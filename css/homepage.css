@@ -18,23 +18,30 @@ body {
     flex-direction: column;
 } 
 
-nav {
-    /*center menu fixed*/
-    position: fixed;
-    top: 24px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+header{
+    display: flex;
+    justify-content: center;
+}
 
-    width: 1024px;
+/* nav {
+    width: 80%;
     border-radius: 30px;
     background: rgba(0, 0, 0, 0.50);
     backdrop-filter: blur(20px);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    z-index: 1100;
     padding: 15px;
+} */
+
+nav {width: 100%;
+    background: rgba(0, 0, 0, 0.50);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 
 nav ul{
@@ -42,33 +49,25 @@ nav ul{
     list-style: none;
     padding: 0;
     gap: 50px;
+    margin:0;
 }
 
-nav ul li a,
-a.logo{
+nav ul li a{
     color: white;
-    font-weight: 800;
+    font-weight: 400;
     font-size: 14pt;
     text-decoration: none;
 }
 
 nav ul li a:hover{
-    color: var(--gray-color);
-}
-
-a.logo .purple{
-    color: var(--purple-color); 
-}
-nav .menu-icon,
-.mobile-menu-container{
-    display: none;
+    text-decoration: underline;
 }
 
 main{
     display: flex;
     flex-direction: column;
     gap:50px;
-    margin: auto;
+    margin: 20px auto 20px auto;
 }
 
 .quiz{
@@ -89,18 +88,72 @@ main{
 
 .card{
     width: 400px;
+    user-select: none;
 }
 
-.card-img :hover{
-    opacity: .5;
+
+.card-img{
+    opacity: 1;
+    transition: all 1s ease-out;
+}
+
+.card:hover .card-img{
+    opacity: .3;
+    transition: all 1s ease-out;
 }
 
 .card-title{
     text-align: center;
-    margin-bottom: 0;
-    margin: auto;
+    margin-top: 45%;
+    font-size: 20pt;
+    transition: all 1s ease-out;
+}
+
+.card:hover .card-title{
+    margin: 0;
+    font-size: 16pt;
+    text-decoration: underline;
+    transition: all 1s ease-out;
 }
 
 .card-text{
     display: none;
+    transition: all 1s ease-out;
+}
+
+.card:hover .card-text{
+    display: block;
+    transition: all 1s ease-out;
+}
+
+.card-info{
+    opacity: 1;
+    text-align: center;
+    transition: all 1s ease-out;
+}
+
+.card:hover .card-info{
+    opacity: 0;
+    transition: all 1s ease-out;
+    display: none;
+}
+
+footer{
+    text-align: center;
+    color: #FFF;
+    font: 12pt;
+    padding: 30px;
+}
+
+footer a{
+    text-decoration: none;
+    color: #FFF;
+}
+
+footer a:hover{
+    text-decoration: underline;
+}
+
+.footer-line{
+    height: 3px;
 }
