@@ -1,0 +1,45 @@
+body
+{
+    margin: 0px;
+    border: 0px;  
+    background-image: url("../asset/image/lodr,bg.jpg");  
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.wrapper
+{
+    width: 450px;
+    background-color: bisque;
+    border: 10px;
+    margin: 10px;
+}
+.wrapper .imput-box
+{
+    width: 100%;
+    height: 50px;
+}
+.imput-box input
+{
+    width: 90%;
+    align-items: center;
+    margin: 10px;
+}
+.account 
+{
+    border: 10px;
+    margin: 10px;
+}
+.forgot 
+{
+    border: 10px;
+    margin: 10px;
+}
+.submit
+{
+    border: 10px;
+    margin: 10px;
+}
