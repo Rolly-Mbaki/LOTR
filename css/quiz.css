@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('../assets/fonts/MiddleEarthPersonalUseRegular-axlP5.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.answers > img {
+    height: 250px;
+    width: 250px;
+    border-image: url('../assets/3p3onjt22e2e54qaploc2k6qmq.png') 30 / 19px round;
+}
+
+.quote {
+    font-family: "MyFont";
+}
