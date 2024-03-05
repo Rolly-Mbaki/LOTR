@@ -2,7 +2,7 @@ body
 {
     margin: 0px;
     border: 0px;  
-    background-image: url("../asset/image/lodr,bg.jpg");  
+    background-image: url("../assets/lodr,bg.jpg");  
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
