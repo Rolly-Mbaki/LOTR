@@ -1,6 +1,11 @@
 *{
     box-sizing: border-box;
     margin: 0;
+    
+    font-family: "MedievalSharp", cursive;
+    font-weight: 400;
+    font-style: normal;
+    color: #e3b737;
 }
 
 html{
@@ -10,12 +15,13 @@ html{
 body {
     min-height: 100%;
     width: 100%;
-    background-image: url("../assets/lotrCastle.jpg");
+    background-image: url("../assets/LOTRMain.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 } 
 
 header{
@@ -34,8 +40,9 @@ header{
     padding: 15px;
 } */
 
-nav {width: 100%;
-    background: rgba(0, 0, 0, 0.50);
+nav {
+    width: 100%;
+    background: rgba(40, 16, 1, 0.5);
     backdrop-filter: blur(20px);
     display: flex;
     justify-content: space-around;
@@ -53,14 +60,20 @@ nav ul{
 }
 
 nav ul li a{
-    color: white;
     font-weight: 400;
-    font-size: 14pt;
     text-decoration: none;
+    color: #e3b737;
+    font-size: 18pt;
 }
 
 nav ul li a:hover{
-    text-decoration: underline;
+    color: #d17600;
+    font-weight: 900;
+}
+
+.nav-text{
+    margin: 0;
+    font-size: 18pt;
 }
 
 main{
@@ -87,7 +100,7 @@ main{
 }
 
 .card{
-    width: 400px;
+    width: 350px;
     user-select: none;
 }
 
@@ -98,20 +111,21 @@ main{
 }
 
 .card:hover .card-img{
-    opacity: .3;
+    opacity: .1;
     transition: all 1s ease-out;
 }
 
 .card-title{
+    color: var(--bs-card-title-color);
     text-align: center;
-    margin-top: 45%;
-    font-size: 20pt;
+    font-size: 26pt;
     transition: all 1s ease-out;
+    font-weight: 900;
 }
 
 .card:hover .card-title{
     margin: 0;
-    font-size: 16pt;
+    font-size: 20pt;
     text-decoration: underline;
     transition: all 1s ease-out;
 }
@@ -119,6 +133,8 @@ main{
 .card-text{
     display: none;
     transition: all 1s ease-out;
+    font-size: 14pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .card:hover .card-text{
@@ -130,6 +146,8 @@ main{
     opacity: 1;
     text-align: center;
     transition: all 1s ease-out;
+    font-size: 16pt;
+    font-weight: 900;
 }
 
 .card:hover .card-info{
@@ -138,20 +156,31 @@ main{
     display: none;
 }
 
+hr {
+    margin: 1rem 0;
+    margin-top: 0;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: 1;
+    color: #f6ce06;
+}
+
 footer{
     text-align: center;
     color: #FFF;
-    font: 12pt;
+    font-size: 16pt;
     padding: 30px;
+    padding-top: 0;
+    color: #e3b737;
 }
 
 footer a{
     text-decoration: none;
-    color: #FFF;
+    color: #e3b737;
 }
 
 footer a:hover{
-    text-decoration: underline;
+    color: #d17600;
 }
 
 .footer-line{
