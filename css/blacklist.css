@@ -83,6 +83,87 @@ main{
     margin: 20px auto 20px auto;
 }
 
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 350px;
+    height: 300px;
+    background-color: rgba(48, 15, 4, 0.6);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.card-text{
+    font-size: 16pt;
+}
+
+.card-button{
+    border: none;
+    background-color: rgb(91, 34, 15);
+    padding: 10px;
+    font-size: 14pt;
+}
+
+.card-button:hover{
+    background-color: rgba(48, 15, 4);
+    cursor: pointer;
+}
+.card-info{
+    padding: 5px;
+}
+.card-click{
+    display: flex;
+    flex-direction: column;
+}
+
+dialog{
+    background-color: rgb(91, 34, 15);
+    width: 500px;
+    margin: auto;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    /* z-index: 1000; */
+}
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+dialog::backdrop {
+    background-color: rgba(48, 15, 4, 0.6);
+}
+
+form{
+    margin: auto;
+    padding-top: 15px;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #e3b737;
+    border-radius: 4px;
+    background-color: rgb(91, 34, 15);
+    font-size: 16pt;
+    margin-bottom: 10px;
+}
+
+textarea::placeholder{
+    color: #e3b737;
+    opacity: .5;
+}
+
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    border: 0;
+    border-top: 2px #e3b737 solid;
+    opacity: .2;
+}
 
 footer{
     text-align: center;
@@ -91,6 +172,10 @@ footer{
     padding: 30px;
     padding-top: 0;
     color: #e3b737;
+}
+
+footer p{
+    margin-bottom: 1rem;
 }
 
 footer a{
