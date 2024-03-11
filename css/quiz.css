@@ -1,16 +1,248 @@
-@font-face {
-    font-family: 'MyFont';
-    src: url('../assets/fonts/MiddleEarthPersonalUseRegular-axlP5.otf') format('opentype');
-    font-weight: normal;
+*{
+    box-sizing: border-box;
+    margin: 0;
+    
+    font-family: "MedievalSharp", cursive;
+    font-weight: 400;
     font-style: normal;
+    color: #e3b737;
 }
 
-.answers > img {
-    height: 250px;
-    width: 250px;
-    border-image: url('../assets/3p3onjt22e2e54qaploc2k6qmq.png') 30 / 19px round;
+html{
+    height: 100%;
 }
 
-.quote {
-    font-family: "MyFont";
+body {
+    min-height: 100%;
+    width: 100%;
+    background-image: url("https://cdnb.artstation.com/p/assets/images/images/064/815/229/4k/neil-burn-shire-03b-signed-sized.jpg?1688812191");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} 
+
+header{
+    display: flex;
+    justify-content: center;
+}
+
+/* nav {
+    width: 80%;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.50);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+} */
+
+nav {
+    width: 100%;
+    background: rgba(40, 16, 1, 0.5);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 50px;
+    margin:0;
+}
+
+nav ul li a{
+    font-weight: 400;
+    text-decoration: none;
+    color: #e3b737;
+    font-size: 18pt;
+}
+
+nav ul li a:hover{
+    color: #d17600;
+    font-weight: 900;
+}
+
+.nav-text{
+    margin: 0;
+    font-size: 18pt;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    margin: 20px auto 20px auto;
+}
+
+.quiz{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.quotes{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    width: 350px;
+    user-select: none;
+}
+
+
+.card-img{
+    opacity: 1;
+    transition: all 1s ease-out;
+}
+
+.card:hover .card-img{
+    opacity: .1;
+    transition: all 1s ease-out;
+}
+
+.card-title{
+    color: var(--bs-card-title-color);
+    text-align: center;
+    font-size: 26pt;
+    transition: all 1s ease-out;
+    font-weight: 900;
+}
+
+.card:hover .card-title{
+    margin: 0;
+    font-size: 20pt;
+    text-decoration: underline;
+    transition: all 1s ease-out;
+}
+
+.card-text{
+    display: none;
+    transition: all 1s ease-out;
+    font-size: 14pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.card:hover .card-text{
+    display: block;
+    transition: all 1s ease-out;
+}
+
+.card-info{
+    opacity: 1;
+    text-align: center;
+    transition: all 1s ease-out;
+    font-size: 16pt;
+    font-weight: 900;
+}
+
+.card:hover .card-info{
+    opacity: 0;
+    transition: all 1s ease-out;
+    display: none;
+}
+
+hr {
+    margin: 1rem 0;
+    margin-top: 0;
+    border: 0;
+    border-top: var(--bs-border-width) solid;
+    opacity: 1;
+    color: #f6ce06;
+}
+
+footer{
+    text-align: center;
+    color: #FFF;
+    font-size: 16pt;
+    padding: 30px;
+    padding-top: 0;
+    color: #e3b737;
+}
+
+footer a{
+    text-decoration: none;
+    color: #e3b737;
+}
+
+footer a:hover{
+    color: #d17600;
+}
+
+.footer-line{
+    height: 3px;
+}
+
+/* quiz */
+
+.quiz-container {
+max-width: 600px;
+min-width: 600px;
+
+margin: 0 auto;
+padding: 40px;
+background-color: #F9F6EE;
+border-radius: 5px;
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.btn {
+    color: #e3b737;
+}
+
+
+.options , .options1 {
+
+font-size: 19px;
+margin-right: 1rem;
+}
+
+.form-check-label {
+    color:#EC8A38
+}
+.form-check-input:checked {
+    background-color: #EC8A38!important;
+    border-color: #EC8A38!important;
+    
+}
+
+.question {
+font-size: 22px;
+color: #FFC000;
+margin-bottom: 30px;
+/* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+}
+
+.option {
+margin-bottom: 10px;
+}
+
+.btnDiv {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.options-container {
+    display: flex;
+    justify-content: center;
 }
