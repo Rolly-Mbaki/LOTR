@@ -51,3 +51,9 @@ h1
     text-align: center;
     text-decoration-style: solid;
 }
+* {
+    font-family: "MedievalSharp", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
