@@ -267,12 +267,23 @@ footer a:hover{
 @media only screen and (max-width: 750px) {
     .mobile-nav{
         display: flex;
-        justify-content: space-between;
-        padding: 10px 0 10px 0;;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        flex-direction: column;
     }
 
     .mobile-nav .dropdown{
         text-align: center;
+    }
+
+    .topmobilenav{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .dropdown{
+        display: block;
     }
 
     nav{
@@ -280,7 +291,27 @@ footer a:hover{
     }
 
     #topnav{
-        display: none;
+        display: block;
         flex-direction: column;
+    }
+
+    .card{
+        width: 350px;
+        height: 300px;
+    }
+    
+    .card-text{
+        margin-top: 10px;
+        font-size: 14pt;
+    }
+    
+    .card-answer{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: white;
+        font-size: 12pt;
+    }
+    
+    .card-button{
+        font-size: 12pt;
     }
   }
