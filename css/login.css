@@ -39,9 +39,15 @@ body
     margin: 10px;
     display: inline-flex;
     flex-direction: row;
+    float: right;
 }
 .submit
 {
     border: 10px;
     margin: 10px;
+}
+h1
+{
+    text-align: center;
+    text-decoration-style: solid;
 }
