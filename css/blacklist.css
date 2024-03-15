@@ -101,7 +101,7 @@ nav ul li a:hover{
   .dropdown-content {
     display: none;
     position: absolute;
-    background: rgba(40, 16, 1, 0.5);
+    background-color: rgba(40, 16, 1);
     backdrop-filter: blur(20px);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -120,7 +120,7 @@ nav ul li a:hover{
   /* Change color of dropdown links on hover */
   .dropdown-content a:hover {
     color: #d17600;
-    background-color: rgba(40, 16, 1, 0.5);
+    background-color: rgba(40, 16, 1);
 }
   
   /* Show the dropdown menu on hover */
@@ -291,10 +291,6 @@ footer a:hover{
         align-items: center;
     }
 
-    .dropdown{
-        display: block;
-    }
-
     nav{
         display: none;
     }
@@ -322,5 +318,20 @@ footer a:hover{
     
     .card-button{
         font-size: 12pt;
+    }
+
+    .dropdown{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dropbtn{
+        padding: 5px;
+        font-size: 20pt;
+    }
+
+    .dropdown a{
+        margin-bottom: 10px;
+        font-size: 14pt;
     }
   }
