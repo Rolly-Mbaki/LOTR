@@ -10,19 +10,59 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <script src="../js/dropdownMenu.js"></script>
+    <script src="https://kit.fontawesome.com/2391a493c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <p class="nav-text">Logo</p>
-          <ul>
-            <li><a href="#">10 Rounds Quiz</a></li>
-            <li><a href="#">Sudden Death Quiz</a></li>
-            <li><a href="#">Favoriete Quotes</a></li>
-            <li><a href="#">Blacklisted Quotes</a></li>
-          </ul>
-          <p class="nav-text">Welkom, Gebruiker</p>
+
+        <nav class="mobile-nav">
+            <section class="topmobilenav">
+                <img class="logo" src="../assets/lotr.png" alt="">
+                <a href="javascript:void(0)" onclick="dropdownMenu()" class="bars"><i class="fa-solid fa-bars"></i></a>
+            </section>
+            <section id="topnav">
+                <div class="dropdown">
+                    <button class="dropbtn">Quizes</button><br>
+                      <a href="#">10 Rounds</a><br>
+                      <a href="#">Sudden Death</a>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Quotes</button><br>
+                      <a href="#">Favorieten</a><br>
+                      <a href="#">Blacklisted</a>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">welkom, Gebruiker</button><br>
+                      <a href="#">Uitloggen</a>
+                </div>
+            </section>
         </nav>
+
+        <nav>
+            <img class="logo" src="../assets/lotr.png" alt="">
+            <div class="dropdown">
+                <button class="dropbtn">Quizes</button>
+                <div class="dropdown-content">
+                  <a href="#">10 Rounds</a>
+                  <a href="#">Sudden Death</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Quotes</button>
+                <div class="dropdown-content">
+                  <a href="#">Favorieten</a>
+                  <a href="#">Blacklisted</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">welkom, Gebruiker</button>
+                <div class="dropdown-content">
+                  <a href="#">Uitloggen</a>
+                </div>
+            </div>
+        </nav>
+
     </header>
 
     <main>
@@ -76,9 +116,9 @@
     </main>
 
     <footer>
-        <hr class="footer-line">
-        <p><a href="https://the-one-api.dev" target="_blank">The One API</a> | <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">The One Wiki</a></p>
-        &copy; 2024 - Palworld G_PRO1_D2
+        <!-- <hr class="footer-line"> -->
+        <p><a href="https://the-one-api.dev" target="_blank">The One API</a> | <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">The One Wiki</a> &copy; 2024 - Palworld G_PRO1_D2</p>
+        
     </footer>
 
 </body>
