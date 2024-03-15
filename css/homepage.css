@@ -116,11 +116,11 @@ main{
 }
 
 .card-title{
-    color: var(--bs-card-title-color);
     text-align: center;
     font-size: 26pt;
     transition: all 1s ease-out;
     font-weight: 900;
+    color: white;
 }
 
 .card:hover .card-title{
@@ -135,6 +135,7 @@ main{
     transition: all 1s ease-out;
     font-size: 14pt;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
 }
 
 .card:hover .card-text{
@@ -148,6 +149,7 @@ main{
     transition: all 1s ease-out;
     font-size: 16pt;
     font-weight: 900;
+    color: white;
 }
 
 .card:hover .card-info{
