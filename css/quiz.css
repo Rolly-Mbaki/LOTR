@@ -202,6 +202,17 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 .btn {
     color: #e3b737;
+    border-color: red;
+    border: none;
+}
+
+#btn2 {
+    color: #e3b737;
+    text-decoration: none;
+    background-color: #F9F6EE;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 
@@ -209,21 +220,25 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 font-size: 19px;
 margin-right: 1rem;
+
 }
 
 .form-check-label {
-    color:#EC8A38
+    color: #1B1212;
+    font-family: Arial, Helvetica, sans-serif!important;
+    
 }
 .form-check-input:checked {
-    background-color: #EC8A38!important;
-    border-color: #EC8A38!important;
+    background-color: #e3b737!important;
+    border-color: #e3b737!important;
     
 }
 
 .question {
 font-size: 22px;
-color: #FFC000;
-margin-bottom: 30px;
+color: #1B1212;
+margin-bottom: 20px;
+font-family: Arial, Helvetica, sans-serif!important;
 /* display: flex;
     justify-content: center;
     align-items: center;
@@ -245,6 +260,14 @@ margin-bottom: 10px;
 .options-container {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+}
+
+.icons-container {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 60px;
 }
 
 @media (max-width:641px) {
