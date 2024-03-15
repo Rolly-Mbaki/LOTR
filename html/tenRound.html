@@ -77,10 +77,45 @@
     </div>
   </div>
   
-
-
+  <i onClick="togglePlay()" class="fa-solid fa-volume-high"></i>
 
     </main>
+    <dialog data-modal class="modall">
+      <img height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
+      <button data-close-modal id="modalBtn">Start Quiz</button>
+      <img height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
+    </dialog>
+
+    <script>
+      const openButton = document.querySelector("[data-open-modal]")
+      const closeButton = document.querySelector("[data-close-modal]")
+      const modal = document.querySelector("[data-modal]")
+      const quizContainer = document.getElementsByClassName("quiz-container")
+      const volumeIcon = document.getElementsByClassName("fa-volume-high")
+      const modall = document.getElementsByClassName("modall")
+      var audio = new Audio('../assets/Lord of the Rings_Sound of The Shire.mp3');
+     
+        window.onload = quizContainer[0].style.display="none"
+        window.onload = volumeIcon[0].style.display="none"
+        modal.showModal()
+        
+        
+
+      closeButton.addEventListener("click", () => {
+        quizContainer[0].style.display="block"
+        volumeIcon[0].style.display="block"
+        modall[0].style.display="none"
+        
+        
+        audio.play();
+        modal.close()
+      })
+      function togglePlay() {
+        return audio.paused ? audio.play() : audio.pause();
+      };
+      
+    </script>
+    
 
     <footer>
         <hr class="footer-line">
