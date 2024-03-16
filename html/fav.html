@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/fav.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <title>Favoriete Quotes</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <script src="../js/dropdownMenu.js"></script>
+    <script src="https://kit.fontawesome.com/2391a493c1.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header>
+
+        <nav class="mobile-nav">
+            <section class="topmobilenav">
+                <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
+                <a href="javascript:void(0)" onclick="dropdownMenu()" class="bars"><i class="fa-solid fa-bars"></i></a>
+            </section>
+            <section id="topnav">
+                <div class="dropdown">
+                    <button class="dropbtn">Quizes</button>
+                      <a href="#">10 Rounds</a>
+                      <a href="#">Sudden Death</a>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">Quotes</button>
+                      <a href="../html/fav.html">Favorieten</a>
+                      <a href="../html/blacklistPagina.html">Blacklisted</a>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">welkom, Gebruiker</button>
+                      <a href="../html/login.html">Log uit</a>
+                </div>
+            </section>
+        </nav>
+
+        <nav>
+            <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
+            <div class="dropdown">
+                <button class="dropbtn">Quizes</button>
+                <div class="dropdown-content">
+                  <a href="#">10 Rounds</a>
+                  <a href="#">Sudden Death</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Quotes</button>
+                <div class="dropdown-content">
+                  <a href="../html/fav.html">Favorieten</a>
+                  <a href="../html/blacklistPagina.html">Blacklisted</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">welkom, Gebruiker</button>
+                <div class="dropdown-content">
+                  <a href="../html/login.html">Log uit</a>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <main>
+        <section class="titel">
+            <h1 class="print" style="text-align: center;">Druk hier om een lijst van je quotes af te drukken <i class="fa-solid fa-print"></i></h1>
+        </section>
+        <section class="cards">
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Gandalf" target="_blank">Gandalf</a>
+                    <p class="card-total">Totaal quotes: 10</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">"Now come the days of the King. May they be blessed."</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+    
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Aragorn_I" target="_blank">Aragorn</a>
+                    <p class="card-total">Totaal quotes: 15</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">“I would have gone with you to the end, into the very fires of Mordor.”</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+    
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Galadriel" target="_blank">Galadriel</a>
+                    <p class="card-total">Totaal quotes: 10</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">"This task was appointed to you. And if you do not find a way, no one will.”</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+    
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Boromir" target="_blank">Boromir</a>
+                    <p class="card-total">Totaal quotes: 3</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">"They have a cave troll."</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+    
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Smeagol" target="_blank">Smeagol</a>
+                    <p class="card-total">Totaal quotes: 10</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">"What's taters, precious? What's taters, eh?"</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+    
+            <div class="card">
+                <section class="card-info">
+                    <a class="card-name" href="https://lotr.fandom.com/wiki/Legolas" target="_blank">Legolas</a>
+                    <p class="card-total">Totaal quotes: 1</p>
+                </section>
+                <section class="card-text">
+                    <p class="card-quote">"They’re taking the Hobbits to Isengard!"</p>
+                </section>
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer>
+
+        <p><a href="https://the-one-api.dev" target="_blank">The One API</a> | <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">The One Wiki</a> &copy; 2024 - Palworld G_PRO1_D2</p>
+        
+    </footer>
+
+</body>
+</html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thuis</title>
     <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/nav.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,33 +15,34 @@
     <script src="https://kit.fontawesome.com/2391a493c1.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <header>
 
         <nav class="mobile-nav">
             <section class="topmobilenav">
-                <img class="logo" src="../assets/lotr.png" alt="">
+                <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
                 <a href="javascript:void(0)" onclick="dropdownMenu()" class="bars"><i class="fa-solid fa-bars"></i></a>
             </section>
             <section id="topnav">
                 <div class="dropdown">
-                    <button class="dropbtn">Quizes</button><br>
-                      <a href="#">10 Rounds</a><br>
+                    <button class="dropbtn">Quizes</button>
+                      <a href="#">10 Rounds</a>
                       <a href="#">Sudden Death</a>
                 </div>
                 <div class="dropdown">
-                    <button class="dropbtn">Quotes</button><br>
-                      <a href="#">Favorieten</a><br>
-                      <a href="#">Blacklisted</a>
+                    <button class="dropbtn">Quotes</button>
+                      <a href="../html/fav.html">Favorieten</a>
+                      <a href="../html/blacklistPagina.html">Blacklisted</a>
                 </div>
                 <div class="dropdown">
-                    <button class="dropbtn">welkom, Gebruiker</button><br>
-                      <a href="#">Uitloggen</a>
+                    <button class="dropbtn">welkom, Gebruiker</button>
+                      <a href="../html/login.html">Log uit</a>
                 </div>
             </section>
         </nav>
 
         <nav>
-            <img class="logo" src="../assets/lotr.png" alt="">
+            <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
             <div class="dropdown">
                 <button class="dropbtn">Quizes</button>
                 <div class="dropdown-content">
@@ -51,14 +53,14 @@
             <div class="dropdown">
                 <button class="dropbtn">Quotes</button>
                 <div class="dropdown-content">
-                  <a href="#">Favorieten</a>
-                  <a href="#">Blacklisted</a>
+                  <a href="../html/fav.html">Favorieten</a>
+                  <a href="../html/blacklistPagina.html">Blacklisted</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">welkom, Gebruiker</button>
                 <div class="dropdown-content">
-                  <a href="#">Uitloggen</a>
+                  <a href="../html/login.html">Log uit</a>
                 </div>
             </div>
         </nav>
