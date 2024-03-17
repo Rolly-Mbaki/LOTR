@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/blacklist.css">
-    <link rel="stylesheet" href="../css/blacklist.scss">
+    <link rel="stylesheet" href="../css/nav.css">
     <script src="../js/dialog.js" defer></script>
     <title>Blacklisted Quotes</title>
+    <link rel="icon" type="image/x-icon" href="../assets/lotr.ico">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +22,7 @@
 
         <nav class="mobile-nav">
             <section class="topmobilenav">
-                <a href="#"><img class="logo" src="../assets/lotr.png" alt=""></a>
+                <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
                 <a href="javascript:void(0)" onclick="dropdownMenu()" class="bars"><i class="fa-solid fa-bars"></i></a>
             </section>
             <section id="topnav">
@@ -32,18 +33,18 @@
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">Quotes</button>
-                      <a href="#">Favorieten</a>
-                      <a href="#">Blacklisted</a>
+                      <a href="../html/fav.html">Favorieten</a>
+                      <a href="../html/blacklistPagina.html">Blacklisted</a>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">welkom, Gebruiker</button>
-                      <a href="#">Uitloggen</a>
+                      <a href="../html/login.html">Log uit</a>
                 </div>
             </section>
         </nav>
 
         <nav>
-            <a href="#"><img class="logo" src="../assets/lotr.png" alt=""></a>
+            <a href="../html/homepage.html"><img class="logo" src="../assets/lotr.png" alt=""></a>
             <div class="dropdown">
                 <button class="dropbtn">Quizes</button>
                 <div class="dropdown-content">
@@ -54,14 +55,14 @@
             <div class="dropdown">
                 <button class="dropbtn">Quotes</button>
                 <div class="dropdown-content">
-                  <a href="#">Favorieten</a>
-                  <a href="#">Blacklisted</a>
+                  <a href="../html/fav.html">Favorieten</a>
+                  <a href="../html/blacklistPagina.html">Blacklisted</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">welkom, Gebruiker</button>
                 <div class="dropdown-content">
-                  <a href="#">Uitloggen</a>
+                  <a href="../html/login.html">Log uit</a>
                 </div>
             </div>
         </nav>
@@ -90,7 +91,7 @@
                 <p class="card-text">Naam:</p>
                 <p class="card-answer">Gandalf</p>
                 <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
+                <p class="card-answer quote">"Now come the days of the King. May they be blessed."</p>
                 <p class="card-text">Reden voor ban:</p>
                 <p class="card-answer">Ik ben geen fan van Gandalf</p>
             </section>
@@ -103,11 +104,56 @@
         <div class="card">
             <section class="card-info">
                 <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
+                <p class="card-answer">Hamfast</p>
                 <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
+                <p class="card-answer quote">"All’s well that ends better."</p>
                 <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
+                <p class="card-answer">Geen idee</p>
+            </section>
+            <section class="card-click">
+                <button type="button" class="card-button open-button">Reden aanpassen</button>
+                <button type="button" class="card-button">Verwijderen</button>
+            </section>
+        </div>
+
+        <div class="card">
+            <section class="card-info">
+                <p class="card-text">Naam:</p>
+                <p class="card-answer">Aragorn</p>
+                <p class="card-text">Quote:</p>
+                <p class="card-answer quote">"Few other griefs amid the ill chances of this world have more bitterness and shame for a man’s heart than to behold the love of a lady so fair and brave that cannot be returned."</p>
+                <p class="card-text">Reden voor ban:</p>
+                <p class="card-answer">Ik ben geen fan van Aragorn</p>
+            </section>
+            <section class="card-click">
+                <button type="button" class="card-button open-button">Reden aanpassen</button>
+                <button type="button" class="card-button">Verwijderen</button>
+            </section>
+        </div>
+
+        <div class="card">
+            <section class="card-info">
+                <p class="card-text">Naam:</p>
+                <p class="card-answer">Frodo</p>
+                <p class="card-text">Quote:</p>
+                <p class="card-answer quote">"It is useless to meet revenge with revenge: it will heal nothing."</p>
+                <p class="card-text">Reden voor ban:</p>
+                <p class="card-answer">Meeting revenge with revenge is altijd goed</p>
+            </section>
+            <section class="card-click">
+                <button type="button" class="card-button open-button">Reden aanpassen</button>
+                <button type="button" class="card-button">Verwijderen</button>
+            </section>
+        </div>
+
+        <div class="card">
+            <section class="card-info">
+                <p class="card-text">Naam:</p>
+                <p class="card-answer">Arwen</p>
+                <p class="card-text">Quote:</p>
+                <p class="card-answer quote">"I would rather share one lifetime with you than face all the ages of this world alone."</p>
+                <p class="card-text">Reden voor ban:</p>
+                <p class="card-answer">I would rather face the ages alone!</p>
             </section>
             <section class="card-click">
                 <button type="button" class="card-button open-button">Reden aanpassen</button>
@@ -120,7 +166,7 @@
                 <p class="card-text">Naam:</p>
                 <p class="card-answer">Gandalf</p>
                 <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
+                <p class="card-answer quote">"Now come the days of the King. May they be blessed."</p>
                 <p class="card-text">Reden voor ban:</p>
                 <p class="card-answer">Ik ben geen fan van Gandalf</p>
             </section>
@@ -129,120 +175,14 @@
                 <button type="button" class="card-button">Verwijderen</button>
             </section>
         </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer">"Now come the days of the King. May they be blessed."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-        
-        <!-- <div class="card text-bg-dark">
-            <img src="../assets/LOTRBlacklist.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-                <p class="card-text">Karakternaam</p>
-                <p class="card-text">Quote</p>
-                <button type="button" class="card-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </div>
-        </div>
-        
-        <div class="card text-bg-dark">
-            <img src="../assets/LOTRBlacklist.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-                <p class="card-text">Karakternaam</p>
-                <p class="card-text">Quote</p>
-                <button type="button" class="card-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </div>
-        </div>
-        
-        <div class="card text-bg-dark">
-            <img src="../assets/LOTRBlacklist.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-                <p class="card-text">Karakternaam</p>
-                <p class="card-text">Quote</p>
-                <button type="button" class="card-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </div>
-        </div>
-        
-        <div class="card text-bg-dark">
-            <img src="../assets/LOTRBlacklist.jpg" class="card-img" alt="...">
-            <div class="card-img-overlay">
-                <p class="card-text">Karakternaam</p>
-                <p class="card-text">Quote</p>
-                <button type="button" class="card-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </div>
-        </div> -->
         
     </main>
     
     <footer>
-        <!-- <hr class="footer-line"> -->
+
         <p><a href="https://the-one-api.dev" target="_blank">The One API</a> | <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">The One Wiki</a> &copy; 2024 - Palworld G_PRO1_D2</p>
         
     </footer>
-
-    <!-- MODAL -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Blacklist reden aanpassen</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form action="">
-                <textarea cols="50" rows="4"></textarea>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
-              <button type="button" class="btn btn-primary card-button">Opslaan</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
 </body>
 </html>
