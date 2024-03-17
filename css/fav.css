@@ -113,6 +113,7 @@ main{
     bottom: 0;
     position: absolute;
     right: 0;
+    cursor: pointer;
 }
 
 .card button:hover i{
