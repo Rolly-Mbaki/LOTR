@@ -182,18 +182,26 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 .modall {
     align-self: center;
     margin: auto;
-    width: 100%;
+    width: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
     overflow: hidden;
+    background-color: rgb(255, 252, 214);
+    padding: 20px;
+    border: 5px solid #e3b737;
 }
+
+.modall::backdrop{
+    display: none;
+}
+
 #modalBtn {
     margin-left: 2rem;
     margin-right: 2rem;
     white-space: nowrap;
     font-size: 20px;
+    border: 2px solid;
 }
 
 hr {

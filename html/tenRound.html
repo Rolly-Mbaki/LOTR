@@ -120,11 +120,11 @@
   <i onClick="togglePlay()" class="fa-solid fa-volume-high"></i>
 
     </main>
-    <dialog data-modal class="modall">
+    <div data-modal class="modall">
       <img height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
       <button data-close-modal id="modalBtn">Start Quiz</button>
       <img height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
-    </dialog>
+    </div>
 
     <script>
       const openButton = document.querySelector("[data-open-modal]")
@@ -137,7 +137,6 @@
      
         window.onload = quizContainer[0].style.display="none"
         window.onload = volumeIcon[0].style.display="none"
-        modal.showModal()
         
         
 
