@@ -16,7 +16,7 @@ html{
 body {
     min-height: 100%;
     width: 100%;
-    background-image: url("../assets/lodr,bg.jpg");
+    background-image: url("../assets/landingPagePics/LOTR.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
