@@ -206,7 +206,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: none;
 }
 
-#btn2 {
+#dislikeBtn , #likeBtn {
     color:#d17600;
     text-decoration: none;
     background-color: #F9F6EE;
@@ -215,7 +215,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     cursor: pointer;
 }
 
-.fa-volume-high {
+#audioBtn {
     cursor: pointer;
     margin-top: 7px;
     width: 0;

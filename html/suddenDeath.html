@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/5c4e8631b8.js" crossorigin="anonymous"></script>
-    <script src="../toggleIcon.js" ></script>
 </head>
 <body>
     <header>
@@ -70,14 +69,13 @@
     
     <div class="btnDiv">
         <div class="icons-container">
-          <i id="btn2" class="fa-regular fa-thumbs-up fa-lg"></i>
-          <i id="btn2" class="fa-regular fa-thumbs-down fa-lg"></i>
+          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg"></i>
         </div>
         <button class="btn" type="button">Volgende</button>
     </div>
   </div>
   
-  <i onClick="togglePlay()" class="fa-solid fa-volume-high"></i>
+    <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
 
     </main>
     <dialog data-modal class="modall">
@@ -86,37 +84,7 @@
       <img height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
     </dialog>
 
-    <script>
-      const openButton = document.querySelector("[data-open-modal]")
-      const closeButton = document.querySelector("[data-close-modal]")
-      const modal = document.querySelector("[data-modal]")
-      const quizContainer = document.getElementsByClassName("quiz-container")
-      const volumeIcon = document.getElementsByClassName("fa-volume-high")
-      const modall = document.getElementsByClassName("modall")
-      var audio = new Audio('../assets/The Fellowship of the Ring Soundtrack-07-A Knife in the Dark.mp3');
-     
-        window.onload = quizContainer[0].style.display="none"
-        window.onload = volumeIcon[0].style.display="none"
-        modal.showModal()
-        
-        
-
-      closeButton.addEventListener("click", () => {
-        quizContainer[0].style.display="block"
-        volumeIcon[0].style.display="block"
-        modall[0].style.display="none"
-        
-        
-        audio.play();
-        modal.close();
-        audio.loop=true;
-      })
-      function togglePlay() {
-        return audio.paused ? audio.play() : audio.pause();
-      };
-      
-    </script>
-    
+    <script src="../js/quiz.js" ></script>
 
     <footer>
         <hr class="footer-line">
