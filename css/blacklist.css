@@ -44,7 +44,7 @@ main{
     flex-direction: column;
     justify-content: space-between;
     width: 350px;
-    background-color: rgba(48, 15, 4, 0.6);
+    background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -115,12 +115,14 @@ textarea {
     border-radius: 4px;
     background-color: rgb(91, 34, 15);
     font-size: 16pt;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 10px;
     resize: none;
 }
 
 textarea::placeholder{
-    color: #e3b737;
+    color: white;
     opacity: .5;
 }
 
@@ -172,6 +174,10 @@ footer a:hover{
     }
     
     .card-button{
+        font-size: 12pt;
+    }
+
+    textarea {
         font-size: 12pt;
     }
   }
