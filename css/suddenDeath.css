@@ -5,7 +5,7 @@
     font-family: "MedievalSharp", cursive;
     font-weight: 400;
     font-style: normal;
-    color: #d17600;
+    color: #e3b737;
 }
 
 html{
@@ -15,7 +15,7 @@ html{
 body {
     min-height: 100%;
     width: 100%;
-    background-image: url("/assets/wallpaperflare.com_wallpaper.jpg");
+    background-image: url("../assets/wallpaperflare.com_wallpaper.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -27,53 +27,6 @@ body {
 header{
     display: flex;
     justify-content: center;
-}
-
-/* nav {
-    width: 80%;
-    border-radius: 30px;
-    background: rgba(0, 0, 0, 0.50);
-    backdrop-filter: blur(20px);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 15px;
-} */
-
-nav {
-    width: 100%;
-    background: rgba(40, 16, 1, 0.5);
-    backdrop-filter: blur(20px);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 15px;
-    margin-bottom: 10px;
-}
-
-nav ul{
-    display: flex;
-    list-style: none;
-    padding: 0;
-    gap: 50px;
-    margin:0;
-}
-
-nav ul li a{
-    font-weight: 400;
-    text-decoration: none;
-    color: #e3b737;
-    font-size: 18pt;
-}
-
-nav ul li a:hover{
-    color: #d17600;
-    font-weight: 900;
-}
-
-.nav-text{
-    margin: 0;
-    font-size: 18pt;
 }
 
 main{
@@ -156,22 +109,20 @@ main{
     display: none;
 }
 
-hr {
-    margin: 1rem 0;
-    margin-top: 0;
-    border: 0;
-    border-top: var(--bs-border-width) solid;
-    opacity: 1;
-    color: #f6ce06;
-}
 
 footer{
     text-align: center;
     color: #FFF;
     font-size: 16pt;
-    padding: 30px;
-    padding-top: 0;
+    padding: 15px;
     color: #e3b737;
+    width: 100%;
+    background: rgba(40, 16, 1, 0.5);
+    backdrop-filter: blur(20px);
+}
+
+footer p{
+    margin: 0;
 }
 
 footer a{
@@ -183,15 +134,10 @@ footer a:hover{
     color: #d17600;
 }
 
-.footer-line{
-    height: 3px;
-}
-
 /* quiz */
 
 .quiz-container {
 max-width: 600px;
-min-width: 600px;
 
 margin: 0 auto;
 padding: 40px;
@@ -223,21 +169,34 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 .modall {
     align-self: center;
-    margin: 0 auto;
-    width: 100%;
+    margin: auto;
+    width: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    background-color: rgb(255, 252, 214, 0.6);
+    padding: 20px;
+    /* border: 5px solid #e3b737; */
+    background-color: rgba(48, 15, 4, 0.8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.sketchline{
+    filter: invert(6%) sepia(200%) saturate(3207%) hue-rotate(15deg) brightness(87%) contrast(1000%);
 }
 #modalBtn {
     margin-left: 2rem;
     margin-right: 2rem;
     white-space: nowrap;
-    font-size: 20px;
+    font-size: 20pt;
+    border: none;
+    background-color: transparent;
 }
 
-hr {
-    width: 100%;
+
+#modalBtn:hover{
+    color: #d17600;
 }
 
 

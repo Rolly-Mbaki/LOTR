@@ -35,7 +35,6 @@ var icon2 = document.getElementById('dislikeBtn');
      
         window.onload = quizContainer[0].style.display="none"
         window.onload = volumeIcon[0].style.display="none"
-        modal.showModal()
         
         
 
