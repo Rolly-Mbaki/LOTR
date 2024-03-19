@@ -46,7 +46,7 @@ main{
 
 .titel{
     padding: 15px;
-    background-color: rgba(48, 15, 4, 0.6);
+    background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -66,7 +66,7 @@ main{
     width: 350px;
     height: 250px;
     padding: 15px;
-    background-color: rgba(48, 15, 4, 0.6);
+    background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
     position: relative;
 }

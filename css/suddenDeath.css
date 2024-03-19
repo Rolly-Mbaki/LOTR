@@ -15,7 +15,7 @@ html{
 body {
     min-height: 100%;
     width: 100%;
-    background-image: url("https://cdnb.artstation.com/p/assets/images/images/064/815/229/4k/neil-burn-shire-03b-signed-sized.jpg?1688812191");
+    background-image: url("../assets/wallpaperflare.com_wallpaper.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -34,7 +34,6 @@ main{
     flex-direction: column;
     gap:50px;
     margin: 20px auto 20px auto;
-    position: relative;
 }
 
 .quiz{
@@ -110,6 +109,7 @@ main{
     display: none;
 }
 
+
 footer{
     text-align: center;
     color: #FFF;
@@ -153,7 +153,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 #dislikeBtn , #likeBtn {
-    color: #e3b737;
+    color:#d17600;
     text-decoration: none;
     background-color: #F9F6EE;
     border: none;
@@ -185,7 +185,6 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 .sketchline{
     filter: invert(6%) sepia(200%) saturate(3207%) hue-rotate(15deg) brightness(87%) contrast(1000%);
 }
-
 #modalBtn {
     margin-left: 2rem;
     margin-right: 2rem;
@@ -194,6 +193,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: none;
     background-color: transparent;
 }
+
 
 #modalBtn:hover{
     color: #d17600;
@@ -209,20 +209,20 @@ margin-right: 1rem;
 
 .form-check-label {
     color: #1B1212;
-    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-family: Arial, Helvetica, sans-serif!important;
     
 }
 .form-check-input:checked {
-    background-color: #e3b737!important;
-    border-color: #e3b737!important;
+    background-color: #d17600!important;
+    border-color: #d17600!important;
     
 }
 
 .question {
-font-size: 20pt;
+font-size: 22px;
 color: #1B1212;
 margin-bottom: 20px;
-font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+font-family: Arial, Helvetica, sans-serif!important;
 /* display: flex;
     justify-content: center;
     align-items: center;
@@ -254,12 +254,12 @@ margin-bottom: 10px;
     padding-left: 60px;
 }
 
-@media (max-width:600px) {
-    .options-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        flex-direction: column;
-        align-items:stretch;
-    }
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+
+  }
+
+@media (max-width:641px) {
+    
 }
