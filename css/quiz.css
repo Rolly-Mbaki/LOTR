@@ -30,7 +30,7 @@ header{
 }
 
 main{
-    display: flex;
+    display: flex;  
     flex-direction: column;
     gap:50px;
     margin: 20px auto 20px auto;
