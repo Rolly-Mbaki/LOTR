@@ -90,6 +90,7 @@ main{
     font-size: 14pt;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
+    margin-top: 15px;
 }
 
 .card:hover .card-text{

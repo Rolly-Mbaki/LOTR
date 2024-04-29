@@ -17,7 +17,7 @@
                   <a href="/blacklist">Blacklisted</a>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">welkom, Gebruiker</button>
+                <button class="dropbtn">welkom, <%= locals.user.username %></button>
                   <a href="/login">Log uit</a>
             </div>
         </section>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">welkom, Gebruiker</button>
+            <button class="dropbtn">welkom, <%= locals.user.username %></button>
             <div class="dropdown-content">
               <a href="/login">Log uit</a>
             </div>

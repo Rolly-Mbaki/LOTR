@@ -19,13 +19,10 @@
     </header>
  
     <main>
-        <div class="kaart" style="display: block;">
-            <p style="<%= locals.error  === true ? 'display: block' : 'display: none'%>"><%= locals.message %></p>
-        </div>
         <div class="kaart">
             <h1>Login</h1>
+            <p class="error"> <%= locals.message %> </p>
             <form action="/login" method="POST">
-                
                 <input type="text" placeholder="Gebruikersnaam" name="username">
                 <input type="password" placeholder="Wachtwoord" name="password">
                 <button type="submit">Inloggen</button>

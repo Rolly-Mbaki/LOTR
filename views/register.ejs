@@ -19,11 +19,9 @@
     </header>
 
     <main>
-        <div class="kaart" style="display: block;">
-            <p style="display: block;"><%= message %></p>
-        </div>
         <div class="kaart">
             <h1>Registratie</h1>
+            <p class="error"><%= locals.message %></p>
             <form action="/register" method="POST">
                 <input type="text" placeholder="E-mailadres" name="email">
                 <input type="text" placeholder="Gebruikersnaam" name="username">
