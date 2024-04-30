@@ -46,17 +46,8 @@ app.get("/suddenDeath",(req,res)=>{
     res.render("suddenDeath",{qoutes:randomQuotes});
 })
 
-/* app.get("/test",(req,res)=>{
-    res.json(quotes);
-}) */
-
-
-app.use("/", quizRouter(quotes))
-
-
 app.listen(app.get("port"), async () => {
     
     quotes = await linkCharsAndMovieToQoute()
-    console.log(quotes[50])
     console.log("[server] http://localhost:" + app.get("port"))
 });

@@ -47,6 +47,10 @@ var icon2 = document.getElementById('dislikeBtn');
         audio.play();
         modal.close();
         audio.loop=true;
+        audio.addEventListener('ended', function() {
+          this.currentTime = 0;
+          this.play();
+      }, false);
       })
 
       function toggleAudio() {
@@ -61,7 +65,7 @@ var icon2 = document.getElementById('dislikeBtn');
 
       function togglePlay() {
         toggleAudio()
-        return audio.paused ? audio.play() : audio.pause();
+        audio.muted = !audio.muted;
       };
 
       

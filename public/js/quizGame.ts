@@ -2,16 +2,22 @@ import { Quote,Character,Movie,gameQuote } from "../../types/quizTypes";
 
 const apiKey = 'YfOQe6Lm8jLfWV1C9EWq';
 
-export const getQoute = async () => {
-    
-    const response2 = await fetch('https://the-one-api.dev/v2/quote', {
-      headers: {
-        'Authorization': `Bearer ${apiKey}`
-      }
-    });
-    const getLengthOfApi = await response2.json();
-    
-    const apiUrl = `https://the-one-api.dev/v2/quote?limit=${getLengthOfApi.total}`;
+
+export const getApiLength = async () => {
+  const response2 = await fetch('https://the-one-api.dev/v2/quote', {
+    headers: {
+      'Authorization': `Bearer ${apiKey}`
+    }
+  });
+  const lengthApiJson = await response2.json();
+  const lengthOfApi = lengthApiJson.total
+  return lengthOfApi;
+}
+
+
+
+export const getQoute = async (limit:number=10000) => {
+    const apiUrl = `https://the-one-api.dev/v2/quote?limit=${limit}`;
 
     const response = await fetch(apiUrl, {
         headers: {
@@ -24,17 +30,8 @@ export const getQoute = async () => {
     return quotes;
 }
 
-export const getChars = async () => {
-    
-  
-  const response2 = await fetch('https://the-one-api.dev/v2/character', {
-    headers: {
-      'Authorization': `Bearer ${apiKey}`
-    }
-  });
-  const getLengthOfApi = await response2.json();
-  
-  const apiUrl = `https://the-one-api.dev/v2/character?limit=${getLengthOfApi.total}`;
+export const getChars = async (limit:number=10000) => {
+  const apiUrl = `https://the-one-api.dev/v2/character?limit=${limit}`;
 
   const response = await fetch(apiUrl, {
       headers: {
@@ -47,17 +44,9 @@ export const getChars = async () => {
   return chars;
 }
 
-export const getMovies = async () => {
-    
-  
-  const response2 = await fetch('https://the-one-api.dev/v2/movie', {
-    headers: {
-      'Authorization': `Bearer ${apiKey}`
-    }
-  });
-  const getLengthOfApi = await response2.json();
-  
-  const apiUrl = `https://the-one-api.dev/v2/movie?limit=${getLengthOfApi.total}`;
+export const getMovies = async (limit:number=10000) => {
+
+  const apiUrl = `https://the-one-api.dev/v2/movie?limit=${limit}`;
 
   const response = await fetch(apiUrl, {
       headers: {
@@ -71,154 +60,87 @@ export const getMovies = async () => {
 }
 
 export const linkCharsAndMovieToQoute = async() => {
-  let qoutes:Quote[] = await getQoute();
-  let chars:Character[] = await getChars();
-  let movies:Movie[] = await getMovies();
+  let limit = await getApiLength();
+  let qoutes:Quote[] = await getQoute(limit);
+  let chars:Character[] = await getChars(limit);
+  let movies:Movie[] = await getMovies(limit);
 
   for (let i = 0; i < qoutes.length; i++) {
     const char:Character = chars.find(char => char._id === qoutes[i].character)!;
     const movie:Movie = movies.find(movie => movie._id === qoutes[i].movie)!;
-    qoutes[i].character = char.name
+    qoutes[i].character = char.name //add char link somehow
     qoutes[i].movie = movie.name
   }
   return qoutes
 }
 
-export const qouteForGame = () => {
-
-}
 
 export const getRandomQoutes = (qoutes:Quote[],n:number) => {
-  /* NOTE TO SELF THERE IS A MINOR_CHARACTER object */
+  /* NOTE TO SELF THERE IS A MINOR_CHARACTER object AND MAYBE UNIQUE DIALOG IN full array of gameQoutes */
   const shuffled = qoutes.sort(() => 0.5 - Math.random());
-  
-   const gameQuotes:gameQuote[] = [{
-     quote: shuffled[0].dialog,
-     characterAnswer: shuffled[0].character,
-     characterWrong1: "",
-     characterWrong2: "",
-     movieAnswer: shuffled[0].movie,
-     movieWrong1: "",
-     movieWrong2: ""
-   }]
-  
-  /* for (let i = 0; i < shuffled.length; i++) {
-    gameQuotes[i].quote = shuffled[i].dialog
-    gameQuotes[i].characterAnswer = shuffled[i].character
-    gameQuotes[i].movieAnswer = shuffled[i].movie
 
-    let filteredQoutes = shuffled.filter((shuffled) => {
-      return shuffled.movie !== gameQuotes[i].movieAnswer && shuffled.character !== gameQuotes[i].characterAnswer
-    })
+  let gameQuotes:gameQuote[] = [{
+    quote: "",
+    characterAnswer: "",
+    characterWrong1: "",
+    characterWrong2: "",
+    movieAnswer: "",
+    movieWrong1: "",
+    movieWrong2: ""
+  }]
 
-    gameQuotes[i].characterWrong1 = filteredQoutes[0].character
-    gameQuotes[i].movieWrong1 = filteredQoutes[0].movie
+  for (let i = 0; i < n; i++) {
+  let uniqueAnwser = Math.floor(Math.random() * shuffled.length);
 
-    let filteredQoutes2 = filteredQoutes.filter((shuffled) => {
-      return shuffled.movie !== gameQuotes[i].movieAnswer && shuffled.movie !== filteredQoutes[0].movie 
-      && shuffled.character !== filteredQoutes[0].character && shuffled.character !== gameQuotes[i].characterAnswer
-    })
+  let char1 = "";
+  let char2 = "";
+  let movie1 = "";
+  let movie2 = "";
 
-    gameQuotes[i].characterWrong2 = filteredQoutes2[0].character
-    gameQuotes[i].movieWrong2 = filteredQoutes2[0].movie
+  let uniqueMovies = shuffled.filter(function(this: Set<string>,{movie}) {
+    return !this.has(movie) && this.add(movie);
+  }, new Set)
 
-    
+  let my2 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie)
 
-  } */
-  
-  /* for (let i = 0; i < 10; i++) {
-    if (shuffled[i].character !== undefined) {
-      
-      let filteredQoutes = shuffled.filter((shuffled) => {
-        return shuffled.movie !== gameQuotes[i].movieAnswer || shuffled.character !== gameQuotes[i].characterAnswer
-      })
-      let randomQuoteNumber:number = Math.floor(Math.random() * filteredQoutes.length+1) 
+  let uniqueMoviesRandom = Math.floor(Math.random() * my2.length);
 
-      let char1 = filteredQoutes[randomQuoteNumber].character
-      let movie1 = filteredQoutes[randomQuoteNumber].movie
+  movie1 = my2[uniqueMoviesRandom].movie
 
-      let filteredQoutes2 = filteredQoutes.filter((shuffled) => {
-        return shuffled.movie !== gameQuotes[i].movieAnswer || shuffled.movie !== movie1
-        && shuffled.character !== char1 || shuffled.character !== gameQuotes[i].characterAnswer
-      })
-      let tempData:gameQuote = {
-        quote: shuffled[i].dialog,
-        characterAnswer: shuffled[i].character,
-        characterWrong1: char1,
-        characterWrong2: filteredQoutes2[0].character,
-        movieAnswer: shuffled[i].movie,
-        movieWrong1: movie1,
-        movieWrong2: filteredQoutes2[0].movie
-      }
-      gameQuotes.push(tempData)
-    }
-    
-    
+  let my4 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie && e.movie !== movie1)
+
+  let uniqueMoviesRandom2 = Math.floor(Math.random() * my4.length);
+
+  movie2 = my4[uniqueMoviesRandom2].movie
+
+  let uniqueChars = shuffled.filter(function(this: Set<string>,{character}) {
+    return !this.has(character) && this.add(character);
+  }, new Set)
+
+  let my = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character)
+
+  let uniqueCharsRandom = Math.floor(Math.random() * my.length);
+
+  char1 = my[uniqueCharsRandom].character
+
+  let my3 = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character && e.character !== char1)
+  let uniqueCharsRandom2 = Math.floor(Math.random() * my3.length);
+
+  char2 = my3[uniqueCharsRandom2].character
+
+  let tempData:gameQuote = {
+    quote: shuffled[uniqueAnwser].dialog,
+    characterAnswer: shuffled[uniqueAnwser].character,
+    characterWrong1: char1,
+    characterWrong2: char2,
+    movieAnswer: shuffled[uniqueAnwser].movie,
+    movieWrong1: movie1,
+    movieWrong2: movie2
   }
-  console.log(gameQuotes) */
 
-  /* gameQuotes[0].quote = shuffled[0].dialog
-    gameQuotes[0].characterAnswer = shuffled[0].character
-    gameQuotes[0].movieAnswer = shuffled[0].movie
+  gameQuotes.push(tempData)
+  }
 
-    let filteredQoutes = shuffled.filter((shuffled) => {
-      return shuffled.movie !== gameQuotes[0].movieAnswer && shuffled.character !== gameQuotes[0].characterAnswer
-    })
-
-    let randomQuoteNumber:number = Math.floor(Math.random() * filteredQoutes.length+1)
-
-    gameQuotes[0].characterWrong1 = filteredQoutes[randomQuoteNumber].character
-    gameQuotes[0].movieWrong1 = filteredQoutes[randomQuoteNumber].movie
-
-    let filteredQoutes2 = filteredQoutes.filter((shuffled) => {
-      return shuffled.movie !== gameQuotes[0].movieAnswer && shuffled.movie !== gameQuotes[0].movieWrong1
-      && shuffled.character !== gameQuotes[0].characterWrong1 && shuffled.character !== gameQuotes[0].characterAnswer
-    })
-
-    gameQuotes[0].characterWrong2 = filteredQoutes2[0].character
-    gameQuotes[0].movieWrong2 = filteredQoutes2[0].movie
-
-    
- */
-
-
-
-/*WIP!!!!!!!!!!!*/
-
-function areObjectsEqual(obj1: Quote, obj2: gameQuote): boolean {
-  return obj1.character === obj2.characterAnswer || obj1.movie === obj2.movieAnswer;
-}
-
-
-const filteredQoutesMovies: Quote[] = shuffled.filter(parent => {
-
-  const correspondingChild = gameQuotes.find(gameQuotes => gameQuotes.movieAnswer === parent.movie);
-
-
-  return !correspondingChild || !areObjectsEqual(parent, correspondingChild);
-});
-
-
-
-const filteredQoutesChars: Quote[] = filteredQoutesMovies.filter(parent => {
-
-  const correspondingChild = gameQuotes.find(gameQuotes => gameQuotes.characterAnswer=== parent.character);
-
-
-  return !correspondingChild || !areObjectsEqual(parent, correspondingChild);
-});
-
-
-/*WIP!!!!!!!!!!!*/
-
-let randomQuoteNumber:number = Math.floor(Math.random() * filteredQoutesChars.length+1)
-
-for (let i = 0; i < 20; i++) {
-  console.log(filteredQoutesMovies[i].movie)
-}
-console.log("h")
-console.log(gameQuotes[0].movieAnswer);
-console.log("h")
-  
-  return shuffled.slice(0, n);
+  gameQuotes.shift()
+  return gameQuotes;
 }
