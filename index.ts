@@ -1,11 +1,14 @@
 import express from "express";
 import ejs from "ejs";
+import dotenv from "dotenv"
 const {MongoClient} = require('mongodb');
 const bcrypt = require('bcrypt')
 
+dotenv.config()
+
 const app = express();
 
-const uri:string = "mongodb+srv://rolly:124501@webont.9shb7rd.mongodb.net/";
+const uri:string = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
 interface User {
@@ -42,6 +45,11 @@ app.get("/home",(req,res)=>{
 })
 
 app.get("/login",(req,res)=>{
+    user = {
+        username: "",
+        email:"",
+        password:""
+    };
     res.render("login")
 })
 
@@ -77,7 +85,6 @@ app.post("/login", async (req,res)=>{
 })
 
 app.get("/register",(req,res)=>{
-
     res.render("register")
 })
 
@@ -114,6 +121,7 @@ app.post("/register", async (req,res)=>{
             }  
             else if (req.body.password.length > 6) {
                 await client.db('LOTR').collection('Users').insertOne(newUser);
+                user = newUser
                 message = "Account succevol aangemaakt!"
                 error = false
                 res.redirect("home")
