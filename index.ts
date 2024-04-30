@@ -1,6 +1,7 @@
 import express from "express";
 import ejs from "ejs";
 import dotenv from "dotenv"
+import session from "./session";
 const {MongoClient} = require('mongodb');
 const bcrypt = require('bcrypt')
 
@@ -11,7 +12,7 @@ const app = express();
 const uri:string = process.env.MONGO_URI as string;
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-interface User {
+export interface User {
     _id?:string,
     email:string,
     username:string,
@@ -29,6 +30,7 @@ let user:User = {
     password:""
 };
 
+app.use(session)
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: false}))
 
@@ -41,6 +43,7 @@ app.get("/",(req,res)=>{
 
 app.get("/home",(req,res)=>{
     // console.log(user)
+    console.log(req.session.user?.username)
     res.render("home",{user:user});
 })
 
@@ -54,6 +57,7 @@ app.get("/login",(req,res)=>{
 })
 
 app.post("/login", async (req,res)=>{
+    // let userObject:User = req.session.user ? req.session.user : undefined;
     try {
         await client.connect();
 
@@ -67,6 +71,8 @@ app.post("/login", async (req,res)=>{
         if (username!=null) {
             const isPasswordMatch = await bcrypt.compare(req.body.password, username.password)
             if (isPasswordMatch){
+                //hier moet ik session beginnen maken
+                //req.session.isLoggedIn = true
                 user = username;
                 res.redirect("home")
             }
@@ -124,6 +130,8 @@ app.post("/register", async (req,res)=>{
                 user = newUser
                 message = "Account succevol aangemaakt!"
                 error = false
+                //hier moet ik session beginnen maken
+                //req.session.isLoggedIn = true
                 res.redirect("home")
             } 
             else if (req.body.password.length <= 7) {
@@ -149,6 +157,12 @@ app.post("/register", async (req,res)=>{
         await client.close();
     } 
 });
+
+/////// om session te beeindigen
+// req.session.destroy(() => {
+//     res.redirect('/')
+// });
+//////
 
 // app.post("/register", async (req,res)=>{
 
