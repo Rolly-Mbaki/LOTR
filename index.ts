@@ -1,7 +1,7 @@
 import express from "express";
 import ejs from "ejs";
 
-import { getQoute,getRandomQoutes } from "./public/js/quizGame";
+import { getQoute,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
 import { Quote } from "./types/quizTypes";
 import quizRouter from "./routes/quiz";
 
@@ -38,14 +38,12 @@ app.get("/fav",(req,res)=>{
 
 app.get("/tenRound",(req,res)=>{
     let randomQuotes = getRandomQoutes(quotes,10)
-    console.log(randomQuotes[1])
-    res.render("tenRound");
+    res.render("tenRound",{qoutes:randomQuotes});
 })
 
 app.get("/suddenDeath",(req,res)=>{
     let randomQuotes = getRandomQoutes(quotes,quotes.length)
-    console.log(randomQuotes[1])
-    res.render("suddenDeath");
+    res.render("suddenDeath",{qoutes:randomQuotes});
 })
 
 /* app.get("/test",(req,res)=>{
@@ -57,9 +55,8 @@ app.use("/", quizRouter(quotes))
 
 
 app.listen(app.get("port"), async () => {
-    quotes = await getQoute();
     
-    console.log(quotes[10])
-    
+    quotes = await linkCharsAndMovieToQoute()
+    console.log(quotes[50])
     console.log("[server] http://localhost:" + app.get("port"))
 });
