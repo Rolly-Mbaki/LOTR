@@ -91,6 +91,11 @@ app.post("/login", async (req,res)=>{
 })
 
 app.get("/register",(req,res)=>{
+    user = {
+        username: "",
+        email:"",
+        password:""
+    };
     res.render("register")
 })
 
