@@ -44,6 +44,10 @@ main{
     flex-wrap: wrap;
 }
 
+.quiz-container {
+    display: none;
+}
+
 .quotes{
     display: flex;
     flex-direction: row;

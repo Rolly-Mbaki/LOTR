@@ -44,6 +44,10 @@ main{
     flex-wrap: wrap;
 }
 
+.quiz-container {
+    display: none;
+}
+
 .quotes{
     display: flex;
     flex-direction: row;
@@ -177,8 +181,8 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: rgb(255, 252, 214, 0.6);
     padding: 20px;
     /* border: 5px solid #e3b737; */
-    background-color: rgba(48, 15, 4, 0.8);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    background-color: rgba(48, 15, 4, 0.8)!important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5)!important;
 }
 
 .sketchline{
