@@ -159,7 +159,10 @@ app.post("/register", async (req,res)=>{
             }  
             else if (req.body.password.length > 6) {
                 await client.db('LOTR').collection('Users').insertOne(newUser);
-                user = newUser
+                req.session.isAuth = true
+                console.log(req.session.id)
+                req.session.user = newUser
+                console.log(req.session.user)
                 message = "Account succevol aangemaakt!"
                 error = false
 
