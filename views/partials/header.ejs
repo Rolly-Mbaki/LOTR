@@ -18,7 +18,9 @@
             </div>
             <div class="dropdown">
                 <button class="dropbtn">welkom, <%= locals.user.username %></button>
-                  <a href="/login">Log uit</a>
+                <form action="/logout" method="POST">
+                  <button class="logout-mobile">Log uit</button>
+                </form>
             </div>
         </section>
     </nav>
@@ -42,7 +44,9 @@
         <div class="dropdown">
             <button class="dropbtn">welkom, <%= locals.user.username %></button>
             <div class="dropdown-content">
-              <a href="/login">Log uit</a>
+              <form action="/logout" method="POST">
+                <button class="logout">Log uit</button>
+              </form>
             </div>
         </div>
     </nav>

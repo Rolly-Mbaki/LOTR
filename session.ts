@@ -12,19 +12,20 @@ const mongoStore = new MongoDBStore({
     databaseName: "LOTR",
 });
 
-mongoStore.on("error", (error) => {
-    console.error(error);
-});
+// mongoStore.on("error", (error) => {
+//     console.error(error);
+// });
 
 declare module 'express-session' {
     export interface SessionData {
-        user?:User
+        user?:User,
+        isAuth:boolean
     }
 }
 
 export default session({
-    secret: process.env.SESSION_SECRET ?? "my-super-secret-secret",
-    store: mongoStore,
+    secret: "process.env.SESSION_SECRET",
     resave: false,
     saveUninitialized: false,
+    store: mongoStore
 });

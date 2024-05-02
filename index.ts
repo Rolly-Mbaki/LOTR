@@ -30,30 +30,50 @@ let user:User = {
     password:""
 };
 
+//middleware
 app.use(session)
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
+
+const isAuth = (req:any, res:any, next:any) =>{
+    if(req.session.isAuth){
+        next()
+    } else {
+        res.redirect("/login")
+    }
+}
 
 app.set("view engine", "ejs");
 app.set("port", 3000);
+
+// app.get("/",(req,res)=>{
+//     req.session.regenerate(e => {
+//         console.log(req.session)
+//         console.log(req.session.id)
+//         console.log(req.session.user)
+//         res.render("index");
+//     })
+// })
 
 app.get("/",(req,res)=>{
     res.render("index");
 })
 
-app.get("/home",(req,res)=>{
+app.get("/home", isAuth, (req,res)=>{
     // console.log(user)
-    console.log(req.session.user?.username)
-    res.render("home",{user:user});
+    res.render("home",{user:req.session.user});
 })
 
 app.get("/login",(req,res)=>{
-    user = {
-        username: "",
-        email:"",
-        password:""
-    };
-    res.render("login")
+    // user = {
+    //     username: "",
+    //     email:"",
+    //     password:""
+    // };
+    if (req.session.isAuth) {
+        res.redirect("/home")
+    }
+    else res.render("login")
 })
 
 app.post("/login", async (req,res)=>{
@@ -61,19 +81,23 @@ app.post("/login", async (req,res)=>{
     try {
         await client.connect();
 
-        let username:User = await client.db('LOTR').collection('Users').findOne({username:req.body.username.toString().toLowerCase()})
+        let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.body.username.toString().toLowerCase()})
 
-        if (username == null) {
+        if (userObject == null) {
             message = "Gebruiker niet gevonden"
             error = true
             res.render("login",{message:message,error:error})
         }
-        if (username!=null) {
-            const isPasswordMatch = await bcrypt.compare(req.body.password, username.password)
+        if (userObject!=null) {
+            const isPasswordMatch = await bcrypt.compare(req.body.password, userObject.password)
             if (isPasswordMatch){
                 //hier moet ik session beginnen maken
                 //req.session.isLoggedIn = true
-                user = username;
+                req.session.isAuth = true
+                console.log(req.session.id)
+                req.session.user = userObject
+                console.log(req.session.user)
+                // user = userObject;
                 res.redirect("home")
             }
             else{
@@ -91,12 +115,15 @@ app.post("/login", async (req,res)=>{
 })
 
 app.get("/register",(req,res)=>{
-    user = {
-        username: "",
-        email:"",
-        password:""
-    };
-    res.render("register")
+    // user = {
+    //     username: "",
+    //     email:"",
+    //     password:""
+    // };
+    if (req.session.isAuth) {
+        res.redirect("/home")
+    }
+    else res.render("register")
 })
 
 app.post("/register", async (req,res)=>{
@@ -135,6 +162,7 @@ app.post("/register", async (req,res)=>{
                 user = newUser
                 message = "Account succevol aangemaakt!"
                 error = false
+
                 //hier moet ik session beginnen maken
                 //req.session.isLoggedIn = true
                 res.redirect("home")
@@ -231,20 +259,29 @@ app.post("/register", async (req,res)=>{
 //     } 
 // });
 
-app.get("/blacklist",(req,res)=>{
-    res.render("blacklist",{user:user});
+
+
+app.get("/blacklist",isAuth, (req,res)=>{
+    res.render("blacklist",{user:req.session.user});
 })
 
-app.get("/fav",(req,res)=>{
-    res.render("fav",{user:user});
+app.get("/fav",isAuth, (req,res)=>{
+    res.render("fav",{user:req.session.user});
 })
 
-app.get("/suddenDeath",(req,res)=>{
-    res.render("suddenDeath",{user:user});
+app.get("/suddenDeath",isAuth, (req,res)=>{
+    res.render("suddenDeath",{user:req.session.user});
 })
 
-app.get("/tenRound",(req,res)=>{
-    res.render("tenRound",{user:user});
+app.get("/tenRound",isAuth, (req,res)=>{
+    res.render("tenRound",{user:req.session.user});
+})
+
+app.post("/logout", (req,res) =>{
+    req.session.destroy(e => {
+        if(e) throw e
+        res.redirect('/login')
+    })
 })
 
 
