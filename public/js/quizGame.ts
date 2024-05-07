@@ -1,7 +1,9 @@
 import { Quote,Character,Movie,gameQuote } from "../../types/quizTypes";
+import dotenv from "dotenv";
 
-const apiKey = 'YfOQe6Lm8jLfWV1C9EWq';
+dotenv.config();
 
+const apiKey = process.env.LOTR_API_KEY as string;
 
 export const getApiLength = async () => {
   const response2 = await fetch('https://the-one-api.dev/v2/quote', {

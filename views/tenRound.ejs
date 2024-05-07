@@ -26,10 +26,10 @@
       
       <div class="question">
         <div style="display: flex; justify-content: flex-end;" ><p>1/10</p></div>
-        "<%= qoutes[0].quote %>"
+        <div class="quote">"<%= qoutes[0].quote %>"</div>
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
-      <div class="options-container">
+      <form class="options-container" action="/" method="get">
         <div class="options">
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerChar" id="option1" value="option1">
@@ -57,9 +57,9 @@
               <input class="form-check-input" type="radio" name="answerFilms" id="option7" value="option7">
               <label class="form-check-label" for="option7"><%= qoutes[0].movieWrong2 %></label>
             </div>
-      </div>
+          </form>
     </div>
-    
+    <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
           <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal"></i>
@@ -67,6 +67,7 @@
         <button class="btn" type="button">Volgende</button>
         
     </div>
+  </form>
     <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
   </div>
   
