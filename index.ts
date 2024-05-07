@@ -21,6 +21,26 @@ export interface User {
     blQuotes?:string[],
     highscores?:number[],
   }
+
+interface FavQuote {
+    _id?:string,
+    quote:string,
+    character:string,
+    charwiki:string
+}
+
+let favQuotes:FavQuote[] = [
+    {
+        quote:"Het staat in het boek van principes",
+        character:"Furkan",
+        charwiki:"wwww.youtube.com"
+    },
+    {
+        quote:"Wie doet HET?",
+        character:"Yunus",
+        charwiki:"wwww.google.com"
+    },
+]
   
 let message:string = "";
 let error:boolean = true;
