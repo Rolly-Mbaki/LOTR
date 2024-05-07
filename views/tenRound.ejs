@@ -26,40 +26,40 @@
       
       <div class="question">
         <div style="display: flex; justify-content: flex-end;" ><p>1/10</p></div>
-        Quote 1: Haven't you had any sleep Mr Frodo?
+        <div class="quote">"<%= qoutes[0].quote %>"</div>
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
-      <div class="options-container">
+      <form class="options-container" action="/" method="get">
         <div class="options">
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerChar" id="option1" value="option1">
-              <label class="form-check-label" for="option1">Samwise Gamgee</label>
+              <label class="form-check-label" for="option1"><%= qoutes[0].characterAnswer %></label>
             </div>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerChar" id="option2" value="option2">
-              <label class="form-check-label" for="option2">Frodo Baggins</label>
+              <label class="form-check-label" for="option2"><%= qoutes[0].characterWrong1 %></label>
             </div>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerChar" id="option3" value="option3">
-              <label class="form-check-label" for="option3">Gandalf</label>
+              <label class="form-check-label" for="option3"><%= qoutes[0].characterWrong2 %></label>
             </div>
           </div>
           <div class="options1">
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerFilms" id="option5" value="option5">
-              <label class="form-check-label" for="option5">The Return of the King</label>
+              <label class="form-check-label" for="option5"><%= qoutes[0].movieAnswer %></label>
             </div>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerFilms" id="option6" value="option6">
-              <label class="form-check-label" for="option6">The Two Towers</label>
+              <label class="form-check-label" for="option6"><%= qoutes[0].movieWrong1 %></label>
             </div>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerFilms" id="option7" value="option7">
-              <label class="form-check-label" for="option7">The Fellowship of the Ring</label>
+              <label class="form-check-label" for="option7"><%= qoutes[0].movieWrong2 %></label>
             </div>
-      </div>
+          </form>
     </div>
-    
+    <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
           <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal"></i>
@@ -67,6 +67,7 @@
         <button class="btn" type="button">Volgende</button>
         
     </div>
+  </form>
     <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
   </div>
   
@@ -79,12 +80,9 @@
       <img class="sketchline" height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
     </div>
 
-    <script src="../js/tenRound.js" ></script>
-    
+    <%- include("partials/footer") %>
 
-    <footer>
-        <p><a href="https://the-one-api.dev" target="_blank">The One API</a> | <a href="https://lotr.fandom.com/wiki/Main_Page" target="_blank">The One Wiki</a> &copy; 2024 - Palworld G_PRO1_D2</p>
-    </footer>
+    <script src="../js/tenRound.js" ></script>
 
 </body>
 </html>

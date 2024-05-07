@@ -59,7 +59,7 @@ var icon2 = document.getElementById('dislikeBtn');
 
       function togglePlay() {
         toggleAudio()
-        return audio.paused ? audio.play() : audio.pause();
+        audio.muted = !audio.muted;
       };
 
       

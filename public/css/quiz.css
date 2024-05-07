@@ -44,12 +44,20 @@ main{
     flex-wrap: wrap;
 }
 
+.quiz-container {
+    display: none;
+}
+
 .quotes{
     display: flex;
     flex-direction: row;
     gap: 50px;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.quote {
+    color: #1B1212!important;
 }
 
 .card{
@@ -177,8 +185,8 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: rgb(255, 252, 214, 0.6);
     padding: 20px;
     /* border: 5px solid #e3b737; */
-    background-color: rgba(48, 15, 4, 0.8);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    background-color: rgba(48, 15, 4, 0.8)!important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5)!important;
 }
 
 .sketchline{
@@ -221,11 +229,14 @@ margin-right: 1rem;
 font-size: 24px;
 color: #1B1212;
 margin-bottom: 20px;
-font-family: Arial, Helvetica, sans-serif!important;
 /* display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; */
+}
+
+.form-check > input {
+    border-color: gray;
 }
 
 .option {

@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt')
 
 dotenv.config()
 
+import { getQoute,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
+import { Quote } from "./types/quizTypes";
+import quizRouter from "./routes/quiz";
+
 const app = express();
 
 const uri:string = process.env.MONGO_URI as string;
@@ -74,7 +78,7 @@ app.set("port", 3000);
 //         res.render("index");
 //     })
 // })
-
+let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d"}];
 app.get("/",(req,res)=>{
     res.render("index");
 })
@@ -292,8 +296,14 @@ app.get("/fav",isAuth, (req,res)=>{
     res.render("fav",{user:req.session.user});
 })
 
+app.get("/tenRound",(req,res)=>{
+    let randomQuotes = getRandomQoutes(quotes,10)
+    res.render("tenRound",{qoutes:randomQuotes});
+})
+
 app.get("/suddenDeath",isAuth, (req,res)=>{
-    res.render("suddenDeath",{user:req.session.user});
+    let randomQuotes = getRandomQoutes(quotes,quotes.length)
+    res.render("suddenDeath",{user:req.session.user},{qoutes:randomQuotes});
 })
 
 app.get("/tenRound",isAuth, (req,res)=>{
@@ -311,3 +321,8 @@ app.post("/logout", (req,res) =>{
 app.listen(app.get("port"), () =>
   console.log("[server] http://localhost:" + app.get("port"))
 );
+app.listen(app.get("port"), async () => {
+    
+    quotes = await linkCharsAndMovieToQoute()
+    console.log("[server] http://localhost:" + app.get("port"))
+});
