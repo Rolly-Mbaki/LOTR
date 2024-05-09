@@ -7,7 +7,8 @@ const bcrypt = require('bcrypt')
 
 dotenv.config()
 
-import { getQoute,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
+import { getMovies, getQoute, getApiLength, getChars,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
+import { addQuotesToDB } from "./public/js/QuotesDb";
 import { Quote, gameQuote } from "./types/quizTypes";
 import quizRouter from "./routes/quiz";
 
@@ -54,6 +55,25 @@ let user:User = {
     password:""
 };
 
+// const connectQuotesToMoviesAndCharacters = async () => {
+//     try {
+//         let limit = await getApiLength();
+//         let quotes:Quote[] = await getQoute(limit);
+//         let chars:Character[] = await getChars(limit);
+//         let movies:Movie[] = await getMovies(limit);
+
+//         const quotesWithMovieAndCharacter = quotes.map(quote => ({
+//             ...quotes,
+//             movie: movies.find(movie => movie._id === quote.movie),
+//             character: chars.find(character => character._id === quote.character)
+//         }));
+//         // console.log(quotesWithMovieAndCharacter)
+//         return quotesWithMovieAndCharacter
+//     } catch (error) {
+//         console.log('error', error)
+//     }
+// }
+
 //middleware
 app.use(session)
 app.use(express.static("public"));
@@ -79,12 +99,16 @@ app.set("port", 3000);
 //     })
 // })
 let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d"}];
+linkCharsAndMovieToQoute().then(data => (quotes = data))
+addQuotesToDB(quotes)
 app.get("/",(req,res)=>{
+    console.log(quotes.length)
     res.render("index");
 })
 
 app.get("/home", isAuth, (req,res)=>{
     // console.log(user)
+    linkCharsAndMovieToQoute().then(console.log)
     res.render("home",{user:req.session.user});
 })
 
@@ -293,7 +317,8 @@ app.get("/blacklist",isAuth, (req,res)=>{
 })
 
 app.get("/fav",isAuth, (req,res)=>{
-    res.render("fav",{user:req.session.user});
+    console.log(favQuotes)
+    res.render("fav",{user:req.session.user, favQuotes});
 })
 
 app.get("/tenRound",isAuth,(req,res)=>{
