@@ -7,14 +7,14 @@ export interface Quote {
 }
 
 export interface Character {
-    _id:     string;
-    name:    string;
-    wikiUrl: string;
+    _id:string;
+    name:string;
+    wikiUrl:string;
 }
 
 export interface Movie {
-    _id:                        string;
-    name:                       string;
+    _id:string;
+    name:string;
 }
 
 export interface gameQuote {
@@ -25,4 +25,10 @@ export interface gameQuote {
     movieAnswer:string;
     movieWrong1:string;
     movieWrong2:string;
+}
+
+export interface Quiz {
+    quote: Quote,
+    charsAnswers:string[],
+    moviesAnswers:string[]
 }

@@ -25,38 +25,39 @@
       
       <div class="question">
         <div style="display: flex; justify-content: flex-end;" ><p style="color: #d17600">1</p></div>
-        <div class="quote">"<%= qoutes[0].quote %>"</div> 
+        <div class="quote">"<%= quotes[0].quote.dialog %>"</div> 
         
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
       <div class="options-container">
         <div class="options">
+          <% quotes[0].charsAnswers.forEach(char => { %>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerChar" id="option1" value="option1">
-              <label class="form-check-label" for="option1"><%= qoutes[0].characterAnswer %></label>
+              <label class="form-check-label" for="option1"><%= char %></label>
             </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerChar" id="option2" value="option2">
-              <label class="form-check-label" for="option2"><%= qoutes[0].characterWrong1 %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerChar" id="option3" value="option3">
-              <label class="form-check-label" for="option3"><%= qoutes[0].characterWrong2 %></label>
-            </div>
+          <% }) %>
+          
+          <!-- <div class="form-check option">
+            <input class="form-check-input" type="radio" name="answerChar" id="option1" value="option1">
+            <label class="form-check-label" for="option1"></label>
           </div>
-          <div class="options1">
+          <div class="form-check option">
+            <input class="form-check-input" type="radio" name="answerChar" id="option2" value="option2">
+            <label class="form-check-label" for="option2"></label>
+          </div>
+          <div class="form-check option">
+            <input class="form-check-input" type="radio" name="answerChar" id="option3" value="option3">
+            <label class="form-check-label" for="option3"></label>
+          </div> -->
+        </div>
+        <div class="options1">
+          <% quotes[0].moviesAnswers.forEach(movie => { %>
             <div class="form-check option">
               <input class="form-check-input" type="radio" name="answerFilms" id="option5" value="option5">
-              <label class="form-check-label" for="option5"><%= qoutes[0].movieAnswer %></label>
+              <label class="form-check-label" for="option5"><%= movie %></label>
             </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerFilms" id="option6" value="option6">
-              <label class="form-check-label" for="option6"><%= qoutes[0].movieWrong1 %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerFilms" id="option7" value="option7">
-              <label class="form-check-label" for="option7"><%= qoutes[0].movieWrong2 %></label>
-            </div>
+          <% }) %>
       </div>
     </div>
     

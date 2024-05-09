@@ -1,4 +1,4 @@
-import { Quote,Character,Movie,gameQuote } from "../../types/quizTypes";
+import { Quote,Character,Movie,gameQuote, Quiz } from "../../types/quizTypes";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -70,79 +70,140 @@ export const linkCharsAndMovieToQoute = async() => {
   for (let i = 0; i < qoutes.length; i++) {
     const char:Character = chars.find(char => char._id === qoutes[i].character)!;
     const movie:Movie = movies.find(movie => movie._id === qoutes[i].movie)!;
-    qoutes[i].character = char.name //add char link somehow
-    qoutes[i].movie = movie.name
+
+    qoutes[i].character = char.name 
+    qoutes[i].movie = movie.name 
   }
   return qoutes
 }
 
+//Rolly functies
+export const getQuizQuestions = async (n:number) => {
+  let limit = await getApiLength();
+  let quotes:Quote[] = await linkCharsAndMovieToQoute()
+  let randomizedQuotes = quotes.sort(() => 0.5 - Math.random())
+  let allChars:Character[] = await getChars(limit)
+  let allMovies:Movie[] = await getMovies(limit)
+  
+  let answersChars:string[] = []
+  let answersMovies:string[] = []
 
-export const getRandomQoutes = (qoutes:Quote[],n:number) => {
-  /* NOTE TO SELF THERE IS A MINOR_CHARACTER object AND MAYBE UNIQUE DIALOG IN full array of gameQoutes */
-  const shuffled = qoutes.sort(() => 0.5 - Math.random());
-
-  let gameQuotes:gameQuote[] = [{
-    quote: "",
-    characterAnswer: "",
-    characterWrong1: "",
-    characterWrong2: "",
-    movieAnswer: "",
-    movieWrong1: "",
-    movieWrong2: ""
-  }]
+  let quizArray:Quiz[] = []
 
   for (let i = 0; i < n; i++) {
-  let uniqueAnwser = Math.floor(Math.random() * shuffled.length);
+    
+    let chars:string[] = []
+    let movies:string[] = []
 
-  let char1 = "";
-  let char2 = "";
-  let movie1 = "";
-  let movie2 = "";
+    let quizItem: Quiz = {
+      quote: {
+          _id: "",
+          dialog: "",
+          movie: "",
+          character: "",
+          id: ""
+      },
+      charsAnswers: [],
+      moviesAnswers: []
+    };
 
-  let uniqueMovies = shuffled.filter(function(this: Set<string>,{movie}) {
-    return !this.has(movie) && this.add(movie);
-  }, new Set)
+    quizItem.quote = randomizedQuotes[i]
+    
+    chars.push(quizItem.quote.character)
+    let charsChoices = allChars.sort(() => 0.5 - Math.random()).slice(0,6).map(char => char.name)
+    // console.log(charsChoices)
+    for (let k = 0; k < 10; k++) {
+      if (charsChoices[k] != quizItem.quote.character) {
+        chars.push(charsChoices[k])
+      }
+    }
+    // console.log(chars)
 
-  let my2 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie)
+    movies.push(quizItem.quote.movie)
+    let moviesChoices = allMovies.sort(() => 0.5 - Math.random()).slice(0,6).map(movie => movie.name)
+    // console.log(moviesChoices)
+    for (let j = 0; j < 10; j++) {
+      if (moviesChoices[j] != quizItem.quote.movie) {
+        movies.push(moviesChoices[j])
+      }
+    }
 
-  let uniqueMoviesRandom = Math.floor(Math.random() * my2.length);
+    quizItem.charsAnswers = chars.slice(0,3).sort(() => 0.5 - Math.random())
+    quizItem.moviesAnswers = movies.slice(0,3).sort(() => 0.5 - Math.random())
 
-  movie1 = my2[uniqueMoviesRandom].movie
-
-  let my4 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie && e.movie !== movie1)
-
-  let uniqueMoviesRandom2 = Math.floor(Math.random() * my4.length);
-
-  movie2 = my4[uniqueMoviesRandom2].movie
-
-  let uniqueChars = shuffled.filter(function(this: Set<string>,{character}) {
-    return !this.has(character) && this.add(character);
-  }, new Set)
-
-  let my = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character)
-
-  let uniqueCharsRandom = Math.floor(Math.random() * my.length);
-
-  char1 = my[uniqueCharsRandom].character
-
-  let my3 = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character && e.character !== char1)
-  let uniqueCharsRandom2 = Math.floor(Math.random() * my3.length);
-
-  char2 = my3[uniqueCharsRandom2].character
-
-  let tempData:gameQuote = {
-    quote: shuffled[uniqueAnwser].dialog,
-    characterAnswer: shuffled[uniqueAnwser].character,
-    characterWrong1: char1,
-    characterWrong2: char2,
-    movieAnswer: shuffled[uniqueAnwser].movie,
-    movieWrong1: movie1,
-    movieWrong2: movie2
+    quizArray.push(quizItem)
   }
 
-  gameQuotes.push(tempData)
-  }
-
-  gameQuotes.shift()
-  return gameQuotes;
+  return quizArray
 }
+
+
+// export const getRandomQoutes = (qoutes:Quote[],n:number) => {
+//   /* NOTE TO SELF THERE IS A MINOR_CHARACTER object AND MAYBE UNIQUE DIALOG IN full array of gameQoutes */
+//   const shuffled = qoutes.sort(() => 0.5 - Math.random());
+
+//   let gameQuotes:gameQuote[] = [{
+//     quote: "",
+//     characterAnswer: "",
+//     characterWrong1: "",
+//     characterWrong2: "",
+//     movieAnswer: "",
+//     movieWrong1: "",
+//     movieWrong2: ""
+//   }]
+
+//   for (let i = 0; i < n; i++) {
+//   let uniqueAnwser = Math.floor(Math.random() * shuffled.length);
+
+//   let char1 = "";
+//   let char2 = "";
+//   let movie1 = "";
+//   let movie2 = "";
+
+//   let uniqueMovies = shuffled.filter(function(this: Set<string>,{movie}) {
+//     return !this.has(movie) && this.add(movie);
+//   }, new Set)
+
+//   let my2 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie)
+
+//   let uniqueMoviesRandom = Math.floor(Math.random() * my2.length);
+
+//   movie1 = my2[uniqueMoviesRandom].movie
+
+//   let my4 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie && e.movie !== movie1)
+
+//   let uniqueMoviesRandom2 = Math.floor(Math.random() * my4.length);
+
+//   movie2 = my4[uniqueMoviesRandom2].movie
+
+//   let uniqueChars = shuffled.filter(function(this: Set<string>,{character}) {
+//     return !this.has(character) && this.add(character);
+//   }, new Set)
+
+//   let my = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character)
+
+//   let uniqueCharsRandom = Math.floor(Math.random() * my.length);
+
+//   char1 = my[uniqueCharsRandom].character
+
+//   let my3 = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character && e.character !== char1)
+//   let uniqueCharsRandom2 = Math.floor(Math.random() * my3.length);
+
+//   char2 = my3[uniqueCharsRandom2].character
+
+//   let tempData:gameQuote = {
+//     quote: shuffled[uniqueAnwser].dialog,
+//     characterAnswer: shuffled[uniqueAnwser].character,
+//     characterWrong1: char1,
+//     characterWrong2: char2,
+//     movieAnswer: shuffled[uniqueAnwser].movie,
+//     movieWrong1: movie1,
+//     movieWrong2: movie2
+//   }
+
+//   gameQuotes.push(tempData)
+//   }
+
+//   gameQuotes.shift()
+//   return gameQuotes;
+// }

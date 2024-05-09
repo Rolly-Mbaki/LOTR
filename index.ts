@@ -7,10 +7,11 @@ const bcrypt = require('bcrypt')
 
 dotenv.config()
 
-import { getMovies, getQoute, getApiLength, getChars,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
+import { getMovies, getQoute, getApiLength, getChars,getQuizQuestions,linkCharsAndMovieToQoute } from "./public/js/quizGame";
 import { addQuotesToDB } from "./public/js/QuotesDb";
-import { Quote, gameQuote } from "./types/quizTypes";
+import { Quote, gameQuote, Movie,Character, Quiz} from "./types/quizTypes";
 import quizRouter from "./routes/quiz";
+import { log } from "console";
 
 const app = express();
 
@@ -55,6 +56,27 @@ let user:User = {
     password:""
 };
 
+const shuffleArray = (array:Quiz[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const fillVariables = async () =>{
+    try {
+        quotes = await linkCharsAndMovieToQoute()
+        randomQuotes = await getQuizQuestions(quotes.length)
+    } catch (e) {
+        console.log('error: ',e)
+    }
+}
+let quotes: Quote[] = [{id:"",_id:"",dialog:"",movie:"",character:""}];
+let randomQuotes:Quiz[] = []
+fillVariables()
+console.log(randomQuotes)
+
 // const connectQuotesToMoviesAndCharacters = async () => {
 //     try {
 //         let limit = await getApiLength();
@@ -98,9 +120,11 @@ app.set("port", 3000);
 //         res.render("index");
 //     })
 // })
-let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d"}];
-linkCharsAndMovieToQoute().then(data => (quotes = data))
-addQuotesToDB(quotes)
+// linkCharsAndMovieToQoute().then(data => (quotes = data))
+// getQuizQuestions(quotes.length).then(data => (randomQuotes = data))
+//linkCharsAndMovieToQoute().then(console.log)
+// addQuotesToDB(quotes)
+//getQuizQuestions(5).then(console.log)
 app.get("/",(req,res)=>{
     console.log(quotes.length)
     res.render("index");
@@ -108,7 +132,7 @@ app.get("/",(req,res)=>{
 
 app.get("/home", isAuth, (req,res)=>{
     // console.log(user)
-    linkCharsAndMovieToQoute().then(console.log)
+    // linkCharsAndMovieToQoute().then(console.log)
     res.render("home",{user:req.session.user});
 })
 
@@ -322,13 +346,16 @@ app.get("/fav",isAuth, (req,res)=>{
 })
 
 app.get("/tenRound",isAuth,(req,res)=>{
-    let randomQuotes = getRandomQoutes(quotes,10)
+    let randomQuotes = getQuizQuestions(10)
     res.render("tenRound",{qoutes:randomQuotes,user:req.session.user});
 })
 
 app.get("/suddenDeath",isAuth, (req,res)=>{
-    let randomQuotes:gameQuote[] = getRandomQoutes(quotes,quotes.length)
-    res.render("suddenDeath",{user:req.session.user,qoutes:randomQuotes});
+    // let randomQuotes = await getQuizQuestions(quotes.length)
+    // console.log(randomQuotes)
+    // randomQuotes.sort(() => 0.5 - Math.random())
+    randomQuotes = shuffleArray([...randomQuotes])
+    res.render("suddenDeath",{user:req.session.user,quotes:randomQuotes});
 })
 
 
@@ -343,6 +370,6 @@ app.post("/logout", (req,res) =>{
 
 app.listen(app.get("port"), async () => {
     
-    quotes = await linkCharsAndMovieToQoute()
+    // quotes = await linkCharsAndMovieToQoute()
     console.log("[server] http://localhost:" + app.get("port"))
 });
