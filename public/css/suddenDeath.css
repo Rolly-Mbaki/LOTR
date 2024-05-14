@@ -195,6 +195,23 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
+#highscore {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F9F6EE;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 40px;
+    font-size: 26px;
+    color: #1B1212!important;
+    
+}
+#highscore > ol > li {
+    color: #1B1212!important;
+}
+
 .sketchline{
     filter: invert(6%) sepia(200%) saturate(3207%) hue-rotate(15deg) brightness(87%) contrast(1000%);
 }
@@ -213,7 +230,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 
-.options , .options1 {
+#options , #options1 {
 
 font-size: 19px;
 margin-right: 1rem;
@@ -270,7 +287,7 @@ margin-bottom: 10px;
     padding-left: 60px;
 }
 
-.quote {
+#quote {
     color: #1B1212!important;
 }
 
@@ -279,7 +296,9 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.6);
 
   }
-
+#qouteNumber {
+    color: #d17600
+}
 @media (max-width:641px) {
     
 }

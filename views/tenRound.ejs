@@ -25,46 +25,24 @@
     <div class="quiz-container">
       
       <div class="question">
-        <div style="display: flex; justify-content: flex-end;" ><p>1/10</p></div>
-        <div class="quote">"<%= qoutes[0].quote %>"</div>
+        <div style="display: flex; justify-content: flex-end;" ><p id="qouteNumber"></p></div>
+        <div id="quote"></div>
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
       <form class="options-container" action="/" method="get">
-        <div class="options">
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerChar" id="option1" value="option1">
-              <label class="form-check-label" for="option1"><%= qoutes[0].characterAnswer %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerChar" id="option2" value="option2">
-              <label class="form-check-label" for="option2"><%= qoutes[0].characterWrong1 %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerChar" id="option3" value="option3">
-              <label class="form-check-label" for="option3"><%= qoutes[0].characterWrong2 %></label>
-            </div>
+        <div id="options">
+            
           </div>
-          <div class="options1">
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerFilms" id="option5" value="option5">
-              <label class="form-check-label" for="option5"><%= qoutes[0].movieAnswer %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerFilms" id="option6" value="option6">
-              <label class="form-check-label" for="option6"><%= qoutes[0].movieWrong1 %></label>
-            </div>
-            <div class="form-check option">
-              <input class="form-check-input" type="radio" name="answerFilms" id="option7" value="option7">
-              <label class="form-check-label" for="option7"><%= qoutes[0].movieWrong2 %></label>
-            </div>
-          </form>
+          <div id="options1">
+            
+        </form>
     </div>
     <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
           <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal"></i>
         </div>
-        <button class="btn" type="button">Volgende</button>
+        <button class="btn" id="nextButton" type="button" onclick="increaseCount()">Volgende</button>
         
     </div>
   </form>
@@ -72,16 +50,24 @@
   </div>
   
 
-
+    <div id="highscore">
+      <h1>Highscore</h1>
+      <img height=3 width="100%" style="margin-bottom: 20px;" src="../assets/hr-sketch-line.svg" alt="">
+        <ol>
+          <li>Argon - 6</li>
+          <li>Vagabond - 4</li>
+          <li>Test - 2</li>
+        </ol>
+    </div>
     </main>
     <div data-modal class="modall">
       <img class="sketchline" height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
-      <button data-close-modal id="modalBtn">Start Quiz</button>
+      <button data-close-modal id="modalBtn" onclick="startQuiz()">Start Quiz</button>
       <img class="sketchline" height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
     </div>
 
     <%- include("partials/footer") %>
-
+    <div id="data" style="display: none;"><%- JSON.stringify(qoutes) %></div>
     <script src="../js/tenRound.js" ></script>
 
 </body>

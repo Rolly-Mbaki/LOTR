@@ -56,7 +56,24 @@ main{
     flex-wrap: wrap;
 }
 
-.quote {
+#quote {
+    color: #1B1212!important;
+}
+
+#highscore {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F9F6EE;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 40px;
+    font-size: 26px;
+    color: #1B1212!important;
+    
+}
+#highscore > ol > li {
     color: #1B1212!important;
 }
 
@@ -207,7 +224,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 
-.options , .options1 {
+#options , #options1 {
 
 font-size: 19px;
 margin-right: 1rem;

@@ -19,10 +19,14 @@ export interface Movie {
 
 export interface gameQuote {
     quote:string;
-    characterAnswer:string;
-    characterWrong1:string;
-    characterWrong2:string;
-    movieAnswer:string;
-    movieWrong1:string;
-    movieWrong2:string;
+    characterAnswers:[
+        {name:string,correct:boolean},
+        {name:string,correct:boolean},
+        {name:string,correct:boolean}
+    ]
+    movieAnswers:[
+        {title:string,correct:boolean},
+        {title:string,correct:boolean},
+        {title:string,correct:boolean},
+    ]
 }

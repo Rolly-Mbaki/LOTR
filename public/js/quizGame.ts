@@ -71,6 +71,9 @@ export const linkCharsAndMovieToQoute = async() => {
     const char:Character = chars.find(char => char._id === qoutes[i].character)!;
     const movie:Movie = movies.find(movie => movie._id === qoutes[i].movie)!;
     qoutes[i].character = char.name //add char link somehow
+    if (qoutes[i].character == "MINOR_CHARACTER") {
+      qoutes[i].character = "Minor Character"
+    }
     qoutes[i].movie = movie.name
   }
   return qoutes
@@ -83,12 +86,16 @@ export const getRandomQoutes = (qoutes:Quote[],n:number) => {
 
   let gameQuotes:gameQuote[] = [{
     quote: "",
-    characterAnswer: "",
-    characterWrong1: "",
-    characterWrong2: "",
-    movieAnswer: "",
-    movieWrong1: "",
-    movieWrong2: ""
+    characterAnswers:[
+      {name:"",correct:false},
+      {name:"",correct:false},
+      {name:"",correct:false}
+  ],
+    movieAnswers:[
+    {title:"",correct:false},
+    {title:"",correct:false},
+    {title:"",correct:false},
+]
   }]
 
   for (let i = 0; i < n; i++) {
@@ -132,17 +139,23 @@ export const getRandomQoutes = (qoutes:Quote[],n:number) => {
 
   let tempData:gameQuote = {
     quote: shuffled[uniqueAnwser].dialog,
-    characterAnswer: shuffled[uniqueAnwser].character,
-    characterWrong1: char1,
-    characterWrong2: char2,
-    movieAnswer: shuffled[uniqueAnwser].movie,
-    movieWrong1: movie1,
-    movieWrong2: movie2
+    characterAnswers:[
+      {name:shuffled[uniqueAnwser].character,correct:true},
+      {name:char1,correct:false},
+      {name:char2,correct:false}
+    ],
+    movieAnswers:[
+      {title:shuffled[uniqueAnwser].movie,correct:true},
+      {title:movie1,correct:false},
+      {title:movie2,correct:false},
+    ]
   }
-
+  tempData.characterAnswers.sort(() => 0.5 - Math.random());
+  tempData.movieAnswers.sort(() => 0.5 - Math.random());
   gameQuotes.push(tempData)
   }
 
   gameQuotes.shift()
   return gameQuotes;
 }
+
