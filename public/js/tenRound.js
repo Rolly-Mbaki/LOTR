@@ -9,7 +9,7 @@
       var icon = document.getElementById('likeBtn');
       var audioIcon = document.getElementById('audioBtn');
       function like() {
-        
+        console.log(jsonData[counter])
     if (icon.classList.contains('far')) {
         icon.classList.remove('far');
         icon.classList.add('fas');
@@ -102,7 +102,7 @@
 
         const movieHtmlString = qoutes.movieAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input class="form-check-input" type="radio" name="answerChar" id="option${index+3}" value="${qoute.title}">
+          <input class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
           <label class="form-check-label" for="option${index+3}">${qoute.title}</label>
         </div>`
         }).join('');

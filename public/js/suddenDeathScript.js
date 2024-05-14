@@ -97,7 +97,7 @@ var icon2 = document.getElementById('dislikeBtn');
 
         const movieHtmlString = qoutes.movieAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input class="form-check-input" type="radio" name="answerChar" id="option${index+3}" value="${qoute.title}">
+          <input class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
           <label class="form-check-label" for="option${index+3}">${qoute.title}</label>
         </div>`
         }).join('');
