@@ -26,110 +26,50 @@
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente impedit laboriosam hic ducimus quidem voluptatum, cum delectus quis consectetur excepturi commodi placeat est quibusdam nostrum ipsa nobis soluta temporibus ipsam.</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis placeat exercitationem ut doloribus architecto. Quos reiciendis hic repellat nihil autem veniam nulla a totam, accusantium praesentium? Fugiat odit fugit eius?</p>
         </dialog> -->
-        <dialog id="modal">
-            <div class="modal">
-                <h2>Reden aanpassen</h2>
-                <form action="">
-                    <textarea class="form-text" cols="30" rows="10" placeholder="Geef een reden" required></textarea>
-                    <button type="submit" class="card-button">Opslaan</button>
-                    <button type="button" class="card-button close-button">Sluiten</button>
-                </form>
+        
+
+        <% if (blQuotes.length > 0) { blQuotes.forEach((quote,index) => { %>
+
+            <dialog id="modal">
+                <div class="modal">
+                    <h2>Change reason</h2>
+                    <form action="" onsubmit="updateBlQuote('<%= index %>')">
+                        <textarea id="myReason" class="form-text" cols="30" rows="10" placeholder="Give a reason" required></textarea>
+                        <button type="submit" class="card-button">Save</button>
+                        <button type="button" class="card-button close-button">Close</button>
+                    </form>
+                </div>
+            </dialog>
+
+            <div class="card">
+                <section class="card-info">
+                    <p class="card-text">Name:</p>
+                    <p class="card-answer"><%= quote.character %></p>
+                    <p class="card-text">Quote:</p>
+                    <p class="card-answer quote">"<%= quote.quote %>"</p>
+                    <p class="card-text">Reason for ban:</p>
+                    <p class="card-answer"><%= quote.reason %></p>
+                </section>
+                <section class="card-click">
+                    <button type="button" class="card-button open-button">Change reason</button>
+                    <button type="button" onclick="deleteBlQuote('<%= index %>')" class="card-button">Delete</button>
+                </section>
             </div>
-        </dialog>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"Now come the days of the King. May they be blessed."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Hamfast</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"All’s well that ends better."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Geen idee</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Aragorn</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"Few other griefs amid the ill chances of this world have more bitterness and shame for a man’s heart than to behold the love of a lady so fair and brave that cannot be returned."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Aragorn</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Frodo</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"It is useless to meet revenge with revenge: it will heal nothing."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Meeting revenge with revenge is altijd goed</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Arwen</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"I would rather share one lifetime with you than face all the ages of this world alone."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">I would rather face the ages alone!</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
-
-        <div class="card">
-            <section class="card-info">
-                <p class="card-text">Naam:</p>
-                <p class="card-answer">Gandalf</p>
-                <p class="card-text">Quote:</p>
-                <p class="card-answer quote">"Now come the days of the King. May they be blessed."</p>
-                <p class="card-text">Reden voor ban:</p>
-                <p class="card-answer">Ik ben geen fan van Gandalf</p>
-            </section>
-            <section class="card-click">
-                <button type="button" class="card-button open-button">Reden aanpassen</button>
-                <button type="button" class="card-button">Verwijderen</button>
-            </section>
-        </div>
+        <% })} else {%>
+            <div class="card">
+                <h1 style="text-align: center;">You don't have any favorite quotes yet! Play one of the quizes below to start your collection</h1>
+                <section class="quizlinks">
+                    <a href="/tenRound">10 rounds quiz</a>
+                    <a href="/suddenDeath">sudden death quiz</a>
+                </section>
+            </div>
+        <% } %>
         
     </main>
     
     <%- include("partials/footer") %>
+    <div id="data" style="display: none;"><%- JSON.stringify(blQuotes) %></div>
+    <script src="../js/deleteQuote.js"></script>
 
 </body>
 </html>
