@@ -8,6 +8,36 @@
       var icon2 = document.getElementById('dislikeBtn');
       var icon = document.getElementById('likeBtn');
       var audioIcon = document.getElementById('audioBtn');
+
+      const openButton = document.querySelector("[data-open-modal]")
+      const closeButton = document.querySelector("[data-close-modal]")
+      const modal = document.querySelector("[data-modal]")
+      const quizContainer = document.getElementsByClassName("quiz-container")
+      const highScore = document.getElementById("highscore")
+      const volumeIcon = document.getElementsByClassName("fa-volume-high")
+      const modall = document.getElementsByClassName("modall")
+      var audio = new Audio('../assets/Lord of the Rings_Sound of The Shire.mp3');
+     
+      window.onload = quizContainer[0].style.display="none"
+      window.onload = volumeIcon[0].style.display="none"
+      window.onload = highScore.style.display="none"
+
+      const questionElement = document.getElementById("quote");
+      const nextButton = document.getElementById("nextButton");
+      const charAnswer = document.getElementById("options");
+      const movieAnswer = document.getElementById("options1");
+      const qouteNumber = document.getElementById("qouteNumber");
+
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let counter = 0;
+
+      
+      const allMovieAnswers = document.getElementsByName("answerFilms");
+      
+
+      
+
       function like() {
         console.log(jsonData[counter])
     if (icon.classList.contains('far')) {
@@ -33,28 +63,7 @@
     }
   };
   
-      const openButton = document.querySelector("[data-open-modal]")
-      const closeButton = document.querySelector("[data-close-modal]")
-      const modal = document.querySelector("[data-modal]")
-      const quizContainer = document.getElementsByClassName("quiz-container")
-      const highScore = document.getElementById("highscore")
-      const volumeIcon = document.getElementsByClassName("fa-volume-high")
-      const modall = document.getElementsByClassName("modall")
-      var audio = new Audio('../assets/Lord of the Rings_Sound of The Shire.mp3');
-     
-        window.onload = quizContainer[0].style.display="none"
-        window.onload = volumeIcon[0].style.display="none"
-        window.onload = highScore.style.display="none"
-
-        const questionElement = document.getElementById("quote");
-        const nextButton = document.getElementById("nextButton");
-        const charAnswer = document.getElementById("options");
-        const movieAnswer = document.getElementById("options1");
-        const qouteNumber = document.getElementById("qouteNumber");
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let counter = 0;
+      
         
 
       closeButton.addEventListener("click",startQuiz);
@@ -66,35 +75,21 @@
         volumeIcon[0].style.display="block"
         modall[0].style.display="none"
         audio.play();
-        
-        
+          
         audio.loop=true;
 
-        
-        
         currentQuestionIndex = 0;
         score = 0;
-       /*  nextButton.innerHTML = "Next"; */
         
         showQuestion(jsonData[counter]);
       }
       function showQuestion(qoutes) {
-        /* let currentQuestion = qoutes[currentQuestionIndex]
-        let qouteNumber = currentQuestionIndex+1;
-        questionElement.innerHTML = currentQuestion.qoute; */
-
-       /*  currentQuestion.characterAnswers.forEach(answer => {
-          const option = document.createElement("button");
-          button.innerHTML = answer.name;
-          button.classList.add("btn");
-          charAnwser.appendChild(button);
-        }); */
-        
+        nextButton.disabled = true
         questionElement.innerHTML = qoutes.quote;
         qouteNumber.innerHTML = counter+1 + "/10"
         const charHtmlString = qoutes.characterAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
+          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
           <label class="form-check-label" for="option${index}">${qoute.name}</label>
         </div>`
         }).join('');
@@ -102,16 +97,12 @@
 
         const movieHtmlString = qoutes.movieAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
+          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
           <label class="form-check-label" for="option${index+3}">${qoute.title}</label>
         </div>`
         }).join('');
         movieAnswer.innerHTML = movieHtmlString;
       }
-      
-    
-
-    
 
       function toggleAudio() {
         if (audioBtn.classList.contains('fa-volume-high')) {
@@ -129,11 +120,22 @@
       };
 
       function increaseCount() {
-        /* if (document.getElementById("option1").checked) {
-          if (document.getElementById("option1").value == jsonData[counter]) {
+        let correctCharAwnser = jsonData[counter].characterAnswers.filter((e) => e.correct == true)[0].name;
+        let correctMovieAwnser = jsonData[counter].movieAnswers.filter((e) => e.correct == true)[0].title;
+        
+        for (let radio of document.getElementsByName("answerChar")) {
+          if (radio.checked && correctCharAwnser === radio.value) {
+            score = score + 0.5
             
           }
-        } */
+          
+        }
+        for (let radio of document.getElementsByName("answerFilms")) {
+          if (radio.checked && correctMovieAwnser === radio.value) {
+            score = score + 0.5
+          }
+          
+        }
         if (counter >= jsonData.length -1) {
           counter = jsonData.length - 1;
           showHighScore()
@@ -146,10 +148,16 @@
      function showHighScore() {
       highScore.style.display="flex"
       quizContainer[0].style.display="none"
-        volumeIcon[0].style.display="none"
-        audio.muted = !audio.muted;
+      volumeIcon[0].style.display="none"
+      audio.muted = !audio.muted;
+      document.getElementsByClassName("container-fluid")[0].style.display="none"
+      document.getElementById("currentScore").innerHTML = "Current score: "+score
      }
-  
 
+/*      if(window.location.pathname == '/suddenDeath') {
+      console.log("sudden death aaaa")
+    } else if (window.location.pathname == '/tenRound') {
+      console.log("le calm")
+    } */
       
       
