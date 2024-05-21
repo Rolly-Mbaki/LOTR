@@ -3,6 +3,7 @@ export interface Quote {
     dialog:string;
     movie:string;
     character:string;
+    wikiUrl:string;
     id:string
 }
 

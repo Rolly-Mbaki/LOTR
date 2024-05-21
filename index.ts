@@ -16,7 +16,7 @@ import { log } from "console";
 const app = express();
 
 const uri:string = process.env.MONGO_URI as string;
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient(uri);
 
 export interface User {
     _id?:string,
@@ -83,7 +83,7 @@ app.set("port", 3000);
 //         res.render("index");
 //     })
 // })
-let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d"}];
+let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d",wikiUrl:"d"}];
 linkCharsAndMovieToQoute().then(data => (quotes = data))
 // addQuotesToDB(quotes)
 app.get("/",(req,res)=>{
@@ -142,8 +142,6 @@ app.post("/login", async (req,res)=>{
 
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
     }
 })
 
@@ -176,8 +174,7 @@ app.post("/register", async (req,res)=>{
       
       console.log(newUser)
       
-       try {
-        await client.connect();
+       
         
         
         let userEmail = await client.db('LOTR').collection('Users').findOne({email:req.body.email.toString().toLowerCase()})
@@ -221,13 +218,7 @@ app.post("/register", async (req,res)=>{
             res.render("register",{message:message,error:error})
         }
         
-    } catch (e) {
-        console.error(e);
-        error = true
-        message = "Account maken mislukt, probeer terug opnieuw"
-    } finally {
-        await client.close();
-    } 
+
 });
 
 /////// om session te beeindigen
@@ -301,8 +292,7 @@ app.post("/register", async (req,res)=>{
 
 
 app.get("/blacklist",isAuth, async (req,res)=>{
-    try {
-        await client.connect();
+
 
         let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
         if (userObject) {
@@ -310,16 +300,11 @@ app.get("/blacklist",isAuth, async (req,res)=>{
             // console.log(favQuotes)
             res.render("blacklist",{user:req.session.user, blQuotes})
         }
-    } catch (error) {
-        console.log("Error: ", error)
-    } finally{
-        await client.close();
-    }
+
 })
 
 app.get("/fav",isAuth, async (req,res)=>{
-    try {
-        await client.connect();
+
 
         let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
         if (userObject) {
@@ -327,11 +312,7 @@ app.get("/fav",isAuth, async (req,res)=>{
             // console.log(favQuotes)
             res.render("fav",{user:req.session.user, favQuotes})
         }
-    } catch (error) {
-        console.log("Error: ", error)
-    } finally{
-        await client.close();
-    }
+
 })
 
 app.get("/tenRound",isAuth,(req,res)=>{
@@ -346,20 +327,18 @@ app.get("/suddenDeath",isAuth, (req,res)=>{
 })
 
 
-app.post("/logout", (req,res) =>{
+app.post("/logout", async(req,res) =>{
     req.session.destroy(e => {
         if(e) throw e
         res.redirect('/login')
     })
+    await client.close();
 })
 
 app.post("/like", async (req,res) =>{
     // console.log(req.body)
 
-    let chars = await getChars()
-    let charWiki = chars.find(char => char.name == req.body.char)?.wikiUrl
-
-    let quotes = await linkCharsAndMovieToQoute()
+    let charWiki = quotes.find(char => char.character == req.body.char)?.wikiUrl
     let totalQuotes = quotes.filter(quote => quote.character === req.body.char).length
 
     let favQuote:FavQuote = {quote:"", character:"", charWiki:"",totalCharQuotes:0}
@@ -368,8 +347,7 @@ app.post("/like", async (req,res) =>{
         console.log(favQuote) 
     }
     
-    try {
-        await client.connect();
+
 
         const filter = {username: req.session.user?.username}
 
@@ -399,11 +377,7 @@ app.post("/like", async (req,res) =>{
 
         res.status(200).send({ message: "Quote added to your favorites"});
 
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
+
 })
 
 app.post("/dislike", async (req,res) =>{
@@ -411,8 +385,7 @@ app.post("/dislike", async (req,res) =>{
 
     let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
     
-    try {
-        await client.connect();
+
 
         const filter = {username: req.session.user?.username}
         // const add = {$addToSet: {blQuotes: blQuote}}
@@ -446,17 +419,12 @@ app.post("/dislike", async (req,res) =>{
 
         res.status(200).send({ message: "Quote added to your blacklist"});
 
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
+
 })
 
 app.post("/deleteFavQuote", async (req,res) =>{
     console.log(req.body)
-    try {
-        await client.connect();
+
 
         const filter = {username: req.session.user?.username}
         const update = {$pull: {favQuotes: {quote: req.body.quote}}}
@@ -470,17 +438,12 @@ app.post("/deleteFavQuote", async (req,res) =>{
 
         res.status(200).send("Data deleted from MDB");
 
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
+
 })
 
 app.post("/deleteBlQuote", async (req,res) =>{
     console.log(req.body)
-    try {
-        await client.connect();
+
 
         const filter = {username: req.session.user?.username}
         const update = {$pull: {blQuotes: {quote: req.body.quote}}}
@@ -494,17 +457,11 @@ app.post("/deleteBlQuote", async (req,res) =>{
 
         res.status(200).send("Data deleted from MDB");
 
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
 })
 
 app.post("/updateBlQuote", async (req,res) =>{
     console.log(req.body)
-    try {
-        await client.connect();
+
 
         const filter = { 
             username: req.session.user?.username,
@@ -525,11 +482,7 @@ app.post("/updateBlQuote", async (req,res) =>{
 
         res.status(200).send("Reason updated");
 
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
+
 })
 
 app.listen(app.get("port"), async () => {

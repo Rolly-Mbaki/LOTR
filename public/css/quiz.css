@@ -315,10 +315,10 @@ textarea {
     border: 2px solid #e3b737;
     border-radius: 4px;
     background-color: rgb(91, 34, 15);
-    font-size: 16pt;
+    font-size: 16pt!important;
     margin-bottom: 10px;
     resize: none;
-    color: #e3b737;
+    color: #e3b737!important;
 }
 
 textarea::placeholder{

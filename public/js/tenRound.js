@@ -109,9 +109,7 @@
     
 
     openModals.forEach((openModal) => {
-        openModal.addEventListener('click', () =>{
-            modal2.showModal();
-        })
+            modal2.showModal();    
     })
 
     closeModal.addEventListener('click', () =>{
