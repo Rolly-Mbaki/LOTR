@@ -24,7 +24,7 @@ export interface User {
     username:string,
     password:string,
     favQuotes:FavQuote[],
-    blQuotes:BlQuote[],
+    blQuotes:string[],
     highscores:number[],
   }
   
@@ -300,21 +300,8 @@ app.post("/register", async (req,res)=>{
 
 
 
-app.get("/blacklist",isAuth, async (req,res)=>{
-    try {
-        await client.connect();
-
-        let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
-        if (userObject) {
-            let blQuotes:BlQuote[] = userObject.blQuotes
-            // console.log(favQuotes)
-            res.render("blacklist",{user:req.session.user, blQuotes})
-        }
-    } catch (error) {
-        console.log("Error: ", error)
-    } finally{
-        await client.close();
-    }
+app.get("/blacklist",isAuth, (req,res)=>{
+    res.render("blacklist",{user:req.session.user});
 })
 
 app.get("/fav",isAuth, async (req,res)=>{
@@ -477,60 +464,7 @@ app.post("/deleteFavQuote", async (req,res) =>{
     }
 })
 
-app.post("/deleteBlQuote", async (req,res) =>{
-    console.log(req.body)
-    try {
-        await client.connect();
 
-        const filter = {username: req.session.user?.username}
-        const update = {$pull: {blQuotes: {quote: req.body.quote}}}
-        const remove = await client.db('LOTR').collection('Users').updateOne(filter, update)
-
-        if (remove.modifiedCount === 0) {
-            console.log("Quote not found in the array")
-            return res.status(404).send("Quote not found in the array")
-        }
-        console.log("Quote removed from favQuotes array");
-
-        res.status(200).send("Data deleted from MDB");
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-})
-
-app.post("/updateBlQuote", async (req,res) =>{
-    console.log(req.body)
-    try {
-        await client.connect();
-
-        const filter = { 
-            username: req.session.user?.username,
-            "blQuotes.quote": req.body.quote 
-        };
-
-        const update = { 
-            $set: { "blQuotes.$.reason": req.body.reason } 
-        };
-
-        const result = await client.db('LOTR').collection('Users').updateOne(filter, update);
-
-        if (result.modifiedCount === 0) {
-            console.log("Quote not found in the array")
-            return res.status(404).send("Quote not found in the array")
-        }
-        console.log("Reason changed");
-
-        res.status(200).send("Reason updated");
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-})
 
 app.listen(app.get("port"), async () => {
     
