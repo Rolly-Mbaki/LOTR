@@ -162,6 +162,12 @@
       }
       
         showQuestion(jsonData[counter])
+        if (icon.classList.contains('fas') || icon2.classList.contains('fas')) {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+          icon2.classList.remove('fas');
+          icon2.classList.add('far');
+      }
      }
 
      function showHighScore() {
