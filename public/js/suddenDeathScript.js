@@ -61,6 +61,21 @@ var icon2 = document.getElementById('dislikeBtn');
         
 
       closeButton.addEventListener("click",startQuiz)
+
+      function IsMovieOptionClicked() {
+        movieOptionClicked = true;
+        enableButton()
+      }
+      function IsCharOptionClicked() {
+        charOptionClicked = true;
+        enableButton()
+      }
+
+      function enableButton() {
+        if (charOptionClicked && movieOptionClicked) {
+          nextButton.style.visibility="visible"
+        }
+      }
         
       function startQuiz() {
         quizContainer[0].style.display="block"
@@ -77,12 +92,12 @@ var icon2 = document.getElementById('dislikeBtn');
 
       function showQuestion(qoutes) {
 
-        nextButton.disabled = true
+        nextButton.style.visibility="hidden"
         questionElement.innerHTML = qoutes.quote;
         qouteNumber.innerHTML = counter+1
         const charHtmlString = qoutes.characterAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
+          <input onclick="IsCharOptionClicked()" class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
           <label class="form-check-label" for="option${index}">${qoute.name}</label>
         </div>`
         }).join('');
@@ -90,11 +105,13 @@ var icon2 = document.getElementById('dislikeBtn');
 
         const movieHtmlString = qoutes.movieAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
+          <input onclick="IsMovieOptionClicked()" class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
           <label class="form-check-label" for="option${index+3}">${qoute.title}</label>
         </div>`
         }).join('');
         movieAnswer.innerHTML = movieHtmlString;
+        charOptionClicked = false
+        movieOptionClicked = false
       }
 
       function toggleAudio() {
@@ -119,16 +136,12 @@ var icon2 = document.getElementById('dislikeBtn');
         for (let radio of document.getElementsByName("answerChar")) {
           if (radio.checked && correctCharAwnser !== radio.value) {
             showHighScore()
-          } else if (radio.checked) {
           }
-          
         }
         for (let radio of document.getElementsByName("answerFilms")) {
           if (radio.checked && correctMovieAwnser !== radio.value) {
             showHighScore()
-          } else if (radio.checked) {
           }
-          /* ERROR WORKS IF ONE IS RIGHT NEEDS FIX */
         }
         if (counter >= jsonData.length -1) {
           counter = jsonData.length - 1;
@@ -141,13 +154,13 @@ var icon2 = document.getElementById('dislikeBtn');
      }
 
      function showHighScore() {
-      audio.muted = !audio.muted;
+      
       highScore.style.display="flex"
       quizContainer[0].style.display="none"
       volumeIcon[0].style.display="none"
-      
+      audio.muted = !audio.muted;
       /* document.getElementsByClassName("container-fluid")[0].style.display="none" */
-      document.getElementById("currentScore").innerHTML = "Current score: "+score
+      document.getElementById("currentScore").innerHTML = "Huidige score: "+score
      }
 
       

@@ -31,6 +31,8 @@
       let currentQuestionIndex = 0;
       let score = 0;
       let counter = 0;
+      let charOptionClicked = false;
+      let movieOptionClicked = false;
 
       
       const allMovieAnswers = document.getElementsByName("answerFilms");
@@ -68,7 +70,20 @@
 
       closeButton.addEventListener("click",startQuiz);
 
-      
+      function IsMovieOptionClicked() {
+        movieOptionClicked = true;
+        enableButton()
+      }
+      function IsCharOptionClicked() {
+        charOptionClicked = true;
+        enableButton()
+      }
+
+      function enableButton() {
+        if (charOptionClicked && movieOptionClicked) {
+          nextButton.style.visibility="visible"
+        }
+      }
 
       function startQuiz() {
         quizContainer[0].style.display="block"
@@ -84,12 +99,12 @@
         showQuestion(jsonData[counter]);
       }
       function showQuestion(qoutes) {
-        nextButton.disabled = true
+        nextButton.style.visibility="hidden"
         questionElement.innerHTML = qoutes.quote;
         qouteNumber.innerHTML = counter+1 + "/10"
         const charHtmlString = qoutes.characterAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
+          <input onclick="IsCharOptionClicked()" class="form-check-input" type="radio" name="answerChar" id="option${index}" value="${qoute.name}">
           <label class="form-check-label" for="option${index}">${qoute.name}</label>
         </div>`
         }).join('');
@@ -97,11 +112,13 @@
 
         const movieHtmlString = qoutes.movieAnswers.map((qoute,index) => {
           return `<div class="form-check option">
-          <input onclick="nextButton.disabled = false" class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
+          <input onclick="IsMovieOptionClicked()" class="form-check-input" type="radio" name="answerFilms" id="option${index+3}" value="${qoute.title}">
           <label class="form-check-label" for="option${index+3}">${qoute.title}</label>
         </div>`
         }).join('');
         movieAnswer.innerHTML = movieHtmlString;
+        charOptionClicked = false
+        movieOptionClicked = false
       }
 
       function toggleAudio() {
@@ -126,7 +143,6 @@
         for (let radio of document.getElementsByName("answerChar")) {
           if (radio.checked && correctCharAwnser === radio.value) {
             score = score + 0.5
-            
           }
           
         }
@@ -136,12 +152,15 @@
           }
           
         }
+
         if (counter >= jsonData.length -1) {
           counter = jsonData.length - 1;
           showHighScore()
-      } else {
+      }
+      else {
           counter++
       }
+      
         showQuestion(jsonData[counter])
      }
 
@@ -151,13 +170,13 @@
       volumeIcon[0].style.display="none"
       audio.muted = !audio.muted;
       document.getElementsByClassName("container-fluid")[0].style.display="none"
-      document.getElementById("currentScore").innerHTML = "Current score: "+score
+      document.getElementById("currentScore").innerHTML = "Huidige score: "+score
      }
 
-/*      if(window.location.pathname == '/suddenDeath') {
-      console.log("sudden death aaaa")
+      /* if(window.location.pathname == '/suddenDeath') {
+      audio = new Audio('../assets/The Fellowship of the Ring Soundtrack-07-A Knife in the Dark.mp3');
     } else if (window.location.pathname == '/tenRound') {
-      console.log("le calm")
-    } */
+      audio = new Audio('../assets/Lord of the Rings_Sound of The Shire.mp3');
+    }  */
       
       
