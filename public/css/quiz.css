@@ -281,6 +281,78 @@ margin-bottom: 10px;
     padding-left: 60px;
 }
 
+dialog{
+    background-color: rgb(91, 34, 15);
+    width: 500px;
+    margin: auto;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    /* z-index: 1000; */
+}
+
+.modal2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:#e3b737;
+}
+
+dialog::backdrop {
+    background-color: rgba(48, 15, 4, 0.6);
+}
+
+.dislikeReason{
+    margin: auto;
+    padding-top: 15px;
+    color: #e3b737;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #e3b737;
+    border-radius: 4px;
+    background-color: rgb(91, 34, 15);
+    font-size: 16pt!important;
+    margin-bottom: 10px;
+    resize: none;
+    color: #e3b737!important;
+}
+
+textarea::placeholder{
+    color: #e3b737;
+    opacity: .5;
+}
+.card-button{
+    border: none;
+    background-color: rgb(91, 34, 15);
+    padding: 10px;
+    font-size: 14pt;
+}
+
+.card-button:hover{
+    background-color: rgba(48, 15, 4);
+    color: #d17600;
+    cursor: pointer;
+}
+
+.quizlinks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+.quizlinks a{
+    text-decoration: none;
+    font-size: 16pt;
+}
+
+.quizlinks a:hover{
+    color:#d17600;
+}
+
 @media (max-width:600px) {
     .options-container {
         display: flex;

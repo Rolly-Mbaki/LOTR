@@ -66,11 +66,11 @@ export const linkCharsAndMovieToQoute = async() => {
   let qoutes:Quote[] = await getQoute(limit);
   let chars:Character[] = await getChars(limit);
   let movies:Movie[] = await getMovies(limit);
-
   for (let i = 0; i < qoutes.length; i++) {
     const char:Character = chars.find(char => char._id === qoutes[i].character)!;
     const movie:Movie = movies.find(movie => movie._id === qoutes[i].movie)!;
     qoutes[i].character = char.name //add char link somehow
+    qoutes[i].wikiUrl = char.wikiUrl
     if (qoutes[i].character == "MINOR_CHARACTER") {
       qoutes[i].character = "Minor Character"
     }
@@ -83,7 +83,6 @@ export const linkCharsAndMovieToQoute = async() => {
 export const getRandomQoutes = (qoutes:Quote[],n:number) => {
   /* NOTE TO SELF THERE IS A MINOR_CHARACTER object AND MAYBE UNIQUE DIALOG IN full array of gameQoutes */
   const shuffled = qoutes.sort(() => 0.5 - Math.random());
-
   let gameQuotes:gameQuote[] = [{
     quote: "",
     characterAnswers:[

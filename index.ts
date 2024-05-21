@@ -9,50 +9,34 @@ dotenv.config()
 
 import { getMovies, getQoute, getApiLength, getChars,getRandomQoutes,linkCharsAndMovieToQoute } from "./public/js/quizGame";
 import { addQuotesToDB } from "./public/js/QuotesDb";
-import { Quote, gameQuote } from "./types/quizTypes";
+import { Quote, gameQuote, FavQuote, BlQuote } from "./types/quizTypes";
 import quizRouter from "./routes/quiz";
+import { log } from "console";
 
 const app = express();
 
 const uri:string = process.env.MONGO_URI as string;
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient(uri);
 
 export interface User {
     _id?:string,
     email:string,
     username:string,
     password:string,
-    favQuotes?:string[],
-    blQuotes?:string[],
-    highscores?:number[],
+    favQuotes:FavQuote[],
+    blQuotes:BlQuote[],
+    highscores:number[],
   }
-
-interface FavQuote {
-    _id?:string,
-    quote:string,
-    character:string,
-    charwiki:string
-}
-
-let favQuotes:FavQuote[] = [
-    {
-        quote:"Het staat in het boek van principes",
-        character:"Furkan",
-        charwiki:"wwww.youtube.com"
-    },
-    {
-        quote:"Wie doet HET?",
-        character:"Yunus",
-        charwiki:"wwww.google.com"
-    },
-]
   
 let message:string = "";
 let error:boolean = true;
 let user:User = {
     username: "",
     email:"",
-    password:""
+    password:"",
+    favQuotes:[],
+    blQuotes: [],
+    highscores:[]
 };
 
 // const connectQuotesToMoviesAndCharacters = async () => {
@@ -76,6 +60,7 @@ let user:User = {
 
 //middleware
 app.use(session)
+app.use(express.json())
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}))
 
@@ -98,9 +83,9 @@ app.set("port", 3000);
 //         res.render("index");
 //     })
 // })
-let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d"}];
+let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d",wikiUrl:"d"}];
 linkCharsAndMovieToQoute().then(data => (quotes = data))
-addQuotesToDB(quotes)
+// addQuotesToDB(quotes)
 app.get("/",(req,res)=>{
     console.log(quotes.length)
     res.render("index");
@@ -108,7 +93,7 @@ app.get("/",(req,res)=>{
 
 app.get("/home", isAuth, (req,res)=>{
     // console.log(user)
-    linkCharsAndMovieToQoute().then(console.log)
+    // linkCharsAndMovieToQoute().then(console.log)
     res.render("home",{user:req.session.user});
 })
 
@@ -157,8 +142,6 @@ app.post("/login", async (req,res)=>{
 
     } catch (e) {
         console.error(e);
-    } finally {
-        await client.close();
     }
 })
 
@@ -179,7 +162,10 @@ app.post("/register", async (req,res)=>{
     let newUser:User = {
         username:req.body.username.toString().toLowerCase(),
         email:req.body.email.toString().toLowerCase(),
-        password:req.body.password
+        password:req.body.password,
+        favQuotes:[],
+        blQuotes: [],
+        highscores:[]
       }
       const saltRounds = 10
       const hashehPassword = await bcrypt.hash(newUser.password, saltRounds)
@@ -188,8 +174,7 @@ app.post("/register", async (req,res)=>{
       
       console.log(newUser)
       
-       try {
-        await client.connect();
+       
         
         
         let userEmail = await client.db('LOTR').collection('Users').findOne({email:req.body.email.toString().toLowerCase()})
@@ -233,13 +218,7 @@ app.post("/register", async (req,res)=>{
             res.render("register",{message:message,error:error})
         }
         
-    } catch (e) {
-        console.error(e);
-        error = true
-        message = "Account maken mislukt, probeer terug opnieuw"
-    } finally {
-        await client.close();
-    } 
+
 });
 
 /////// om session te beeindigen
@@ -312,18 +291,34 @@ app.post("/register", async (req,res)=>{
 
 
 
-app.get("/blacklist",isAuth, (req,res)=>{
-    res.render("blacklist",{user:req.session.user});
+app.get("/blacklist",isAuth, async (req,res)=>{
+
+
+        let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
+        if (userObject) {
+            let blQuotes:BlQuote[] = userObject.blQuotes
+            // console.log(favQuotes)
+            res.render("blacklist",{user:req.session.user, blQuotes})
+        }
+
 })
 
-app.get("/fav",isAuth, (req,res)=>{
-    console.log(favQuotes)
-    res.render("fav",{user:req.session.user, favQuotes});
+app.get("/fav",isAuth, async (req,res)=>{
+
+
+        let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
+        if (userObject) {
+            let favQuotes:FavQuote[] = userObject.favQuotes
+            // console.log(favQuotes)
+            res.render("fav",{user:req.session.user, favQuotes})
+        }
+
 })
 
 app.get("/tenRound",isAuth,(req,res)=>{
+    console.log(req.session.user)
     let randomQuotes = getRandomQoutes(quotes,10)
-    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user});
+    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false});
 })
 
 app.get("/suddenDeath",isAuth, (req,res)=>{
@@ -332,14 +327,163 @@ app.get("/suddenDeath",isAuth, (req,res)=>{
 })
 
 
-app.post("/logout", (req,res) =>{
+app.post("/logout", async(req,res) =>{
     req.session.destroy(e => {
         if(e) throw e
         res.redirect('/login')
     })
+    await client.close();
 })
 
+app.post("/like", async (req,res) =>{
+    // console.log(req.body)
 
+    let charWiki = quotes.find(char => char.character == req.body.char)?.wikiUrl
+    let totalQuotes = quotes.filter(quote => quote.character === req.body.char).length
+
+    let favQuote:FavQuote = {quote:"", character:"", charWiki:"",totalCharQuotes:0}
+    if (charWiki) {
+        favQuote = {quote: req.body.quote, character:req.body.char, charWiki:charWiki, totalCharQuotes:totalQuotes}
+        console.log(favQuote) 
+    }
+    
+
+
+        const filter = {username: req.session.user?.username}
+
+        const taken = await client.db('LOTR').collection('Users').findOne({
+            username: req.session.user?.username,
+            blQuotes: { $elemMatch: { quote: favQuote.quote } }
+        });
+
+        let update
+
+        if (taken) {
+            update = {
+                $pull: { blQuotes: { quote: favQuote.quote } },
+                $addToSet: { favQuotes: favQuote }
+            };
+        } else {
+            update = { $addToSet: { favQuotes: favQuote } };
+        }
+
+        const add = await client.db('LOTR').collection('Users').updateOne(filter, update)
+
+        if (add.modifiedCount === 0) {
+            console.log("Quote already exists in the array");
+            return res.status(409).send({message:"Quote already exists in your favorites"});
+        }
+        console.log("Quote added to favQuotes array");
+
+        res.status(200).send({ message: "Quote added to your favorites"});
+
+
+})
+
+app.post("/dislike", async (req,res) =>{
+    console.log(req.body)
+
+    let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
+    
+
+
+        const filter = {username: req.session.user?.username}
+        // const add = {$addToSet: {blQuotes: blQuote}}
+        // const remove = {$pull: {favQuotes: {quote: blQuote.quote}}}
+
+        const taken = await client.db('LOTR').collection('Users').findOne({
+            username: req.session.user?.username,
+            favQuotes: { $elemMatch: { quote: blQuote.quote } }
+        });
+
+        let update
+
+        if (taken) {
+            update = {
+                $pull: { favQuotes: { quote: blQuote.quote } },
+                $addToSet: { blQuotes: blQuote }
+            };
+        }
+        else {
+            update = { $addToSet: {blQuotes: blQuote} }
+        }
+
+        const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
+
+        console.log("Quote moved from favQuotes to blQuotes");
+        if (add.modifiedCount === 0) {
+            console.log("Quote already exists in the array");
+            return res.status(409).send({message:"Quote already exists in your blacklist"});
+        }
+        console.log("Quote added to blacklist array");
+
+        res.status(200).send({ message: "Quote added to your blacklist"});
+
+
+})
+
+app.post("/deleteFavQuote", async (req,res) =>{
+    console.log(req.body)
+
+
+        const filter = {username: req.session.user?.username}
+        const update = {$pull: {favQuotes: {quote: req.body.quote}}}
+        const remove = await client.db('LOTR').collection('Users').updateOne(filter, update)
+
+        if (remove.modifiedCount === 0) {
+            console.log("Quote not found in the array")
+            return res.status(404).send("Quote not found in the array")
+        }
+        console.log("Quote removed from favQuotes array");
+
+        res.status(200).send("Data deleted from MDB");
+
+
+})
+
+app.post("/deleteBlQuote", async (req,res) =>{
+    console.log(req.body)
+
+
+        const filter = {username: req.session.user?.username}
+        const update = {$pull: {blQuotes: {quote: req.body.quote}}}
+        const remove = await client.db('LOTR').collection('Users').updateOne(filter, update)
+
+        if (remove.modifiedCount === 0) {
+            console.log("Quote not found in the array")
+            return res.status(404).send("Quote not found in the array")
+        }
+        console.log("Quote removed from favQuotes array");
+
+        res.status(200).send("Data deleted from MDB");
+
+})
+
+app.post("/updateBlQuote", async (req,res) =>{
+    console.log(req.body)
+
+
+        const filter = { 
+            username: req.session.user?.username,
+            "blQuotes.quote": req.body.quote 
+        };
+
+        const update = { 
+            $set: { "blQuotes.$.reason": req.body.reason } 
+        };
+
+        const result = await client.db('LOTR').collection('Users').updateOne(filter, update);
+
+        if (result.modifiedCount === 0) {
+            console.log("Quote not found in the array")
+            return res.status(404).send("Quote not found in the array")
+        }
+        console.log("Reason changed");
+
+        res.status(200).send("Reason updated");
+
+
+})
 
 app.listen(app.get("port"), async () => {
     

@@ -22,6 +22,18 @@
     <main>
 
   <div class="container-fluid">
+
+    <dialog id="modal2">
+      <div class="modal2">
+          <h2>Reden aanpassen</h2>
+          <form id="dislike "class="dislikeReason" onsubmit="submitFormReturn(); return false" action="">
+              <textarea id="myReason" class="form-text" cols="30" rows="10" placeholder="Geef een reden" required></textarea>
+              <button type="submit" class="card-button">Opslaan</button>
+              <button type="button" class="card-button close-button">Sluiten</button>
+          </form>
+      </div>
+    </dialog>
+    <p id="retOp"><b></b></p>
     <div class="quiz-container">
       
       <div class="question">
@@ -41,7 +53,7 @@
     <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
-          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal"></i>
+          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal open-button"></i>
         </div>
         <button class="btn" id="nextButton" type="button" onclick="increaseCount()">Volgende</button>
         

@@ -3,6 +3,7 @@ export interface Quote {
     dialog:string;
     movie:string;
     character:string;
+    wikiUrl:string;
     id:string
 }
 
@@ -29,4 +30,17 @@ export interface gameQuote {
         {title:string,correct:boolean},
         {title:string,correct:boolean},
     ]
+}
+
+export interface FavQuote {
+    quote:string,
+    character:string,
+    charWiki:string,
+    totalCharQuotes:number
+}
+
+export interface BlQuote {
+    quote:string,
+    character:string,
+    reason:string
 }

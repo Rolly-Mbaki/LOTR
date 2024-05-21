@@ -62,9 +62,9 @@ main{
 .card{
     display: flex;
     flex-direction: column;
-    gap:20px;
+    gap:10px;
     width: 350px;
-    height: 250px;
+    min-height: 250px;
     padding: 15px;
     background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
@@ -118,6 +118,21 @@ main{
 
 .card button:hover i{
     color: #d17600;
+}
+
+.quizlinks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+.quizlinks a{
+    text-decoration: none;
+    font-size: 16pt;
+}
+
+.quizlinks a:hover{
+    color:#d17600;
 }
 
 footer{
