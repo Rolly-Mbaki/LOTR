@@ -76,12 +76,25 @@ async function updateBlQuote() {
     })
     console.log(response.body)
     if (response.ok) {
-      console.log("Data deleted from mdb")
+      console.log("Data updated in mdb")
       window.location.reload()
     } else {
-      console.log("Failed to delete data from mdb")
+      console.log("Failed to update data in mdb")
     }
   } catch (error) {
     console.log("Error: ", error)
   }
+}
+
+function downloadQuotes() {
+  const content = quotes.map(quote => `"${quote.quote}" - ${quote.character}`).join('\n');
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'FavQuotes.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
