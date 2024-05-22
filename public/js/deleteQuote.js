@@ -1,6 +1,7 @@
 const quotesData = document.getElementById("data").textContent;
 
 const quotes = JSON.parse(quotesData);
+let currentQuote = {quote:"", character:"", reason:""}
 // console.log(favQuotes)
 
 async function deleteFavQuote(index) {
@@ -49,17 +50,19 @@ async function deleteBlQuote(index) {
 
 const input = document.getElementById("myReason")
 function submitFormReturn(event){
-  console.log(input.value)
+  event.preventDefault()
+  // console.log(input.value)
+  updateBlQuote()
 }
 
-// function getCurrentQuote(index) {
-//   let quote = quotes[index]
-//   console.log(quote)
-//   return quote
-// }
-
-async function updateBlQuote(index) {
+function getCurrentQuote(index) {
   let quote = quotes[index]
+  currentQuote = quote
+  console.log(quote)
+}
+
+async function updateBlQuote() {
+  let quote = currentQuote
 
   let updatedQuote = {quote:quote.quote, character:quote.character, reason:input.value}
 
@@ -74,11 +77,10 @@ async function updateBlQuote(index) {
     console.log(response.body)
     if (response.ok) {
       console.log("Data deleted from mdb")
+      window.location.reload()
     } else {
-      
       console.log("Failed to delete data from mdb")
     }
-    window.location.reload()
   } catch (error) {
     console.log("Error: ", error)
   }
