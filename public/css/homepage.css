@@ -56,6 +56,7 @@ main{
 .card{
     width: 350px;
     user-select: none;
+    cursor: pointer;
 }
 
 
@@ -112,36 +113,6 @@ main{
     transition: all 1s ease-out;
     display: none;
 }
-
-
-footer{
-    text-align: center;
-    color: #FFF;
-    font-size: 16pt;
-    padding: 15px;
-    color: #e3b737;
-    width: 100%;
-    background: rgba(40, 16, 1, 0.5);
-    backdrop-filter: blur(20px);
-}
-
-footer p{
-    margin: 0;
-}
-
-footer a{
-    text-decoration: none;
-    color: #e3b737;
-}
-
-footer a:hover{
-    color: #d17600;
-}
-
-.footer-line{
-    height: 3px;
-}
-
 
 @media only screen and (max-width: 750px) {
     .card{

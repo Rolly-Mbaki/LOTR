@@ -67,14 +67,13 @@
     async function toevoegenFav() {
       // console.log(jsonData[counter])
 
-      let favQuote = {quote:"", char:"", charWiki:""}
+      let favQuote = {quote:"", char:""}
 
       jsonData[counter].characterAnswers.forEach(element => {
         if (element.correct) {
           let quote = jsonData[counter].quote
           let char = jsonData[counter].characterAnswers[jsonData[counter].characterAnswers.indexOf(element)].name
-          let wiki = "https://lotr.fandom.com/wiki/"+char
-          favQuote = {quote:quote, char: char, charWiki:wiki}
+          favQuote = {quote:quote, char: char}
         }
       });
       console.log(JSON.stringify(favQuote))

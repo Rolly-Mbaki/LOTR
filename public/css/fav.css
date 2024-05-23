@@ -44,10 +44,22 @@ main{
     cursor: pointer;
 }
 
+.back{
+    font-size: 16pt;
+    text-decoration: none;
+    text-align: center;
+}
+
+.back:hover{
+    color: #d17600;
+    cursor: pointer;
+}
+
 .titel{
     padding: 15px;
     background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
 
 .cards{
@@ -64,7 +76,7 @@ main{
     flex-direction: column;
     gap:10px;
     width: 350px;
-    min-height: 250px;
+    min-height: 200px;
     padding: 15px;
     background-color: rgba(48, 15, 4, 0.8);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
@@ -87,8 +99,8 @@ main{
 
 .card-info{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     font-size: 16pt;
 }
 .card-text{
@@ -119,7 +131,12 @@ main{
 .card button:hover i{
     color: #d17600;
 }
-
+.card-total{
+    cursor: pointer;
+}
+.card-total:hover {
+    color: #d17600;
+}
 .quizlinks{
     display: flex;
     flex-direction: column;
@@ -135,32 +152,27 @@ main{
     color:#d17600;
 }
 
-footer{
-    text-align: center;
-    color: #FFF;
-    font-size: 16pt;
-    padding: 15px;
-    color: #e3b737;
-    width: 100%;
-    background: rgba(40, 16, 1, 0.5);
-    backdrop-filter: blur(20px);
+#scrollTop{
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    bottom: 10px;
+    font-size: 20pt; 
+    background-color: rgba(48, 15, 4, 0.8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    border-style: none;
+    cursor: pointer;
+    z-index: 10000;
+    display: none;
 }
 
-footer p{
-    margin: 0;
-}
-
-footer a{
-    text-decoration: none;
-    color: #e3b737;
-}
-
-footer a:hover{
+/* #scrollTop i {
+    font-size: 20px;
+    padding: 20px;
+} */
+#scrollTop:hover i{
     color: #d17600;
-}
-
-.footer-line{
-    height: 3px;
 }
 
 
@@ -170,7 +182,7 @@ footer a:hover{
     }
     .card{
         width: 350px;
-        height: 300px;
+        min-height: 150px;
     }
     
     .card-text{
@@ -196,5 +208,9 @@ footer a:hover{
 
     .card-quote{
         font-size: 12pt;
+    }
+    #scrollTop{
+        bottom: 10px;
+        font-size: 20pt; 
     }
   }

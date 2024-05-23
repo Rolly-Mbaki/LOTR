@@ -127,9 +127,9 @@ app.post("/login", async (req,res)=>{
                 //hier moet ik session beginnen maken
                 //req.session.isLoggedIn = true
                 req.session.isAuth = true
-                console.log(req.session.id)
+                // console.log(req.session.id)
                 req.session.user = userObject
-                console.log(req.session.user)
+                // console.log(req.session.user)
                 // user = userObject;
                 res.redirect("home")
             }
@@ -193,9 +193,9 @@ app.post("/register", async (req,res)=>{
             else if (req.body.password.length > 6) {
                 await client.db('LOTR').collection('Users').insertOne(newUser);
                 req.session.isAuth = true
-                console.log(req.session.id)
+                // console.log(req.session.id)
                 req.session.user = newUser
-                console.log(req.session.user)
+                // console.log(req.session.user)
                 message = "Account succevol aangemaakt!"
                 error = false
 
@@ -305,14 +305,22 @@ app.get("/blacklist",isAuth, async (req,res)=>{
 
 app.get("/fav",isAuth, async (req,res)=>{
 
+    let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
+    if (userObject) {
+        let favQuotes:FavQuote[] = userObject.favQuotes
+        const paginatedQuotes = favQuotes.slice(0,6)
+        // console.log(favQuotes)
+        res.render("fav",{user:req.session.user, favQuotes,paginatedQuotes})
+    }
 
-        let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
-        if (userObject) {
-            let favQuotes:FavQuote[] = userObject.favQuotes
-            // console.log(favQuotes)
-            res.render("fav",{user:req.session.user, favQuotes})
-        }
+})
 
+app.get("/fav/:character",isAuth, async (req,res)=>{
+
+    const character = decodeURIComponent(req.params.character)
+    const allQuotes:Quote[] = quotes.filter(quote => quote.character.toLowerCase() == character.toLowerCase()) 
+    
+    res.render("quotesPerChar",{user:req.session.user, allQuotes})
 })
 
 app.get("/tenRound",isAuth,(req,res)=>{
@@ -336,7 +344,7 @@ app.post("/logout", async(req,res) =>{
 })
 
 app.post("/like", async (req,res) =>{
-    // console.log(req.body)
+    console.log(req.body)
 
     let charWiki = quotes.find(char => char.character == req.body.char)?.wikiUrl
     let totalQuotes = quotes.filter(quote => quote.character === req.body.char).length
@@ -371,11 +379,11 @@ app.post("/like", async (req,res) =>{
 
         if (add.modifiedCount === 0) {
             console.log("Quote already exists in the array");
-            return res.status(409).send({message:"Quote already exists in your favorites"});
+            return res.status(409).send({message:"Quote zit al tussen je favorieten"});
         }
         console.log("Quote added to favQuotes array");
 
-        res.status(200).send({ message: "Quote added to your favorites"});
+        res.status(200).send({ message: "Quote toegevoegd aan je favorieten"});
 
 
 })
@@ -403,6 +411,7 @@ app.post("/dislike", async (req,res) =>{
                 $pull: { favQuotes: { quote: blQuote.quote } },
                 $addToSet: { blQuotes: blQuote }
             };
+            console.log("Quote moved from favQuotes to blQuotes");
         }
         else {
             update = { $addToSet: {blQuotes: blQuote} }
@@ -410,14 +419,13 @@ app.post("/dislike", async (req,res) =>{
 
         const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
 
-        console.log("Quote moved from favQuotes to blQuotes");
         if (add.modifiedCount === 0) {
             console.log("Quote already exists in the array");
-            return res.status(409).send({message:"Quote already exists in your blacklist"});
+            return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
         }
         console.log("Quote added to blacklist array");
 
-        res.status(200).send({ message: "Quote added to your blacklist"});
+        res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
 
 
 })

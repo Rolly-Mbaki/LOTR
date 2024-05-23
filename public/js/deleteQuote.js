@@ -3,7 +3,9 @@ const quotesData = document.getElementById("data").textContent;
 const quotes = JSON.parse(quotesData);
 let currentQuote = {quote:"", character:"", reason:""}
 // console.log(favQuotes)
-
+// document.addEventListener("DOMContentLoaded", function(event) {
+//   console.log(quotes)
+// });
 async function deleteFavQuote(index) {
     let quote = quotes[index]
 
@@ -87,7 +89,7 @@ async function updateBlQuote() {
 }
 
 function downloadQuotes() {
-  const content = quotes.map(quote => `"${quote.quote}" - ${quote.character}`).join('\n');
+  const content = quotes.map(quote => `"${quote.quote}" - ${quote.character}`).join('\n\n');
   const blob = new Blob([content], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -97,4 +99,21 @@ function downloadQuotes() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+function AllQuotes(index){
+  let quote = quotes[index]
+  let character = encodeURIComponent(quote.character)
+  console.log(character)
+  const url = `/fav/${character}`
+  window.location = url;
+  // const response = await fetch(`/fav/${character}`, {
+  //   method: "get"
+  // })
+  // if (response.ok) {
+  //   const quotes = await response.json();
+  //   console.log(quotes);
+  // } else {
+  //   console.error('Failed to fetch quotes:', response.statusText);
+  // }
 }
