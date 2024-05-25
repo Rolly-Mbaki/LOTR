@@ -25,7 +25,7 @@ export interface User {
     password:string,
     favQuotes:FavQuote[],
     blQuotes:BlQuote[],
-    highscores:number[],
+    highscores:number,
   }
   
 let message:string = "";
@@ -36,7 +36,7 @@ let user:User = {
     password:"",
     favQuotes:[],
     blQuotes: [],
-    highscores:[]
+    highscores:0
 };
 
 // const connectQuotesToMoviesAndCharacters = async () => {
@@ -84,6 +84,7 @@ app.set("port", 3000);
 //     })
 // })
 let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d",wikiUrl:"d"}];
+let blacklistedQoutes: Quote[] = []
 linkCharsAndMovieToQoute().then(data => (quotes = data))
 // addQuotesToDB(quotes)
 app.get("/",(req,res)=>{
@@ -145,16 +146,22 @@ app.post("/login", async (req,res)=>{
     }
 })
 
-app.get("/register",(req,res)=>{
+app.get("/register", async (req,res)=>{
     // user = {
     //     username: "",
     //     email:"",
     //     password:""
     // };
-    if (req.session.isAuth) {
-        res.redirect("/home")
+    try {
+        await client.connect();
+        if (req.session.isAuth) {
+            res.redirect("/home")
+        }
+        else res.render("register")
+    } catch (error) {
+        console.error(error)
     }
-    else res.render("register")
+    
 })
 
 app.post("/register", async (req,res)=>{
@@ -165,7 +172,7 @@ app.post("/register", async (req,res)=>{
         password:req.body.password,
         favQuotes:[],
         blQuotes: [],
-        highscores:[]
+        highscores:0
       }
       const saltRounds = 10
       const hashehPassword = await bcrypt.hash(newUser.password, saltRounds)
@@ -323,14 +330,46 @@ app.get("/fav/:character",isAuth, async (req,res)=>{
     res.render("quotesPerChar",{user:req.session.user, allQuotes})
 })
 
-app.get("/tenRound",isAuth,(req,res)=>{
-    console.log(req.session.user)
-    let randomQuotes = getRandomQoutes(quotes,10)
-    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false});
+app.get("/tenRound",isAuth, async(req,res)=>{
+        let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
+
+        /* if (blacklistedQoutes.filter(value => value.dialog == currentUser.blQuotes[0].quote).length > 0) {
+            console.log("it's in");
+        } */
+
+        if (currentUser.blQuotes.length) {
+        blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
+        }
+        
+
+        /* if (blacklistedQoutes.filter(value => value.dialog == currentUser.blQuotes[0].quote).length > 0)
+            console.log("it's in game");
+        else {
+            console.log("qoute not in")
+        }   */
+
+        if (!blacklistedQoutes.length) {
+            blacklistedQoutes[0] = {id:"d",_id:"",dialog:"Verwijder een paar van de blacklist",character:"d",movie:"d",wikiUrl:"d"}
+            blacklistedQoutes[1] = {id:"4",_id:"",dialog:"Verwijder een paar van de blacklist",character:"7",movie:"8",wikiUrl:"h"}
+            blacklistedQoutes[2] = {id:"2",_id:"",dialog:"Verwijder een paar van de blacklist",character:"6",movie:"2",wikiUrl:"p"}
+        }
+
+    let randomQuotes = getRandomQoutes(blacklistedQoutes,10)
+    /* randomQuotes = randomQuotes.slice(0,8)
+    blacklistedQoutes = blacklistedQoutes.slice(0,8) */
+    console.log(currentUser.highscores)
+    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.highscores});
 })
 
-app.get("/suddenDeath",isAuth, (req,res)=>{
-    let randomQuotes:gameQuote[] = getRandomQoutes(quotes,quotes.length)
+app.get("/suddenDeath",isAuth, async(req,res)=>{
+    
+    let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username});
+
+    if (currentUser.blQuotes.length) {
+    blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
+    }
+
+    let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes.length)
     res.render("suddenDeath",{user:req.session.user,qoutes:randomQuotes});
 })
 
@@ -390,6 +429,10 @@ app.post("/like", async (req,res) =>{
 
 app.post("/dislike", async (req,res) =>{
     console.log(req.body)
+    let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
+    if (currentUser.blQuotes.length) {
+        blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
+        }
 
     let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
     
@@ -406,24 +449,30 @@ app.post("/dislike", async (req,res) =>{
 
         let update
 
-        if (taken) {
-            update = {
-                $pull: { favQuotes: { quote: blQuote.quote } },
-                $addToSet: { blQuotes: blQuote }
-            };
-            console.log("Quote moved from favQuotes to blQuotes");
-        }
-        else {
-            update = { $addToSet: {blQuotes: blQuote} }
-        }
+        if (blacklistedQoutes.length >= 10) {
+            if (taken) {
+                update = {
+                    $pull: { favQuotes: { quote: blQuote.quote } },
+                    $addToSet: { blQuotes: blQuote }
+                };
+                console.log("Quote moved from favQuotes to blQuotes");
+            }
+            else {
+                update = { $addToSet: {blQuotes: blQuote} }
+            }
+            const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
 
-        const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
-
-        if (add.modifiedCount === 0) {
-            console.log("Quote already exists in the array");
-            return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
+            if (add.modifiedCount === 0) {
+                console.log("Quote already exists in the array");
+                return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
+            }
+            
+            console.log("Quote added to blacklist array");
+    
         }
-        console.log("Quote added to blacklist array");
+        else if (blacklistedQoutes.length <= 10) {
+            return res.status(409).send({message:"Je hebt minstens 10 quotes nodig"});
+        }
 
         res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
 
@@ -493,8 +542,14 @@ app.post("/updateBlQuote", async (req,res) =>{
 
 })
 
+app.post("/highscore", async(req,res)=> {
+    const result = await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{highscores:req.body.score}}, { upsert: true });
+    res.status(200).send({ message: "Highscore success"});
+})
+
 app.listen(app.get("port"), async () => {
     
     quotes = await linkCharsAndMovieToQoute()
+    blacklistedQoutes = [...quotes]
     console.log("[server] http://localhost:" + app.get("port"))
 });

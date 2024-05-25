@@ -58,10 +58,19 @@
         icon.classList.add('fas');
         icon2.classList.remove('fas');
         icon2.classList.add('far');
-      } else {
-          icon.classList.remove('fas');
-          icon.classList.add('far');
       }
+    }
+
+    function thumbsDown() {
+      if (icon2.classList.contains('far')) {
+        icon2.classList.remove('far');
+        icon2.classList.add('fas');
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+    } /* else {
+        icon2.classList.remove('fas');
+        icon2.classList.add('far');
+    } */
     }
 
     async function toevoegenFav() {
@@ -122,6 +131,7 @@
         if (response.ok) {
           retOp.innerHTML = `<b>${result.message}</b>`
           console.log("Data inserted into mdb")
+          thumbsDown()
         } else {
           retOp.innerHTML = `<b>${result.message}</b>`
           console.log("Failed to insert data in mdb")
@@ -133,15 +143,6 @@
 
   function dislike() {
     
-    if (icon2.classList.contains('far')) {
-        icon2.classList.remove('far');
-        icon2.classList.add('fas');
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    } else {
-        icon2.classList.remove('fas');
-        icon2.classList.add('far');
-    }
     openModals.forEach((openModal) => {
       modal2.showModal();    
 })
@@ -235,6 +236,22 @@ function submitFormReturn(event){
         audio.muted = !audio.muted;
       };
 
+      async function postScore() {
+        try {      
+          const response = await fetch('/highscore', {
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+            body: JSON.stringify({
+               score: score
+            })
+         });
+          console.log( await response.text())
+          
+        } catch (error) {
+          console.log("Error: ", error)
+        }
+      }
+
       function increaseCount() {
         let correctCharAwnser = jsonData[counter].characterAnswers.filter((e) => e.correct == true)[0].name;
         let correctMovieAwnser = jsonData[counter].movieAnswers.filter((e) => e.correct == true)[0].title;
@@ -254,6 +271,7 @@ function submitFormReturn(event){
 
         if (counter >= jsonData.length -1) {
           counter = jsonData.length - 1;
+          postScore()
           showHighScore()
       }
       else {
