@@ -239,7 +239,7 @@ function submitFormReturn(event){
 
       async function postScore() {
         try {      
-          const response = await fetch('/highscore', {
+          const response = await fetch('/highscoreTenRound', {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
             body: JSON.stringify({

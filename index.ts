@@ -25,7 +25,8 @@ export interface User {
     password:string,
     favQuotes:FavQuote[],
     blQuotes:BlQuote[],
-    highscores:number,
+    tenRoundHighScore:number,
+    suddenDeathHighScore:number,
   }
   
 let message:string = "";
@@ -36,7 +37,8 @@ let user:User = {
     password:"",
     favQuotes:[],
     blQuotes: [],
-    highscores:0
+    tenRoundHighScore:0,
+    suddenDeathHighScore:0
 };
 
 // const connectQuotesToMoviesAndCharacters = async () => {
@@ -172,7 +174,8 @@ app.post("/register", async (req,res)=>{
         password:req.body.password,
         favQuotes:[],
         blQuotes: [],
-        highscores:0
+        tenRoundHighScore:0,
+        suddenDeathHighScore:0
       }
       const saltRounds = 10
       const hashehPassword = await bcrypt.hash(newUser.password, saltRounds)
@@ -356,7 +359,7 @@ app.get("/tenRound",isAuth, async(req,res)=>{
 
     /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,9) */ 
     let randomQuotes = getRandomQoutes(blacklistedQoutes,10)
-    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.highscores});
+    res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.tenRoundHighScore});
 })
 
 app.get("/suddenDeath",isAuth, async(req,res)=>{
@@ -545,8 +548,8 @@ app.post("/updateBlQuote", async (req,res) =>{
 
 })
 
-app.post("/highscore", async(req,res)=> {
-    const result = await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{highscores:req.body.score}}, { upsert: true });
+app.post("/highscoreTenRound", async(req,res)=> {
+    const result = await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{tenRoundHighScore:req.body.score}}, { upsert: true });
     res.status(200).send({ message: "Highscore success"});
 })
 
