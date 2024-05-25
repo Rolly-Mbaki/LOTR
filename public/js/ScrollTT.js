@@ -5,7 +5,7 @@ function scrollToTop() {
 // Function to show or hide the button based on scroll position
 function toggleScrollTopButton() {
     const scrollTopBtn = document.getElementById('scrollTop');
-    if (window.scrollY > 1000) { // Show the button after scrolling down 100px
+    if (window.scrollY > 100) { // Show the button after scrolling down 100px
         scrollTopBtn.style.display = 'block';
     } else {
         scrollTopBtn.style.display = 'none';

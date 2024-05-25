@@ -22,42 +22,57 @@
 <main>
 
   <div class="container-fluid">
+
+    <dialog id="modal2">
+      <div class="modal2">
+          <h2>Reden aanpassen</h2>
+          <form id="dislike "class="dislikeReason" onsubmit="submitFormReturn(); return false" action="">
+              <textarea id="myReason" class="form-text" cols="30" rows="10" placeholder="Geef een reden" required></textarea>
+              <button type="submit" class="card-button">Opslaan</button>
+              <button type="button" class="card-button close-button">Sluiten</button>
+          </form>
+      </div>
+    </dialog>
+    
     <div class="quiz-container">
-      
+      <p id="retOp"><b></b></p>
       <div class="question">
-        <div style="display: flex; justify-content: flex-end;" ><p id="qouteNumber">1</p></div>
-        <div id="quote"></div> 
-        
+        <div style="display: flex; justify-content: flex-end;" ><p id="qouteNumber"></p></div>
+        <div id="quote"></div>
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
-      <div class="options-container">
+      <form class="options-container" action="/" method="get">
         <div id="options">
             
           </div>
           <div id="options1">
             
-      </div>
-    </div>
-    
+        
+          </div>
+  </form>
+    <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
-          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal"></i>
+          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal open-button"></i>
         </div>
-        <button class="btn" type="button" id="nextButton" onclick="increaseCount()">Volgende</button>
+        <button class="btn" id="nextButton" type="button" onclick="increaseCount()">Volgende</button>
+        
     </div>
+  </form>
     <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
   </div>
-  
-  <div id="highscore">
-    <h1>Score</h1>
-    <img height=3 width="100%" style="margin-bottom: 20px;" src="../assets/hr-sketch-line.svg" alt="">
-      <ul>
-        <li>Hoogste score: 8</li>
-        <li id="currentScore">Huidige score: 0</li>
-      </ul>
-      <button id="modalBtn" onclick="location.reload()" >Herstart</button>
   </div>
+  
 
+    <div id="highscore">
+      <h1>Score</h1>
+      <img height=3 width="100%" style="margin-bottom: 20px;" src="../assets/hr-sketch-line.svg" alt="">
+        <ul>
+          <li>Hoogste score: 8</li>
+          <li id="currentScore">Huidige score: 0</li>
+        </ul>
+        <button id="modalBtn" onclick="location.reload()" >Herstart</button>
+    </div>
     </main>
     <div data-modal class="modall">
       <img class="sketchline" height=3 width="100%" src="../assets/hr-sketch-line.svg" alt="">
@@ -66,6 +81,8 @@
     </div>
     <%- include("partials/footer") %>
     <div id="data" style="display: none;"><%- JSON.stringify(qoutes) %></div>
-    <script src="../js/suddenDeathScript.js" ></script>
+    <script src="../js/QuotesToevoegen.js" ></script>
+    <script src="../js/suddenDeathScript.js"></script>
+
 </body>
 </html>

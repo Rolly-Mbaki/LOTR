@@ -1,81 +1,83 @@
-var jsonData = [];
-      document.addEventListener('DOMContentLoaded', function() {
-        var dataElement = document.getElementById('data');
-        jsonData = JSON.parse(dataElement.textContent);
+// var jsonData = [];
+//       document.addEventListener('DOMContentLoaded', function() {
+//         var dataElement = document.getElementById('data');
+//         jsonData = JSON.parse(dataElement.textContent);
 
-      });
+//       });
 
-      const openButton = document.querySelector("[data-open-modal]")
-      const closeButton = document.querySelector("[data-close-modal]")
-      const modal = document.querySelector("[data-modal]")
-      const highScore = document.getElementById("highscore")
-      const quizContainer = document.getElementsByClassName("quiz-container")
-      const volumeIcon = document.getElementsByClassName("fa-volume-high")
-      const modall = document.getElementsByClassName("modall")
-      var audio = new Audio('../assets/The Fellowship of the Ring Soundtrack-07-A Knife in the Dark.mp3');
+//       var icon2 = document.getElementById('dislikeBtn');
+//       var icon = document.getElementById('likeBtn');
+//       var audioIcon = document.getElementById('audioBtn');
+
+//       const openButton = document.querySelector("[data-open-modal]")
+//       const closeButton = document.querySelector("[data-close-modal]")
+//       const modal = document.querySelector("[data-modal]")
+      
+//       const quizContainer = document.getElementsByClassName("quiz-container")
+//       const highScore = document.getElementById("highscore")
+//       const volumeIcon = document.getElementsByClassName("fa-volume-high")
+//       const modall = document.getElementsByClassName("modall")
+//       var audio = new Audio('../assets/The Fellowship of the Ring Soundtrack-07-A Knife in the Dark.mp3');
 
       
      
-        window.onload = quizContainer[0].style.display="none"
-        window.onload = volumeIcon[0].style.display="none"
-        window.onload = highScore.style.display="none"
+//         window.onload = quizContainer[0].style.display="none"
+//         window.onload = volumeIcon[0].style.display="none"
+//         window.onload = highScore.style.display="none"
 
-        const questionElement = document.getElementById("quote");
-        const nextButton = document.getElementById("nextButton");
-        const charAnswer = document.getElementById("options");
-        const movieAnswer = document.getElementById("options1");
-        const qouteNumber = document.getElementById("qouteNumber");
+//         const questionElement = document.getElementById("quote");
+//         const nextButton = document.getElementById("nextButton");
+//         const charAnswer = document.getElementById("options");
+//         const movieAnswer = document.getElementById("options1");
+//         const qouteNumber = document.getElementById("qouteNumber");
 
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let counter = 0;
+//         let currentQuestionIndex = 0;
+//         let score = 0;
+//         let counter = 0;
 
-var icon2 = document.getElementById('dislikeBtn');
-      var icon = document.getElementById('likeBtn');
-      var audioIcon = document.getElementById('audioBtn');
-      function like() {
+//       function like() {
         
-    if (icon.classList.contains('far')) {
-        icon.classList.remove('far');
-        icon.classList.add('fas');
-        icon2.classList.remove('fas');
-        icon2.classList.add('far');
-    } else {
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    }}
+//     if (icon.classList.contains('far')) {
+//         icon.classList.remove('far');
+//         icon.classList.add('fas');
+//         icon2.classList.remove('fas');
+//         icon2.classList.add('far');
+//     } else {
+//         icon.classList.remove('fas');
+//         icon.classList.add('far');
+//     }}
 
-  function dislike() {
+//   function dislike() {
     
-    if (icon2.classList.contains('far')) {
-        icon2.classList.remove('far');
-        icon2.classList.add('fas');
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    } else {
-        icon2.classList.remove('fas');
-        icon2.classList.add('far');
-    }
-  }
+//     if (icon2.classList.contains('far')) {
+//         icon2.classList.remove('far');
+//         icon2.classList.add('fas');
+//         icon.classList.remove('fas');
+//         icon.classList.add('far');
+//     } else {
+//         icon2.classList.remove('fas');
+//         icon2.classList.add('far');
+//     }
+//   }
       
         
 
-      closeButton.addEventListener("click",startQuiz)
+//       closeButton.addEventListener("click",startQuiz)
 
-      function IsMovieOptionClicked() {
-        movieOptionClicked = true;
-        enableButton()
-      }
-      function IsCharOptionClicked() {
-        charOptionClicked = true;
-        enableButton()
-      }
+//       function IsMovieOptionClicked() {
+//         movieOptionClicked = true;
+//         enableButton()
+//       }
+//       function IsCharOptionClicked() {
+//         charOptionClicked = true;
+//         enableButton()
+//       }
 
-      function enableButton() {
-        if (charOptionClicked && movieOptionClicked) {
-          nextButton.style.visibility="visible"
-        }
-      }
+//       function enableButton() {
+//         if (charOptionClicked && movieOptionClicked) {
+//           nextButton.style.visibility="visible"
+//         }
+//       }
         
       function startQuiz() {
         quizContainer[0].style.display="block"
@@ -91,7 +93,9 @@ var icon2 = document.getElementById('dislikeBtn');
       }
 
       function showQuestion(qoutes) {
-
+        const input = document.getElementById("myReason")
+        input.value=""
+        retOp.innerHTML = ""
         nextButton.style.visibility="hidden"
         questionElement.innerHTML = qoutes.quote;
         qouteNumber.innerHTML = counter+1

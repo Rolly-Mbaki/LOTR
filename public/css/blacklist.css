@@ -124,6 +124,29 @@ textarea::placeholder{
     opacity: .5;
 }
 
+#scrollTop{
+    width: 70px;
+    height: 70px;
+    position: fixed;
+    bottom: 10px;
+    font-size: 20pt; 
+    background-color: rgba(48, 15, 4, 0.8);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    border-style: none;
+    cursor: pointer;
+    z-index: 10000;
+    display: none;
+}
+
+/* #scrollTop i {
+    font-size: 20px;
+    padding: 20px;
+} */
+#scrollTop:hover i{
+    color: #d17600;
+}
+
 @media only screen and (max-width: 750px) {
 
     .card{

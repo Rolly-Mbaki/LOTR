@@ -72,6 +72,7 @@
           <li>Hoogste score: 8</li>
           <li id="currentScore">Huidige score: 0</li>
         </ul>
+        <button id="modalBtn" onclick="location.reload()" >Herstart</button>
     </div>
     </main>
     <div data-modal class="modall">
@@ -82,6 +83,7 @@
 
     <%- include("partials/footer") %>
     <div id="data" style="display: none;"><%- JSON.stringify(qoutes) %></div>
+    <script src="../js/QuotesToevoegen.js" ></script>
     <script src="../js/tenRound.js" ></script>
 
 </body>

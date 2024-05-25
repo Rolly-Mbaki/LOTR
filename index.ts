@@ -404,6 +404,11 @@ app.post("/dislike", async (req,res) =>{
             favQuotes: { $elemMatch: { quote: blQuote.quote } }
         });
 
+        const alreadyIn = await client.db('LOTR').collection('Users').findOne({
+            username: req.session.user?.username,
+            blQuotes: { $elemMatch: { quote: blQuote.quote } }
+        });
+
         let update
 
         if (taken) {
@@ -417,17 +422,13 @@ app.post("/dislike", async (req,res) =>{
             update = { $addToSet: {blQuotes: blQuote} }
         }
 
-        const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
-
-        if (add.modifiedCount === 0) {
-            console.log("Quote already exists in the array");
+        if (alreadyIn) {
             return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
+        } else {
+            await client.db('LOTR').collection('Users').updateOne(filter, update);
+            res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
+            console.log("Quote added to blacklist array");
         }
-        console.log("Quote added to blacklist array");
-
-        res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
-
-
 })
 
 app.post("/deleteFavQuote", async (req,res) =>{
