@@ -354,10 +354,8 @@ app.get("/tenRound",isAuth, async(req,res)=>{
             blacklistedQoutes[2] = {id:"2",_id:"",dialog:"Verwijder een paar van de blacklist",character:"6",movie:"2",wikiUrl:"p"}
         }
 
+    /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,9) */ 
     let randomQuotes = getRandomQoutes(blacklistedQoutes,10)
-    /* randomQuotes = randomQuotes.slice(0,8)
-    blacklistedQoutes = blacklistedQoutes.slice(0,8) */
-    console.log(currentUser.highscores)
     res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.highscores});
 })
 
@@ -389,9 +387,14 @@ app.post("/like", async (req,res) =>{
     let totalQuotes = quotes.filter(quote => quote.character === req.body.char).length
 
     let favQuote:FavQuote = {quote:"", character:"", charWiki:"",totalCharQuotes:0}
-    if (charWiki) {
-        favQuote = {quote: req.body.quote, character:req.body.char, charWiki:charWiki, totalCharQuotes:totalQuotes}
-        console.log(favQuote) 
+    if (req.body.char) {
+        if (charWiki) {
+            favQuote = {quote: req.body.quote, character:req.body.char, charWiki:charWiki, totalCharQuotes:totalQuotes}
+            console.log(favQuote) 
+        } else {
+            favQuote = {quote: req.body.quote, character:req.body.char, charWiki:"", totalCharQuotes:totalQuotes}
+            console.log(favQuote)
+        }
     }
     
 
@@ -429,11 +432,11 @@ app.post("/like", async (req,res) =>{
 
 app.post("/dislike", async (req,res) =>{
     console.log(req.body)
-    let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
+   /*let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
     if (currentUser.blQuotes.length) {
         blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
-        }
-
+         blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) 
+        } */ 
     let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
     
 
@@ -448,7 +451,7 @@ app.post("/dislike", async (req,res) =>{
         });
 
         let update
-
+        console.log(blacklistedQoutes.length)
         if (blacklistedQoutes.length >= 10) {
             if (taken) {
                 update = {
@@ -470,7 +473,7 @@ app.post("/dislike", async (req,res) =>{
             console.log("Quote added to blacklist array");
     
         }
-        else if (blacklistedQoutes.length <= 10) {
+        else if (blacklistedQoutes.length < 10) {
             return res.status(409).send({message:"Je hebt minstens 10 quotes nodig"});
         }
 

@@ -15,6 +15,7 @@
       
       const quizContainer = document.getElementsByClassName("quiz-container")
       const highScore = document.getElementById("highscore")
+      const highestScore = document.getElementById("highestScore")
       const volumeIcon = document.getElementsByClassName("fa-volume-high")
       const modall = document.getElementsByClassName("modall")
       var audio = new Audio('../assets/Lord of the Rings_Sound of The Shire.mp3');
@@ -200,7 +201,7 @@ function submitFormReturn(event){
         input.value=""
         retOp.innerHTML = ""
         nextButton.style.visibility="hidden"
-        questionElement.innerHTML = qoutes.quote;
+        questionElement.innerHTML = '"' + qoutes.quote + '"';
         qouteNumber.innerHTML = counter+1 + "/10"
         const charHtmlString = qoutes.characterAnswers.map((qoute,index) => {
           return `<div class="form-check option">
@@ -293,6 +294,10 @@ function submitFormReturn(event){
       volumeIcon[0].style.display="none"
       audio.muted = !audio.muted;
       document.getElementsByClassName("container-fluid")[0].style.display="none"
+      let highscorePoint = highestScore.innerHTML.split(":")
+      if (parseInt(highscorePoint[1]) <= score) {
+        highestScore.innerHTML = "Hoogste score: " + score 
+      }
       document.getElementById("currentScore").innerHTML = "Huidige score: "+score
      }
 

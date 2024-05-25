@@ -36,9 +36,9 @@
     </dialog>
     
     <div class="quiz-container">
-      <p id="retOp"><b></b></p>
+      
       <div class="question">
-        <div style="display: flex; justify-content: flex-end;" ><p id="qouteNumber"></p></div>
+        <div style="display: flex; justify-content: space-between; align-items: center;" ><p style="font-size: 1rem;" id="retOp"><b></b></p><p id="qouteNumber"></p></div>
         <div id="quote"></div>
       </div>
       <img height=3 width="100%" style="margin-bottom: 10px;" src="../assets/hr-sketch-line.svg" alt="">
@@ -54,13 +54,17 @@
     <form action="/" method="get">
     <div class="btnDiv">
         <div class="icons-container">
-          <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i><i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal open-button"></i>
+          <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
+          <div>
+            <i id="likeBtn" onclick="like()" class="far fa-thumbs-up fa-lg"></i>
+            <i id="dislikeBtn" onclick="dislike()" class="far fa-thumbs-down fa-lg fa-flip-horizontal open-button"></i>
+          </div>
+          <button class="btn" id="nextButton" type="button" onclick="increaseCount()">Volgende</button>
         </div>
-        <button class="btn" id="nextButton" type="button" onclick="increaseCount()">Volgende</button>
         
     </div>
   </form>
-    <i id="audioBtn" onClick="togglePlay()" class="fas fa-volume-high"></i>
+    
   </div>
   </div>
   
@@ -69,7 +73,7 @@
       <h1>Score</h1>
       <img height=3 width="100%" style="margin-bottom: 20px;" src="../assets/hr-sketch-line.svg" alt="">
         <ul>
-          <li>Hoogste score: <%= highscore %> </li>
+          <li id="highestScore">Hoogste score: <%= highscore %> </li>
           <li id="currentScore">Huidige score: 0</li>
         </ul>
         <button id="modalBtn" onclick="location.reload()">Herstart</button>
