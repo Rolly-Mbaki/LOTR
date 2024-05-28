@@ -69,7 +69,7 @@ export const linkCharsAndMovieToQoute = async() => {
   for (let i = 0; i < qoutes.length; i++) {
     const char:Character = chars.find(char => char._id === qoutes[i].character)!;
     const movie:Movie = movies.find(movie => movie._id === qoutes[i].movie)!;
-    qoutes[i].character = char.name //add char link somehow
+    qoutes[i].character = char.name
     qoutes[i].wikiUrl = char.wikiUrl
     if (qoutes[i].character == "MINOR_CHARACTER") {
       qoutes[i].character = "Minor Character"

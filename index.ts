@@ -41,25 +41,6 @@ let user:User = {
     suddenDeathHighScore:0
 };
 
-// const connectQuotesToMoviesAndCharacters = async () => {
-//     try {
-//         let limit = await getApiLength();
-//         let quotes:Quote[] = await getQoute(limit);
-//         let chars:Character[] = await getChars(limit);
-//         let movies:Movie[] = await getMovies(limit);
-
-//         const quotesWithMovieAndCharacter = quotes.map(quote => ({
-//             ...quotes,
-//             movie: movies.find(movie => movie._id === quote.movie),
-//             character: chars.find(character => character._id === quote.character)
-//         }));
-//         // console.log(quotesWithMovieAndCharacter)
-//         return quotesWithMovieAndCharacter
-//     } catch (error) {
-//         console.log('error', error)
-//     }
-// }
-
 //middleware
 app.use(session)
 app.use(express.json())
@@ -77,35 +58,19 @@ const isAuth = (req:any, res:any, next:any) =>{
 app.set("view engine", "ejs");
 app.set("port", 3000);
 
-// app.get("/",(req,res)=>{
-//     req.session.regenerate(e => {
-//         console.log(req.session)
-//         console.log(req.session.id)
-//         console.log(req.session.user)
-//         res.render("index");
-//     })
-// })
 let quotes: Quote[] = [{id:"d",_id:"",dialog:"d",character:"d",movie:"d",wikiUrl:"d"}];
 let blacklistedQoutes: Quote[] = []
 linkCharsAndMovieToQoute().then(data => (quotes = data))
-// addQuotesToDB(quotes)
+
 app.get("/",(req,res)=>{
-    console.log(quotes.length)
     res.render("index");
 })
 
 app.get("/home", isAuth, (req,res)=>{
-    // console.log(user)
-    // linkCharsAndMovieToQoute().then(console.log)
     res.render("home",{user:req.session.user});
 })
 
 app.get("/login",(req,res)=>{
-    // user = {
-    //     username: "",
-    //     email:"",
-    //     password:""
-    // };
     if (req.session.isAuth) {
         res.redirect("/home")
     }
@@ -113,7 +78,6 @@ app.get("/login",(req,res)=>{
 })
 
 app.post("/login", async (req,res)=>{
-    // let userObject:User = req.session.user ? req.session.user : undefined;
     try {
         await client.connect();
 
@@ -149,11 +113,6 @@ app.post("/login", async (req,res)=>{
 })
 
 app.get("/register", async (req,res)=>{
-    // user = {
-    //     username: "",
-    //     email:"",
-    //     password:""
-    // };
     try {
         await client.connect();
         if (req.session.isAuth) {
@@ -181,12 +140,7 @@ app.post("/register", async (req,res)=>{
       const hashehPassword = await bcrypt.hash(newUser.password, saltRounds)
 
       newUser.password = hashehPassword
-      
-      console.log(newUser)
-      
-       
-        
-        
+
         let userEmail = await client.db('LOTR').collection('Users').findOne({email:req.body.email.toString().toLowerCase()})
 
         let userUsername = await client.db('LOTR').collection('Users').findOne({username:req.body.username.toString().toLowerCase()})
@@ -203,14 +157,10 @@ app.post("/register", async (req,res)=>{
             else if (req.body.password.length > 6) {
                 await client.db('LOTR').collection('Users').insertOne(newUser);
                 req.session.isAuth = true
-                // console.log(req.session.id)
                 req.session.user = newUser
-                // console.log(req.session.user)
                 message = "Account succevol aangemaakt!"
                 error = false
 
-                //hier moet ik session beginnen maken
-                //req.session.isLoggedIn = true
                 res.redirect("home")
             } 
             else if (req.body.password.length <= 7) {
@@ -231,83 +181,12 @@ app.post("/register", async (req,res)=>{
 
 });
 
-/////// om session te beeindigen
-// req.session.destroy(() => {
-//     res.redirect('/')
-// });
-//////
-
-// app.post("/register", async (req,res)=>{
-
-//     let newUser:User = {
-//         username:req.body.username,
-//         email:req.body.email.toString().toLowerCase(),
-//         password:req.body.password
-//       }
-//       const saltRounds = 10
-//       const hashehPassword = await bcrypt.hash(newUser.password, saltRounds)
-
-//       newUser.password = hashehPassword
-      
-//       console.log(newUser)
-      
-//        try {
-//         await client.connect();
-        
-        
-//         let userEmail:User = await client.db('LOTR').collection('Users').findOne({email:req.body.email.toString().toLowerCase()})
-
-//         let userUsername: User = await client.db('LOTR').collection('Users').findOne({username:req.body.username})
-        
-//         console.log(userUsername)
-
-//         if (userEmail == null) {
-
-
-//             if (userUsername.username.toLowerCase() == newUser.username.toLowerCase()) {
-            
-//                 message = "Gebruikersnaam bestaat al"
-//                 error = true
-//                 res.render("register",{message:message,error:error})
-//             }  
-//             else if (req.body.password.length > 6) {
-//                 await client.db('LOTR').collection('Users').insertOne(newUser);
-//                 message = "Account succevol aangemaakt!"
-//                 error = false
-//                 res.redirect("home")
-//             } 
-//             else if (req.body.password.length <= 7) {
-//                 message = "Wachtwoord bevat minder dan 8 karakaters"
-//                 error = true
-//                 res.render("register",{message:message,error:error})
-//           }
-//         } 
-
-//         if (userEmail != null) {
-          
-//             message = "Email bestaat al"
-//             error = true
-//             res.render("register",{message:message,error:error})
-//         }
-        
-//     } catch (e) {
-//         console.error(e);
-//         error = true
-//         message = "Account maken mislukt, probeer terug opnieuw"
-//     } finally {
-//         await client.close();
-//     } 
-// });
-
-
-
 app.get("/blacklist",isAuth, async (req,res)=>{
 
 
         let userObject:User = await client.db('LOTR').collection('Users').findOne({username:req.session.user?.username})
         if (userObject) {
             let blQuotes:BlQuote[] = userObject.blQuotes
-            // console.log(favQuotes)
             res.render("blacklist",{user:req.session.user, blQuotes})
         }
 
@@ -319,7 +198,6 @@ app.get("/fav",isAuth, async (req,res)=>{
     if (userObject) {
         let favQuotes:FavQuote[] = userObject.favQuotes
         const paginatedQuotes = favQuotes.slice(0,6)
-        // console.log(favQuotes)
         res.render("fav",{user:req.session.user, favQuotes,paginatedQuotes})
     }
 
@@ -378,19 +256,15 @@ app.post("/logout", async(req,res) =>{
 })
 
 app.post("/like", async (req,res) =>{
-    console.log(req.body)
-
     let charWiki = quotes.find(char => char.character == req.body.char)?.wikiUrl
     let totalQuotes = quotes.filter(quote => quote.character === req.body.char).length
 
     let favQuote:FavQuote = {quote:"", character:"", charWiki:"",totalCharQuotes:0}
     if (req.body.char) {
         if (charWiki) {
-            favQuote = {quote: req.body.quote, character:req.body.char, charWiki:charWiki, totalCharQuotes:totalQuotes}
-            console.log(favQuote) 
+            favQuote = {quote: req.body.quote, character:req.body.char, charWiki:charWiki, totalCharQuotes:totalQuotes} 
         } else {
             favQuote = {quote: req.body.quote, character:req.body.char, charWiki:"", totalCharQuotes:totalQuotes}
-            console.log(favQuote)
         }
     }
     
@@ -428,7 +302,6 @@ app.post("/like", async (req,res) =>{
 })
 
 app.post("/dislike", async (req,res) =>{
-    console.log(req.body)
         let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
    
         let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
@@ -478,9 +351,6 @@ app.post("/dislike", async (req,res) =>{
 })
 
 app.post("/deleteFavQuote", async (req,res) =>{
-    console.log(req.body)
-
-
         const filter = {username: req.session.user?.username}
         const update = {$pull: {favQuotes: {quote: req.body.quote}}}
         const remove = await client.db('LOTR').collection('Users').updateOne(filter, update)
@@ -497,8 +367,6 @@ app.post("/deleteFavQuote", async (req,res) =>{
 })
 
 app.post("/deleteBlQuote", async (req,res) =>{
-    console.log(req.body)
-
 
         const filter = {username: req.session.user?.username}
         const update = {$pull: {blQuotes: {quote: req.body.quote}}}
@@ -515,9 +383,6 @@ app.post("/deleteBlQuote", async (req,res) =>{
 })
 
 app.post("/updateBlQuote", async (req,res) =>{
-    console.log(req.body)
-
-
         const filter = { 
             username: req.session.user?.username,
             "blQuotes.quote": req.body.quote 
@@ -546,7 +411,6 @@ app.post("/highscoreTenRound", async(req,res)=> {
 })
 
 app.post("/highscoreSuddenDeath", async(req,res)=> {
-    console.log("hi")
     await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{suddenDeathHighScore:req.body.score}}, { upsert: true });
     res.status(200).send({ message: "Highscore success"});
 })

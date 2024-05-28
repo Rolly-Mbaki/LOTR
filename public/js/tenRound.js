@@ -75,7 +75,6 @@
     }
 
     async function toevoegenFav() {
-      // console.log(jsonData[counter])
 
       let favQuote = {quote:"", char:""}
 
@@ -86,14 +85,12 @@
           favQuote = {quote:quote, char: char}
         }
       });
-      console.log(JSON.stringify(favQuote))
       try {
         const response = await fetch("/like", {
           method: "post",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(favQuote)
         })
-        console.log(response.body)
         const result = await response.json();
         if (response.ok) {
           retOp.innerHTML = `<b>${result.message}</b>`
@@ -108,7 +105,6 @@
     }
 
     async function toevoegenBl(input) {
-      // console.log(jsonData[counter])
 
       let blQuote = {quote:"", char:"", reason:""}
 
@@ -120,7 +116,6 @@
           blQuote = {quote:quote, char: char, reason:reason}
         }
       });
-      console.log(JSON.stringify(blQuote))
       try {
         const response = await fetch("/dislike", {
           method: "post",
@@ -128,7 +123,6 @@
           body: JSON.stringify(blQuote)
         })
         const result = await response.json();
-        console.log(response.body)
         if (response.ok) {
           retOp.innerHTML = `<b>${result.message}</b>`
           console.log("Data inserted into mdb")
@@ -159,7 +153,6 @@ const retOp = document.getElementById("retOp");
 function submitFormReturn(event){
   modal2.close()
   const input = document.getElementById("myReason")
-  console.log(input.value)
   toevoegenBl(input)
 }
   
