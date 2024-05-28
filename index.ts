@@ -351,14 +351,8 @@ app.get("/tenRound",isAuth, async(req,res)=>{
             console.log("qoute not in")
         }   */
 
-        if (!blacklistedQoutes.length) {
-            blacklistedQoutes[0] = {id:"d",_id:"",dialog:"Verwijder een paar van de blacklist",character:"d",movie:"d",wikiUrl:"d"}
-            blacklistedQoutes[1] = {id:"4",_id:"",dialog:"Verwijder een paar van de blacklist",character:"7",movie:"8",wikiUrl:"h"}
-            blacklistedQoutes[2] = {id:"2",_id:"",dialog:"Verwijder een paar van de blacklist",character:"6",movie:"2",wikiUrl:"p"}
-        }
-
-    /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,9) */ 
-    let randomQuotes = getRandomQoutes(blacklistedQoutes,10)
+    /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) */
+    let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes,10)
     res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.tenRoundHighScore});
 })
 
@@ -370,8 +364,8 @@ app.get("/suddenDeath",isAuth, async(req,res)=>{
     blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
     }
 
-    let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes.length)
-    res.render("suddenDeath",{user:req.session.user,qoutes:randomQuotes});
+    let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes,blacklistedQoutes.length)
+    res.render("suddenDeath",{user:req.session.user,qoutes:randomQuotes,added:false,highscore:currentUser.suddenDeathHighScore});
 })
 
 
@@ -455,7 +449,7 @@ app.post("/dislike", async (req,res) =>{
 
         let update
         console.log(blacklistedQoutes.length)
-        if (blacklistedQoutes.length >= 10) {
+        if (blacklistedQoutes.length >= 11) {
             if (taken) {
                 update = {
                     $pull: { favQuotes: { quote: blQuote.quote } },
@@ -476,8 +470,8 @@ app.post("/dislike", async (req,res) =>{
             console.log("Quote added to blacklist array");
     
         }
-        else if (blacklistedQoutes.length < 10) {
-            return res.status(409).send({message:"Je hebt minstens 10 quotes nodig"});
+        else if (blacklistedQoutes.length <= 10) {
+            return res.status(409).send({message:"Je hebt meer dan 10 quotes nodig"});
         }
 
         res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
@@ -549,7 +543,13 @@ app.post("/updateBlQuote", async (req,res) =>{
 })
 
 app.post("/highscoreTenRound", async(req,res)=> {
-    const result = await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{tenRoundHighScore:req.body.score}}, { upsert: true });
+    await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{tenRoundHighScore:req.body.score}}, { upsert: true });
+    res.status(200).send({ message: "Highscore success"});
+})
+
+app.post("/highscoreSuddenDeath", async(req,res)=> {
+    console.log("hi")
+    await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{suddenDeathHighScore:req.body.score}}, { upsert: true });
     res.status(200).send({ message: "Highscore success"});
 })
 

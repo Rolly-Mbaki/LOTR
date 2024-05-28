@@ -78,83 +78,111 @@ export const linkCharsAndMovieToQoute = async() => {
   }
   return qoutes
 }
+export interface gameAwnsers {
+  name:string,correct:boolean,
+}
+const shuffleChars = (arr:gameQuote["characterAnswers"]) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
+const shuffleMovies = (arr:gameQuote["movieAnswers"]) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
-export const getRandomQoutes = (qoutes:Quote[],n:number) => {
-  /* NOTE TO SELF THERE IS A MINOR_CHARACTER object AND MAYBE UNIQUE DIALOG IN full array of gameQoutes */
-  const shuffled = qoutes.sort(() => 0.5 - Math.random());
+const shuffleArray = (arr:any[]) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+export const getRandomQoutes = (blacklistedQoutes:Quote[],allQuotes:Quote[],n:number) => {
+
+  const shuffledBlacklist:Quote[] = shuffleArray(blacklistedQoutes);
+  allQuotes = shuffleArray(allQuotes);
+
   let gameQuotes:gameQuote[] = [{
     quote: "",
     characterAnswers:[
       {name:"",correct:false},
-      {name:"",correct:false},
-      {name:"",correct:false}
   ],
     movieAnswers:[
-    {title:"",correct:false},
-    {title:"",correct:false},
     {title:"",correct:false},
 ]
   }]
 
   for (let i = 0; i < n; i++) {
-  let uniqueAnwser = Math.floor(Math.random() * shuffled.length);
 
-  let char1 = "";
-  let char2 = "";
-  let movie1 = "";
-  let movie2 = "";
+  /* let randomQuoteNumber = Math.floor(Math.random() * shuffledBlacklist.length); */
 
-  let uniqueMovies = shuffled.filter(function(this: Set<string>,{movie}) {
-    return !this.has(movie) && this.add(movie);
-  }, new Set)
+  let correctChar = shuffledBlacklist[i].character;
+  let correctQuote = shuffledBlacklist[i].dialog;
+  let correctMovie = shuffledBlacklist[i].movie;
 
-  let my2 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie)
-
-  let uniqueMoviesRandom = Math.floor(Math.random() * my2.length);
-
-  movie1 = my2[uniqueMoviesRandom].movie
-
-  let my4 = uniqueMovies.filter((e) => e.movie !== shuffled[uniqueAnwser].movie && e.movie !== movie1)
-
-  let uniqueMoviesRandom2 = Math.floor(Math.random() * my4.length);
-
-  movie2 = my4[uniqueMoviesRandom2].movie
-
-  let uniqueChars = shuffled.filter(function(this: Set<string>,{character}) {
-    return !this.has(character) && this.add(character);
-  }, new Set)
-
-  let my = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character)
-
-  let uniqueCharsRandom = Math.floor(Math.random() * my.length);
-
-  char1 = my[uniqueCharsRandom].character
-
-  let my3 = uniqueChars.filter((e) => e.character !== shuffled[uniqueAnwser].character && e.character !== char1)
-  let uniqueCharsRandom2 = Math.floor(Math.random() * my3.length);
-
-  char2 = my3[uniqueCharsRandom2].character
 
   let tempData:gameQuote = {
-    quote: shuffled[uniqueAnwser].dialog,
+    quote: correctQuote,
     characterAnswers:[
-      {name:shuffled[uniqueAnwser].character,correct:true},
-      {name:char1,correct:false},
-      {name:char2,correct:false}
+      {name:correctChar,correct:true},
     ],
     movieAnswers:[
-      {title:shuffled[uniqueAnwser].movie,correct:true},
-      {title:movie1,correct:false},
-      {title:movie2,correct:false},
+      {title:correctMovie,correct:true},
     ]
   }
-  tempData.characterAnswers.sort(() => 0.5 - Math.random());
-  tempData.movieAnswers.sort(() => 0.5 - Math.random());
-  gameQuotes.push(tempData)
-  }
 
-  gameQuotes.shift()
+//fill chars---
+for (let j = 0; j < 2; j++) {
+  
+  let itemFound = true;
+  
+  while(itemFound) {
+    let randomCharFromAllQoutes = allQuotes[Math.floor(Math.random() * allQuotes.length)].character;
+    let charInArray = tempData.characterAnswers.every((char) => {
+      return char.name !== randomCharFromAllQoutes;
+  });
+    if(charInArray) {
+      tempData.characterAnswers.push({name:randomCharFromAllQoutes,correct:false});
+      itemFound = false;
+    }
+  }
+}
+
+//fill movies ----
+
+for (let j = 0; j < 2; j++) {
+
+  let itemFound = true
+  
+  while(itemFound) {
+    let randomMovieFromAllQoutes = allQuotes[Math.floor(Math.random() * allQuotes.length)].movie
+    let movieInArray = tempData.movieAnswers.every((movie) => {
+      return movie.title !== randomMovieFromAllQoutes;
+    });
+    if(movieInArray) {
+      tempData.movieAnswers.push({title:randomMovieFromAllQoutes,correct:false});
+      itemFound = false;
+    }
+  }
+}
+//---
+
+  tempData.characterAnswers = shuffleChars(tempData.characterAnswers);
+  tempData.movieAnswers = shuffleMovies(tempData.movieAnswers);
+
+  gameQuotes.push(tempData);
+
+}
+  gameQuotes.shift();
+
   return gameQuotes;
 }
 

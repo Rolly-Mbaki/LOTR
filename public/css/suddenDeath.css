@@ -55,6 +55,26 @@ main{
     justify-content: center;
     flex-wrap: wrap;
 }
+#quote {
+    color: #1B1212!important;
+}
+
+#highscore {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F9F6EE;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 40px;
+    font-size: 26px;
+    color: #1B1212!important;
+    
+}
+#highscore > ul > li {
+    color: #d17600!important;
+}
 
 .card{
     width: 350px;
@@ -144,7 +164,6 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     text-decoration: none;
     background-color: #F9F6EE;
     border: none;
-    margin-left: 5px;
     cursor: pointer;
 }
 
@@ -152,7 +171,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     color: #d17600;
     cursor: pointer;
     margin-top: 7px;
-    width: 0;
+    width: 20px;
 }
 
 .modall {
@@ -170,22 +189,6 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 
-#highscore {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #F9F6EE;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 40px;
-    font-size: 26px;
-    color: #1B1212!important;
-    
-}
-#highscore > ol > li {
-    color: #1B1212!important;
-}
 
 .sketchline{
     filter: invert(6%) sepia(200%) saturate(3207%) hue-rotate(15deg) brightness(87%) contrast(1000%);
@@ -209,6 +212,7 @@ box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
 font-size: 19px;
 margin-right: 1rem;
+margin-bottom: 0.5rem;
 
 }
 
@@ -251,19 +255,31 @@ margin-bottom: 10px;
 
 .options-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-top: 20px;
 }
 
 .icons-container {
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
-#quote {
-    color: #1B1212!important;
+dialog{
+    background-color: rgb(91, 34, 15);
+    width: 500px;
+    margin: auto;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    /* z-index: 1000; */
+}
+
+.modal2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color:#e3b737;
 }
 
 
@@ -274,6 +290,73 @@ dialog::backdrop {
 #qouteNumber {
     color: #d17600
 }
+
+dialog::backdrop {
+    background-color: rgba(48, 15, 4, 0.6);
+}
+
+.dislikeReason{
+    margin: auto;
+    padding-top: 15px;
+    color: #e3b737;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #e3b737;
+    border-radius: 4px;
+    background-color: rgb(91, 34, 15);
+    font-size: 16pt!important;
+    margin-bottom: 10px;
+    resize: none;
+    color: #e3b737!important;
+}
+
+textarea::placeholder{
+    color: #e3b737;
+    opacity: .5;
+}
+
+.card-button{
+    border: none;
+    background-color: rgb(91, 34, 15);
+    padding: 10px;
+    font-size: 14pt;
+}
+
+.card-button:hover{
+    background-color: rgba(48, 15, 4);
+    color: #d17600;
+    cursor: pointer;
+}
+
+.quizlinks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+.quizlinks a{
+    text-decoration: none;
+    font-size: 16pt;
+}
+
+.quizlinks a:hover{
+    color:#d17600;
+}
+
+#retOp > b {
+    color: #d17600 !important;
+}
 @media (max-width:641px) {
-    
+    .options-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        flex-direction: column;
+        align-items:stretch;
+    }
 }

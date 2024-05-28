@@ -22,12 +22,8 @@ export interface gameQuote {
     quote:string;
     characterAnswers:[
         {name:string,correct:boolean},
-        {name:string,correct:boolean},
-        {name:string,correct:boolean}
     ]
     movieAnswers:[
-        {title:string,correct:boolean},
-        {title:string,correct:boolean},
         {title:string,correct:boolean},
     ]
 }
