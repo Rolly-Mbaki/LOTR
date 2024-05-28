@@ -145,11 +145,14 @@ main{
 }
 .quizlinks a{
     text-decoration: none;
-    font-size: 16pt;
+    font-size: 20pt;
 }
 
 .quizlinks a:hover{
     color:#d17600;
+}
+.card h1{
+    font-size: 22pt;
 }
 
 #scrollTop{
