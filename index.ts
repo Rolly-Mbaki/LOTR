@@ -351,7 +351,7 @@ app.get("/tenRound",isAuth, async(req,res)=>{
             console.log("qoute not in")
         }   */
 
-    /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) */
+    blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) //ZET BIJ DISLIKE currentuser etc. in commentaat
     let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes,10)
     res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.tenRoundHighScore});
 })
@@ -429,11 +429,11 @@ app.post("/like", async (req,res) =>{
 
 app.post("/dislike", async (req,res) =>{
     console.log(req.body)
-   /*let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
+   let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
     if (currentUser.blQuotes.length) {
         blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
-         blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) 
-        } */ 
+          
+        } 
     let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
     
 
@@ -448,7 +448,6 @@ app.post("/dislike", async (req,res) =>{
         });
 
         let update
-        console.log(blacklistedQoutes.length)
         if (blacklistedQoutes.length >= 11) {
             if (taken) {
                 update = {
