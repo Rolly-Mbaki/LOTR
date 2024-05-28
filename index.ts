@@ -351,7 +351,7 @@ app.get("/tenRound",isAuth, async(req,res)=>{
             console.log("qoute not in")
         }   */
 
-    blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) //ZET BIJ DISLIKE currentuser etc. in commentaat
+    /* blacklistedQoutes = blacklistedQoutes.sort(() => 0.5 - Math.random()).slice(0,10) */ //ZET BIJ DISLIKE currentuser etc. in commentaat
     let randomQuotes:gameQuote[] = getRandomQoutes(blacklistedQoutes,quotes,10)
     res.render("tenRound",{qoutes:randomQuotes,user:req.session.user, added:false,highscore:currentUser.tenRoundHighScore});
 })
@@ -429,52 +429,51 @@ app.post("/like", async (req,res) =>{
 
 app.post("/dislike", async (req,res) =>{
     console.log(req.body)
-   let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
+        let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
+   
+        let currentUser:User = await client.db('LOTR').collection('Users').findOne({username: req.session.user?.username})
     if (currentUser.blQuotes.length) {
         blacklistedQoutes = [...quotes.filter((qoute)=> currentUser.blQuotes.every((blQuote)=> blQuote.quote !== qoute.dialog))]
           
         } 
-    let blQuote:BlQuote = {quote:req.body.quote, character:req.body.char, reason:req.body.reason}
-    
-
-
+ 
         const filter = {username: req.session.user?.username}
         // const add = {$addToSet: {blQuotes: blQuote}}
         // const remove = {$pull: {favQuotes: {quote: blQuote.quote}}}
-
+ 
         const taken = await client.db('LOTR').collection('Users').findOne({
             username: req.session.user?.username,
             favQuotes: { $elemMatch: { quote: blQuote.quote } }
         });
-
+ 
+        const alreadyIn = await client.db('LOTR').collection('Users').findOne({
+            username: req.session.user?.username,
+            blQuotes: { $elemMatch: { quote: blQuote.quote } }
+        });
+ 
         let update
         if (blacklistedQoutes.length >= 11) {
-            if (taken) {
-                update = {
-                    $pull: { favQuotes: { quote: blQuote.quote } },
-                    $addToSet: { blQuotes: blQuote }
-                };
-                console.log("Quote moved from favQuotes to blQuotes");
-            }
-            else {
-                update = { $addToSet: {blQuotes: blQuote} }
-            }
-            const add = await client.db('LOTR').collection('Users').updateOne(filter, update);
-
-            if (add.modifiedCount === 0) {
-                console.log("Quote already exists in the array");
-                return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
-            }
-            
+        if (taken) {
+            update = {
+                $pull: { favQuotes: { quote: blQuote.quote } },
+                $addToSet: { blQuotes: blQuote }
+            };
+            console.log("Quote moved from favQuotes to blQuotes");
+        }
+        else {
+            update = { $addToSet: {blQuotes: blQuote} }
+        }
+ 
+        if (alreadyIn) {
+            return res.status(409).send({message:"Quote zit al tussen jouw geblacklisten"});
+        } else {
+            await client.db('LOTR').collection('Users').updateOne(filter, update);
+            res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
             console.log("Quote added to blacklist array");
-    
         }
-        else if (blacklistedQoutes.length <= 10) {
-            return res.status(409).send({message:"Je hebt meer dan 10 quotes nodig"});
-        }
-
-        res.status(200).send({ message: "Quote toegevoegd aan je geblacklisten"});
-
+    } else if (blacklistedQoutes.length <= 10) {
+        return res.status(409).send({message:"Je hebt meer dan 10 quotes nodig"});
+    }
 
 })
 
@@ -550,6 +549,11 @@ app.post("/highscoreSuddenDeath", async(req,res)=> {
     console.log("hi")
     await client.db('LOTR').collection('Users').updateOne({username: req.session.user?.username},{$max:{suddenDeathHighScore:req.body.score}}, { upsert: true });
     res.status(200).send({ message: "Highscore success"});
+})
+
+app.use((req,res)=> {
+    res.status(404);
+    res.render("404",{user:req.session.user});
 })
 
 app.listen(app.get("port"), async () => {
